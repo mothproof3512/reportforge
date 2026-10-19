@@ -58,7 +58,7 @@ runcmd:
   - git clone ${REPO} /opt/reportforge
   - chown -R ${USER}:${USER} /opt/reportforge
   - mkdir -p /opt/reportforge/data && chown ${USER}:${USER} /opt/reportforge/data
-  - cd /opt/reportforge && docker compose -f deploy/docker-compose.yml build
+  - cd /opt/reportforge && docker compose -f deploy/docker-compose.yml up -d --build
   - echo "reportforge ready" > /var/log/reportforge-install.done
 CLOUD
 
@@ -72,4 +72,4 @@ qm set "$ID" --ide2 "${STORAGE}:cloudinit" --boot order=scsi0
 qm set "$ID" --ipconfig0 "ip=${IP},gw=${GW}" --cicustom "user=local:snippets/$(basename "$SNIPPET")"
 qm start "$ID"
 echo "▶ VM started. Installation runs inside the VM for a few minutes."
-echo "   ssh ${USER}@${IP%/*}   then: cd /opt/reportforge && docker compose -f deploy/docker-compose.yml run --rm rf --help"
+echo "   Open http://${IP%/*}:3000 when it is done (ssh ${USER}@${IP%/*}; cat /var/log/reportforge-install.done)"

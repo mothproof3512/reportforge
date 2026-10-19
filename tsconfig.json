@@ -36,6 +36,7 @@
   "include": [
     "packages/**/*.ts",
     "modules/**/*.ts",
-    "tests/**/*.ts"
+    "tests/**/*.ts",
+    "apps/web/server/**/*.ts"
   ]
 }

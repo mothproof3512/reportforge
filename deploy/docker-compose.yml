@@ -1,16 +1,22 @@
-# Phase 1: CLI renderer as a container. Phase 2 adds the web app and PostgreSQL.
+# Reportforge on the NUC.
+#   docker compose -f deploy/docker-compose.yml up -d --build
+#   → http://<nuc-ip>:3000  (set your password on first visit)
 #
-#   docker compose -f deploy/docker-compose.yml build
-#   docker compose -f deploy/docker-compose.yml run --rm rf render /data/acme-webshop
-#
+# Data (SQLite, screenshots, renders, engagement folders) lives in ../data;
+# client themes live in ../modules/themes so they are files you can also keep in git.
 services:
-  rf:
+  web:
     build:
       context: ..
       dockerfile: deploy/Dockerfile
     image: reportforge:local
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
     volumes:
-      - ../examples:/data            # put your engagement folders here (or change the path)
-      - ../modules/themes:/opt/reportforge/modules/themes   # client themes live outside the image
+      - ../data:/data
+      - ../modules/themes:/opt/reportforge/modules/themes
     environment:
       - TZ=Europe/Amsterdam
+  # One-off CLI renders use the same image:
+  #   docker compose -f deploy/docker-compose.yml run --rm web npx tsx packages/cli/src/index.ts render /data/engagements/PT-2026-042

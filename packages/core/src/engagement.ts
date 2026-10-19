@@ -35,7 +35,7 @@ export const EngagementSchema = z.object({
   client: z.object({ name: z.string(), contact: z.array(person).optional(), address: z.array(z.string()).optional() }),
   provider: z.object({ name: z.string(), address: z.array(z.string()).optional(), website: z.string().optional(), email: z.string().optional(), phone: z.string().optional() }).optional(),
   period: z.object({ start: dateStr, end: dateStr }),
-  authors: z.array(person).min(1),
+  authors: z.array(person).default([]),
   testers: z.array(person).optional(),
   reviewers: z.array(person).optional(),
   scope: z.array(z.object({ asset: z.string(), type: z.string().optional(), description: z.string().optional(), environment: z.string().optional() })).default([]),

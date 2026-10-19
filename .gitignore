@@ -2,3 +2,5 @@ node_modules/
 out/
 .rf-cache/
 *.log
+data/
+apps/web/dist/
