@@ -1,0 +1,40 @@
+reference: STRESS-001
+title: "Stress test engagement with an unreasonably long title that should still look acceptable on the cover and in the running header of every page"
+subtitle: "Thirty generated findings, extreme images, giant code blocks, the risk matrix model and the English language"
+language: en
+theme: _default
+template: pentest-report
+risk_model: matrix
+version: "2.3"
+date: 2026-10-19
+classification: Strictly confidential
+client:
+  name: "Very Long Client Name Holdings International Limited Liability Partnership & Associates"
+  contact: []
+period: { start: 2026-10-01, end: 2026-10-15 }
+authors: [{ name: Tester One }, { name: Tester Two, role: Reviewer }]
+scope:
+  - { asset: "https://host-1.example.com/a/very/long/path/that/keeps/going/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", type: web, environment: production, description: "Scope item 1 with a long description that wraps onto two lines in the scope table" }
+  - { asset: "https://host-2.example.com/a/very/long/path/that/keeps/going/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", type: web, environment: production, description: "Scope item 2 with a long description that wraps onto two lines in the scope table" }
+  - { asset: "https://host-3.example.com/a/very/long/path/that/keeps/going/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", type: web, environment: production, description: "Scope item 3 with a long description that wraps onto two lines in the scope table" }
+  - { asset: "https://host-4.example.com/a/very/long/path/that/keeps/going/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", type: web, environment: production, description: "Scope item 4 with a long description that wraps onto two lines in the scope table" }
+  - { asset: "https://host-5.example.com/a/very/long/path/that/keeps/going/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", type: web, environment: production, description: "Scope item 5 with a long description that wraps onto two lines in the scope table" }
+  - { asset: "https://host-6.example.com/a/very/long/path/that/keeps/going/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", type: web, environment: production, description: "Scope item 6 with a long description that wraps onto two lines in the scope table" }
+  - { asset: "https://host-7.example.com/a/very/long/path/that/keeps/going/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", type: web, environment: production, description: "Scope item 7 with a long description that wraps onto two lines in the scope table" }
+  - { asset: "https://host-8.example.com/a/very/long/path/that/keeps/going/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", type: web, environment: production, description: "Scope item 8 with a long description that wraps onto two lines in the scope table" }
+  - { asset: "https://host-9.example.com/a/very/long/path/that/keeps/going/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", type: web, environment: production, description: "Scope item 9 with a long description that wraps onto two lines in the scope table" }
+  - { asset: "https://host-10.example.com/a/very/long/path/that/keeps/going/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", type: web, environment: production, description: "Scope item 10 with a long description that wraps onto two lines in the scope table" }
+  - { asset: "https://host-11.example.com/a/very/long/path/that/keeps/going/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", type: web, environment: production, description: "Scope item 11 with a long description that wraps onto two lines in the scope table" }
+  - { asset: "https://host-12.example.com/a/very/long/path/that/keeps/going/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", type: web, environment: production, description: "Scope item 12 with a long description that wraps onto two lines in the scope table" }
+out_of_scope: [DoS, Social engineering]
+standards: [owasp-top10-2021, wstg-4.2, owasp-api-top10-2023, asvs-4.0.3, masvs-2, cwe]
+tools: [{ name: Tool, version: "1", purpose: Testing }]
+document_history:
+  - { version: "0.1", date: 2026-10-01, author: Tester One, change: "Change 1 with a long description of what changed in this version of the document" }
+  - { version: "0.2", date: 2026-10-02, author: Tester One, change: "Change 2 with a long description of what changed in this version of the document" }
+  - { version: "0.3", date: 2026-10-03, author: Tester One, change: "Change 3 with a long description of what changed in this version of the document" }
+  - { version: "0.4", date: 2026-10-04, author: Tester One, change: "Change 4 with a long description of what changed in this version of the document" }
+  - { version: "0.5", date: 2026-10-05, author: Tester One, change: "Change 5 with a long description of what changed in this version of the document" }
+  - { version: "0.6", date: 2026-10-06, author: Tester One, change: "Change 6 with a long description of what changed in this version of the document" }
+  - { version: "0.7", date: 2026-10-07, author: Tester One, change: "Change 7 with a long description of what changed in this version of the document" }
+  - { version: "0.8", date: 2026-10-08, author: Tester One, change: "Change 8 with a long description of what changed in this version of the document" }

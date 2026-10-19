@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 72" width="440" height="72">
+  <circle cx="36" cy="36" r="30" fill="none" stroke="#6B7280" stroke-width="6"/>
+  <path d="M36 12 L48 36 L36 60 L24 36 Z" fill="#6B7280"/>
+  <text x="84" y="47" font-family="Georgia, serif" font-size="34" fill="#6B7280">Northwind <tspan fill="#6B7280">Assurance</tspan></text>
+</svg>

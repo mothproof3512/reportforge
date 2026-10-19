@@ -193,7 +193,7 @@
       grid(
         columns: (1fr, auto),
         align: (left + horizon, right + horizon),
-        [#eng.title #h(0.6em) #text(fill: c.rule)[|] #h(0.6em) #eng.client.name],
+        box(height: 1.1em, clip: true, text(hyphenate: false)[#ctx.fmt.header_title #h(0.6em) #text(fill: c.rule)[|] #h(0.6em) #ctx.fmt.header_client]),
         if theme.assets.at("logo_mono", default: none) != none {
           image(theme.assets.logo_mono, height: 5.5mm)
         } else if theme.assets.at("logo", default: none) != none {

@@ -37,8 +37,7 @@
       [], ..range(1, n + 1).map(l => text(size: 8pt, fill: c.muted, str(l))),
     )
     v(2pt)
-    grid(columns: (8mm, 1fr), [], align(center, text(size: 8pt, fill: c.muted, tb.likelihood + " →")))
-    place(left + horizon, dx: -9mm, rotate(-90deg, text(size: 8pt, fill: c.muted, tb.impact + " →")))
+    grid(columns: (8mm, 1fr), [], align(center, text(size: 8pt, fill: c.muted, tb.impact + " ↑  ·  " + tb.likelihood + " →")))
   })
 }
 

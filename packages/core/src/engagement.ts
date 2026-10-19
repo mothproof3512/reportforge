@@ -66,7 +66,7 @@ function readMdField(dir: string, value: unknown): string | undefined {
   return value;
 }
 
-export async function loadEngagement(mods: Modules, engagementDir: string, opts: { lang?: Lang; document?: string; template?: string } = {}): Promise<LoadResult> {
+export async function loadEngagement(mods: Modules, engagementDir: string, opts: { lang?: Lang; document?: string; template?: string; theme?: string } = {}): Promise<LoadResult> {
   const dir = resolve(engagementDir);
   const file = join(dir, 'engagement.yaml');
   if (!existsSync(file)) throw new Error(`Geen engagement.yaml in ${dir}`);
@@ -80,7 +80,7 @@ export async function loadEngagement(mods: Modules, engagementDir: string, opts:
   const lang = opts.lang ?? eng.language;
 
   // Theme
-  const themeRef = existsSync(join(dir, 'theme', 'theme.yaml')) && eng.theme === '_default' ? join(dir, 'theme') : eng.theme;
+  const themeRef = opts.theme ?? (existsSync(join(dir, 'theme', 'theme.yaml')) && eng.theme === '_default' ? join(dir, 'theme') : eng.theme);
   const { theme, warnings: tw } = resolveTheme(mods, themeRef, dir);
   for (const w of tw) diagnostics.push({ level: 'warning', message: w.message, file: 'theme' });
   if (eng.provider) theme.provider = { ...theme.provider, ...eng.provider };

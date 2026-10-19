@@ -36,7 +36,7 @@ export async function render(ctx: any, theme: any, t: any, opts: any, h: Helpers
   out.push(h.table([['ID', t.core.finding, t.core.severity, t.core.score, t.core.status], ...ctx.findings.map((f: any) => [[h.run(f.id, { bold: true, size: h.PT(9) } as any)], [h.run(f.title, { size: h.PT(9) } as any)], [h.badge(f.severity)], [h.run(f.risk.label, { size: h.PT(9) } as any)], [h.run(f.retest ? (t.core.retest_status[f.retest.status] ?? f.retest.status) : f.status, { size: h.PT(9) } as any)]])], { widths: [14, 90, 22, 16, 28], aligns: ['left', 'left', 'left', 'right', 'left'] }));
   if (opts.by_standard !== false) {
     const items = new Map<string, { title: string; ids: string[] }>();
-    for (const f of ctx.findings) for (const m of f.mapping) { const cur = items.get(m.item) ?? { title: m.title ?? '', ids: [] }; cur.ids.push(f.id); items.set(m.item, cur); }
+    for (const f of ctx.findings) for (const m of f.mapping) { const cur = items.get(m.item) ?? { title: m.title ?? "", ids: [] as string[] }; cur.ids.push(f.id); items.set(m.item, cur); }
     if (items.size) {
       out.push(h.h2(tb.by_standard));
       out.push(h.table([[t.core.standards, '', t.core.findings], ...[...items.entries()].sort(([a], [b]) => a.localeCompare(b)).map(([k, v]) => [[h.mono(k)], v.title, v.ids.join(', ')])], { widths: [34, 96, 40] }));
