@@ -9,16 +9,33 @@
     "resolveJsonModule": true,
     "allowImportingTsExtensions": true,
     "noEmit": true,
-    "types": ["node"],
-    "baseUrl": ".",
+    "types": [
+      "node"
+    ],
     "paths": {
-      "@reportforge/core": ["packages/core/src/index.ts"],
-      "@reportforge/markdown": ["packages/markdown/src/index.ts"],
-      "@reportforge/risk": ["packages/risk/src/index.ts"],
-      "@reportforge/render-typst": ["packages/render-typst/src/index.ts"],
-      "@reportforge/render-docx": ["packages/render-docx/src/index.ts"],
-      "@reportforge/preflight": ["packages/preflight/src/index.ts"]
+      "@reportforge/core": [
+        "./packages/core/src/index.ts"
+      ],
+      "@reportforge/markdown": [
+        "./packages/markdown/src/index.ts"
+      ],
+      "@reportforge/risk": [
+        "./packages/risk/src/index.ts"
+      ],
+      "@reportforge/render-typst": [
+        "./packages/render-typst/src/index.ts"
+      ],
+      "@reportforge/render-docx": [
+        "./packages/render-docx/src/index.ts"
+      ],
+      "@reportforge/preflight": [
+        "./packages/preflight/src/index.ts"
+      ]
     }
   },
-  "include": ["packages/**/*.ts", "modules/**/*.ts", "tests/**/*.ts"]
+  "include": [
+    "packages/**/*.ts",
+    "modules/**/*.ts",
+    "tests/**/*.ts"
+  ]
 }

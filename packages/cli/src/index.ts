@@ -26,11 +26,12 @@ program.command('render')
   .option('-f, --format <list>', 'pdf,docx', 'pdf,docx')
   .option('-l, --lang <lang>', 'nl or en')
   .option('-t, --template <id>', 'template id (overrides engagement.yaml)')
+  .option('--theme <id>', 'theme id (overrides engagement.yaml)')
   .option('--strict', 'treat warnings as errors')
   .option('--name <base>', 'output base name (default: <reference>-v<version>)')
   .action(async (engagement: string, o) => {
     const mods = loadModules(ROOT);
-    const { ctx, diagnostics, dir } = await loadEngagement(mods, engagement, { lang: o.lang, template: o.template });
+    const { ctx, diagnostics, dir } = await loadEngagement(mods, engagement, { lang: o.lang, template: o.template, theme: o.theme });
     const pf = preflight(mods, ctx);
     const all = [...diagnostics, ...pf];
     if (all.length) console.error(formatDiagnostics(all));
@@ -38,7 +39,7 @@ program.command('render')
     if (errors.length) { console.error(`\n✖ ${errors.length} fout(en); niet gerenderd.`); process.exit(1); }
     const outDir = resolve(o.out || join(dir, 'out'));
     mkdirSync(outDir, { recursive: true });
-    const base = o.name || `${ctx.engagement.reference}-v${ctx.engagement.version}${ctx.document === 'retest' ? '-retest' : ''}`.replace(/[^\w.-]+/g, '_');
+    const base = o.name || `${ctx.engagement.reference}-v${ctx.engagement.version}${ctx.document === 'retest' ? '-retest' : ''}${o.theme ? '-' + o.theme : ''}${o.lang ? '-' + o.lang : ''}`.replace(/[^\w.-]+/g, '_');
     const formats = String(o.format).split(',').map((s) => s.trim());
     const t0 = Date.now();
     if (formats.includes('pdf')) {

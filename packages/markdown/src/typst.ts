@@ -21,6 +21,8 @@ export interface TypstOptions {
   resolveImage?: (url: string) => ImageRef | undefined;
   /** Headings inside markdown bodies are rendered as run-in sub-headings, never as outline headings. */
   subheadFn?: string; // default "rf.subhead"
+  /** Unbroken tokens longer than this get zero-width break opportunities (narrow contexts use a smaller value). */
+  tokenMax?: number;
 }
 
 /** Escape a string for use inside a Typst string literal "...". */
@@ -33,7 +35,8 @@ export function typstString(s: string): string {
  * characters (long URLs, hashes, base64) so code blocks can always wrap.
  */
 export function softBreaks(s: string, max = 72): string {
-  return s.split('\n').map((line) => line.replace(/\S{73,}/g, (run) => {
+  const re = new RegExp(`\\S{${max + 1},}`, 'g');
+  return s.split('\n').map((line) => line.replace(re, (run) => {
     let out = '';
     for (let i = 0; i < run.length; i++) {
       out += run[i];
@@ -46,8 +49,8 @@ export function softBreaks(s: string, max = 72): string {
 }
 
 /** Escape plain text for Typst markup mode. */
-export function escapeMarkup(s: string): string {
-  let out = s.replace(/[\\*_`#$<>@\[\]~]/g, (c) => '\\' + c);
+export function escapeMarkup(s: string, tokenMax = 40): string {
+  let out = softBreaks(s, tokenMax).replace(/[\\*_`#$<>@\[\]~]/g, (c) => '\\' + c);
   // Constructs that only matter at the start of a line
   out = out.replace(/^(\s*)([-+=/])/gm, '$1\\$2');
   out = out.replace(/^(\s*\d+)\./gm, '$1\\.');
@@ -62,7 +65,7 @@ function inlineChildren(nodes: any[], o: TypstOptions): string {
 
 function inlineNode(n: any, o: TypstOptions): string {
   switch (n.type) {
-    case 'text': return escapeMarkup(n.value);
+    case 'text': return escapeMarkup(n.value, o.tokenMax ?? 40);
     case 'emphasis': return `#emph[${inlineChildren(n.children, o)}]`;
     case 'strong': return `#strong[${inlineChildren(n.children, o)}]`;
     case 'delete': return `#strike[${inlineChildren(n.children, o)}]`;
@@ -114,7 +117,8 @@ function blockNode(n: any, o: TypstOptions): string {
       return `#list(tight: ${tight}, ${items})`;
     }
     case 'table': {
-      const rows = n.children.map((r: any) => '(' + r.children.map((c: any) => `[${inlineChildren(c.children, o)}]`).join(', ') + ',)');
+      const to = { ...o, tokenMax: 14 };
+      const rows = n.children.map((r: any) => '(' + r.children.map((c: any) => `[${inlineChildren(c.children, to)}]`).join(', ') + ',)');
       const align = (n.align ?? []).map((a: any) => (a ? a : 'left'));
       return `#rf.table(theme, align: (${align.map((a: string) => `"${a}"`).join(', ')}${align.length === 1 ? ',' : ''}), rows: (${rows.join(', ')}${rows.length === 1 ? ',' : ''}))`;
     }

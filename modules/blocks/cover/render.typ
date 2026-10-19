@@ -23,6 +23,7 @@
   if eng.at("classification", default: none) != none { meta.push((t.core.classification, eng.classification)) }
 
   let title-block(fg, size: 30pt) = [
+    #set par(justify: false)
     #text(size: 10.5pt, weight: "semibold", tracking: 0.14em, fill: fg)[#upper(doc-label)]
     #v(1.4em)
     #block(width: 100%, text(size: size, weight: "bold", fill: fg, font: theme.fonts.heading, hyphenate: false, eng.title))
@@ -61,7 +62,7 @@
         place(top + left, dy: 48% - 4pt, rect(width: 100%, height: 4pt, fill: c.accent))
         place(top + left, dx: 20mm, dy: 16mm, if logo != none { box(fill: white, radius: 3pt, inset: (x: 8pt, y: 6pt), image(logo, height: 12mm)) })
         place(top + left, dx: 20mm, dy: 48% + 14mm, block(width: 170mm, title-block(c.headingColor, size: 28pt)))
-        place(top + left, dx: 20mm, dy: 48% + 70mm, block(width: 170mm, meta-table(meta)))
+        place(top + left, dx: 20mm, dy: 48% + 80mm, block(width: 170mm, meta-table(meta)))
       } else {
         place(top + left, dx: 20mm, dy: 20mm, if logo != none { image(logo, height: 12mm) } else { text(size: 16pt, weight: "bold", fill: c.primary, theme.provider.name) })
         place(top + left, dx: 20mm, dy: 78mm, line(length: 28mm, stroke: 2pt + c.accent))

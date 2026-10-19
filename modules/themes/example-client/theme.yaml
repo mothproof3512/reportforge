@@ -1,0 +1,25 @@
+# Example client theme: a classic look (serif headings, burgundy, photo cover).
+# Only what differs from _default is listed.
+id: example-client
+name: Northwind Assurance
+version: 1
+provider:
+  name: Northwind Assurance B.V.
+  short: Northwind
+  address: [Keizersgracht 100, 1015 AA Amsterdam]
+  website: https://northwind.example
+  email: security@northwind.example
+colors:
+  primary: "#5A1F2E"
+  accent: "#B08D57"
+fonts:
+  heading: Source Serif 4
+  body: Inter
+  mono: JetBrains Mono
+  docx_heading: Georgia
+page:
+  cover: image
+assets:
+  logo: logo.svg
+  logo_mono: logo-mono.svg
+  cover_image: cover.jpg

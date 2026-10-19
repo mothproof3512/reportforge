@@ -111,6 +111,8 @@ export function renderTypst(mods: Modules, ctx: ReportContext, outPdf: string, o
     fmt: {
       date: formatDate(eng.date, lang), period_start: formatDate(eng.period.start, lang), period_end: formatDate(eng.period.end, lang),
       retest_date: eng.retest ? formatDate(eng.retest.date, lang) : '',
+      header_title: eng.title.length > 62 ? eng.title.slice(0, 60).replace(/\s+\S*$/, '') + '…' : eng.title,
+      header_client: eng.client.name.length > 34 ? eng.client.name.slice(0, 32).replace(/\s+\S*$/, '') + '…' : eng.client.name,
       history: (eng.document_history ?? []).map((h) => ({ ...h, date: formatDate(h.date, lang) })),
     },
     severities: sevs.map((s) => ({ id: s, label: severityLabel(s, lang), count: ctx.stats.bySeverity[s], open: ctx.stats.openBySeverity[s] })),
