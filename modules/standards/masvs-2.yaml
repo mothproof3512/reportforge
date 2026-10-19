@@ -1,0 +1,18 @@
+id: masvs-2
+name: OWASP Mobile Application Security Verification Standard
+short: MASVS
+version: "2.0"
+kind: verification
+url: https://mas.owasp.org/MASVS/
+description:
+  nl: De OWASP MASVS definieert de beveiligingseisen voor mobiele apps; de bijbehorende MASTG beschrijft de testmethodiek.
+  en: The OWASP MASVS defines the security requirements for mobile apps; the accompanying MASTG describes the testing methodology.
+items:
+  - { id: MASVS-STORAGE, title: Secure storage of sensitive data }
+  - { id: MASVS-CRYPTO, title: Cryptography }
+  - { id: MASVS-AUTH, title: Authentication and authorization }
+  - { id: MASVS-NETWORK, title: Secure network communication }
+  - { id: MASVS-PLATFORM, title: Secure interaction with the platform }
+  - { id: MASVS-CODE, title: Code quality and secure build }
+  - { id: MASVS-RESILIENCE, title: Resilience against reverse engineering and tampering }
+  - { id: MASVS-PRIVACY, title: Privacy }

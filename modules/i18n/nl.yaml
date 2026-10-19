@@ -1,0 +1,68 @@
+# Core dictionary (Dutch). Blocks have their own i18n files; these are shared.
+core:
+  report: Rapportage
+  pentest_report: Penetratietestrapport
+  retest_report: Hertestrapport
+  attestation: Third Party Memorandum
+  version: Versie
+  date: Datum
+  reference: Referentie
+  classification: Classificatie
+  client: Opdrachtgever
+  provider: Uitgevoerd door
+  period: Testperiode
+  authors: Auteurs
+  testers: Testers
+  reviewers: Reviewers
+  page: Pagina
+  of: van
+  table_of_contents: Inhoudsopgave
+  finding: Bevinding
+  findings: Bevindingen
+  severity: Ernst
+  score: Score
+  status: Status
+  source: Bron
+  affected: Betrokken systemen
+  description: Beschrijving
+  impact: Impact
+  evidence: Bewijs
+  recommendation: Aanbeveling
+  references: Referenties
+  mapping: Standaarden
+  cwe: CWE
+  retest: Hertest
+  none: Geen
+  total: Totaal
+  open: Open
+  resolved: Opgelost
+  partially_resolved: Deels opgelost
+  not_tested: Niet hergetest
+  confirmed: Bevestigd
+  likely: Waarschijnlijk
+  scope: Scope
+  out_of_scope: Buiten scope
+  asset: Asset
+  type: Type
+  environment: Omgeving
+  notes: Toelichting
+  tools: Tooling
+  standards: Standaarden
+  name: Naam
+  purpose: Doel
+  role: Rol
+  change: Wijziging
+  author: Auteur
+  yes: Ja
+  no: Nee
+  n_a: n.v.t.
+  risk_model:
+    cvss31: CVSS 3.1
+    cvss40: CVSS 4.0
+    matrix: Risicomatrix (impact × waarschijnlijkheid)
+  retest_status:
+    resolved: Opgelost
+    partially-resolved: Deels opgelost
+    open: Open
+    not-tested: Niet hergetest
+    risk-accepted: Risico geaccepteerd

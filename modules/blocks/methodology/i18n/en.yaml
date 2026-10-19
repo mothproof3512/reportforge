@@ -1,0 +1,7 @@
+title: Approach and methodology
+intro: "The assessment was performed as a manual penetration test supported by automated tooling. The tester assumed the role of an attacker and attempted to identify vulnerabilities and, where responsible, demonstrate them through exploitation."
+standards_title: Standards applied
+risk_title: Risk classification
+risk_cvss: "Each finding was rated using {model}. The score determines the severity (critical, high, medium, low or informational); where the tester deviates from the calculated outcome based on context and business impact, this is noted with the finding. The appendix explains the classification."
+risk_matrix: "Each finding was rated on impact and likelihood (scale 1–5). The product of both determines the severity. The appendix explains the classification."
+tools_ref: An overview of the tooling used is included in the appendix.

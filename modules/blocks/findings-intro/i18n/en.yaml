@@ -1,0 +1,3 @@
+title: Findings
+intro: "This chapter describes each finding individually. For every finding it states what was found, which systems are affected, what an attacker could achieve, how it was demonstrated and how it can be remediated. Findings are sorted by severity."
+none: No findings were identified during the assessment.

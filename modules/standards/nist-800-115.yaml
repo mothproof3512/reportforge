@@ -1,0 +1,13 @@
+id: nist-800-115
+name: NIST SP 800-115 Technical Guide to Information Security Testing and Assessment
+short: NIST
+kind: methodology
+url: https://csrc.nist.gov/publications/detail/sp/800-115/final
+description:
+  nl: NIST SP 800-115 beschrijft een gestructureerde aanpak voor technische beveiligingstesten in vier fasen.
+  en: NIST SP 800-115 describes a structured approach to technical security testing in four phases.
+items:
+  - { id: NIST-PLAN, title: Planning }
+  - { id: NIST-DISC, title: Discovery }
+  - { id: NIST-ATT, title: Attack }
+  - { id: NIST-REP, title: Reporting }

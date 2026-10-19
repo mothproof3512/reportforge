@@ -1,0 +1,59 @@
+# Voorbeeldopdracht — alle gegevens zijn fictief.
+reference: PT-2026-042
+title: Penetratietest webshop en klantportaal
+subtitle: Applicatie- en infrastructuurtest van shop.voorbeeldwebshop.nl
+language: nl
+theme: _default            # of de id van een opdrachtgever-thema in modules/themes/
+template: pentest-report
+risk_model: cvss31
+type: web
+version: "1.0"
+date: 2026-09-19
+classification: Vertrouwelijk
+status: definitief
+
+client:
+  name: Voorbeeldwebshop B.V.
+  contact:
+    - { name: Sanne de Vries, role: CISO, email: s.devries@voorbeeldwebshop.nl }
+    - { name: Tom Bakker, role: Lead developer, email: t.bakker@voorbeeldwebshop.nl }
+
+period: { start: 2026-09-01, end: 2026-09-12 }
+
+authors:
+  - { name: J. Jansen, role: Senior penetration tester }
+testers:
+  - { name: J. Jansen, role: Senior penetration tester }
+reviewers:
+  - { name: M. Peters, role: Principal consultant }
+
+scope:
+  - { asset: https://shop.voorbeeldwebshop.nl, type: web, environment: acceptatie, description: Webshop (storefront) inclusief checkout }
+  - { asset: https://mijn.voorbeeldwebshop.nl, type: web, environment: acceptatie, description: Klantportaal met orderhistorie en retouren }
+  - { asset: https://api.voorbeeldwebshop.nl/v2, type: api, environment: acceptatie, description: REST API achter beide applicaties }
+  - { asset: 203.0.113.0/28, type: infra, environment: productie, description: Publiek bereikbare infrastructuur (DMZ) }
+out_of_scope:
+  - Betaalprovider (Mollie) en de betaalpagina's buiten het eigen domein
+  - Denial-of-service-aanvallen en volumetrische tests
+  - Social engineering en fysieke toegang
+
+standards: [owasp-top10-2021, wstg-4.2, owasp-api-top10-2023, ptes, cwe]
+
+tools:
+  - { name: Burp Suite Professional, version: "2026.8", purpose: Intercepting proxy en handmatige webtesten }
+  - { name: Nmap, version: "7.97", purpose: Poortscan en servicedetectie }
+  - { name: Nuclei, version: "3.4", purpose: Geautomatiseerde kwetsbaarheidscontroles }
+  - { name: sqlmap, version: "1.9", purpose: Verificatie van SQL-injectie }
+  - { name: ffuf, version: "2.1", purpose: Content discovery }
+
+executive_summary: summary.md
+conclusion: conclusion.md
+recommendations: |
+  1. **Autorisatie centraliseren.** Voer autorisatiecontroles uit in één laag (API-middleware) in plaats van per endpoint; dit voorkomt de categorie fouten achter F-01 en F-03.
+  2. **Secure development lifecycle.** Neem de OWASP ASVS (niveau 2) op als eis bij nieuwe functionaliteit en laat security-reviews onderdeel zijn van de definition of done.
+  3. **Patchbeleid infrastructuur.** Breng de DMZ-systemen onder in een maandelijkse patchcyclus met monitoring op end-of-life-componenten.
+  4. **Hertest.** Laat na het doorvoeren van de maatregelen een hertest uitvoeren om de effectiviteit vast te stellen.
+
+document_history:
+  - { version: "0.9", date: 2026-09-16, author: J. Jansen, change: Conceptrapport ter review }
+  - { version: "1.0", date: 2026-09-19, author: J. Jansen, change: Definitief na interne review en bespreking met opdrachtgever }

@@ -1,0 +1,68 @@
+# Core dictionary (English). Blocks have their own i18n files; these are shared.
+core:
+  report: Report
+  pentest_report: Penetration Test Report
+  retest_report: Retest Report
+  attestation: Third Party Memorandum
+  version: Version
+  date: Date
+  reference: Reference
+  classification: Classification
+  client: Client
+  provider: Performed by
+  period: Test period
+  authors: Authors
+  testers: Testers
+  reviewers: Reviewers
+  page: Page
+  of: of
+  table_of_contents: Table of contents
+  finding: Finding
+  findings: Findings
+  severity: Severity
+  score: Score
+  status: Status
+  source: Source
+  affected: Affected systems
+  description: Description
+  impact: Impact
+  evidence: Evidence
+  recommendation: Recommendation
+  references: References
+  mapping: Standards
+  cwe: CWE
+  retest: Retest
+  none: None
+  total: Total
+  open: Open
+  resolved: Resolved
+  partially_resolved: Partially resolved
+  not_tested: Not retested
+  confirmed: Confirmed
+  likely: Likely
+  scope: Scope
+  out_of_scope: Out of scope
+  asset: Asset
+  type: Type
+  environment: Environment
+  notes: Notes
+  tools: Tooling
+  standards: Standards
+  name: Name
+  purpose: Purpose
+  role: Role
+  change: Change
+  author: Author
+  yes: Yes
+  no: No
+  n_a: n/a
+  risk_model:
+    cvss31: CVSS 3.1
+    cvss40: CVSS 4.0
+    matrix: Risk matrix (impact × likelihood)
+  retest_status:
+    resolved: Resolved
+    partially-resolved: Partially resolved
+    open: Open
+    not-tested: Not retested
+    risk-accepted: Risk accepted

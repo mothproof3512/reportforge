@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "cover options",
+  "type": "object",
+  "properties": {
+    "show_period": { "type": "boolean", "default": true, "description": "Show the test period on the cover" }
+  },
+  "requires": ["engagement.title", "engagement.client.name", "engagement.reference", "engagement.version", "engagement.date"],
+  "limits": { "engagement.title": { "maxLength": 90 }, "engagement.subtitle": { "maxLength": 120 } }
+}

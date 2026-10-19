@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 72" width="420" height="72">
+  <g fill="none" stroke="#6B7280" stroke-width="6" stroke-linejoin="round">
+    <path d="M36 6 L62 18 V40 C62 54 50 62 36 68 C22 62 10 54 10 40 V18 Z"/>
+  </g>
+  <path d="M28 36 L34 42 L46 28" fill="none" stroke="#6B7280" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="84" y="48" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="700" fill="#6B7280" letter-spacing="1">REPORT<tspan fill="#6B7280">FORGE</tspan></text>
+</svg>

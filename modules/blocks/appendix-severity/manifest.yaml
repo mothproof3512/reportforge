@@ -1,0 +1,6 @@
+id: appendix-severity
+name: Appendix — severity definitions
+version: "1.0"
+category: appendix
+description: Explains the risk model used (CVSS 3.1, CVSS 4.0 or the matrix) and the finding status values.
+documents: [report, retest]

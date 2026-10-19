@@ -1,0 +1,16 @@
+id: ptes
+name: Penetration Testing Execution Standard
+short: PTES
+kind: methodology
+url: http://www.pentest-standard.org/
+description:
+  nl: De PTES beschrijft de zeven fasen van een penetratietest, van pre-engagement tot rapportage. De opdracht is volgens deze fasering uitgevoerd.
+  en: The PTES describes the seven phases of a penetration test, from pre-engagement to reporting. The engagement followed this phasing.
+items:
+  - { id: PTES-1, title: Pre-engagement Interactions }
+  - { id: PTES-2, title: Intelligence Gathering }
+  - { id: PTES-3, title: Threat Modeling }
+  - { id: PTES-4, title: Vulnerability Analysis }
+  - { id: PTES-5, title: Exploitation }
+  - { id: PTES-6, title: Post Exploitation }
+  - { id: PTES-7, title: Reporting }

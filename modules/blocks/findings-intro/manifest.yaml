@@ -1,0 +1,6 @@
+id: findings-intro
+name: Findings chapter intro
+version: "1.0"
+category: finding
+description: Opens the findings chapter and explains how each finding is structured.
+documents: [report, retest]

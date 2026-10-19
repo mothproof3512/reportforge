@@ -1,0 +1,6 @@
+id: disclaimer
+name: Disclaimer
+version: "1.0"
+category: appendix
+description: Theme disclaimer text ({client} is substituted) on its own page.
+documents: [report, retest, attestation, testplan]

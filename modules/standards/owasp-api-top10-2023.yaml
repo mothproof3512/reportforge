@@ -1,0 +1,20 @@
+id: owasp-api-top10-2023
+name: OWASP API Security Top 10 (2023)
+short: API
+version: "2023"
+kind: classification
+url: https://owasp.org/API-Security/editions/2023/en/0x11-t10/
+description:
+  nl: De OWASP API Security Top 10 beschrijft de tien belangrijkste risico's voor API's.
+  en: The OWASP API Security Top 10 describes the ten most critical risks for APIs.
+items:
+  - { id: API1:2023, title: Broken Object Level Authorization }
+  - { id: API2:2023, title: Broken Authentication }
+  - { id: API3:2023, title: Broken Object Property Level Authorization }
+  - { id: API4:2023, title: Unrestricted Resource Consumption }
+  - { id: API5:2023, title: Broken Function Level Authorization }
+  - { id: API6:2023, title: Unrestricted Access to Sensitive Business Flows }
+  - { id: API7:2023, title: Server Side Request Forgery }
+  - { id: API8:2023, title: Security Misconfiguration }
+  - { id: API9:2023, title: Improper Inventory Management }
+  - { id: API10:2023, title: Unsafe Consumption of APIs }

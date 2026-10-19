@@ -1,0 +1,15 @@
+title: "Appendix: risk classification"
+cvss_intro: "Findings were scored using the Common Vulnerability Scoring System ({model}), an open standard maintained by FIRST. The base score (0.0–10.0) is determined by the attack vector, complexity, privileges required, user interaction and the impact on confidentiality, integrity and availability. The score maps to a severity level according to the table below."
+matrix_intro: "Findings were rated on impact (the damage if the vulnerability is exploited) and likelihood (the probability of that happening), both on a scale of 1 to 5. The product determines the severity according to the table below."
+range: Score
+level: Severity
+meaning: Meaning
+status_title: Finding status
+critical: "Directly exploitable with major impact on the organisation, e.g. full system compromise or access to large volumes of confidential data. Requires immediate action."
+high: "Exploitation is realistic and leads to significant damage, such as unauthorised access to data or functionality. Remediate in the short term."
+medium: "Limited impact, or exploitation requires specific circumstances. Include in the regular maintenance cycle."
+low: "Minor impact; mainly aggravates other attacks. Remediate when convenient."
+info: "No direct risk; observations and improvement points for information."
+status_confirmed: "Confirmed: the vulnerability was demonstrated."
+status_likely: "Likely: strong indications, but not fully demonstrated (e.g. to avoid damage)."
+status_fp: "False positive: reported by tooling, but no vulnerability after verification."

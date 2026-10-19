@@ -1,0 +1,7 @@
+title: Executive summary
+key_figures: Key figures
+findings_total: findings
+auto_intro: "{provider} performed a penetration test for {client} between {start} and {end} covering {scope_count} components. The assessment resulted in {total} findings: {critical} critical, {high} high, {medium} medium, {low} low and {info} informational."
+auto_note: "This summary was generated automatically. Add `executive_summary` to engagement.yaml to provide your own executive summary."
+top_findings: Key findings
+no_findings: No findings posing a security risk were identified during the assessment.

@@ -1,0 +1,6 @@
+id: retest-overview
+name: Retest overview
+version: "1.0"
+category: risk
+description: Status of every finding after the retest, with counts per status.
+documents: [retest]
