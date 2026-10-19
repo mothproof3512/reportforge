@@ -8,24 +8,37 @@ Modular, whitelabel pentest reporting. Markdown findings in, world-class PDF and
 - **Risk models**: CVSS 3.1, CVSS 4.0 (verified against the FIRST reference implementation) and an impact × likelihood matrix.
 - **Layout that cannot break**: images are scaled to the text column and capped in height, code wraps (even 300-character tokens), tables break across pages with repeated headers, and the render tests raster every page and fail on any ink in the margins.
 
-Phase 1 (this repo state) is the CLI renderer. Phase 2 adds the web app, finding library and the process flow (intake → testplan → report → TPM → retest).
+Two ways to work: the **web app** (opdrachtgevers with themes, engagements, a finding editor with live preview, library, one-click PDF/DOCX) and the **CLI** (an engagement folder in, files out). Both read the same engagement-folder format, so nothing is locked inside the app. Phase 3 adds the full process flow (intake, testplan with checklists, TPM variants, retest).
 
 ## Quick start
 
+Web app (on the NUC, in Docker — no local Typst needed):
+
 ```bash
 git clone https://github.com/<you>/reportforge.git && cd reportforge
-npm install                                  # Node 22+
-# Typst 0.15+ on PATH, or TYPST_BIN=/path/to/typst
-npm run render -- examples/acme-webshop      # → examples/acme-webshop/out/PT-2026-042-v1.0.{pdf,docx}
-npm run check  -- examples/acme-webshop      # parse + preflight only
+docker compose -f deploy/docker-compose.yml up -d --build
+# → http://<host>:3000 — choose a password on first visit
 ```
 
-Or in Docker (no local Typst needed):
+Locally (Node 22+, Typst 0.15+ on PATH or `TYPST_BIN=`):
 
 ```bash
-docker compose -f deploy/docker-compose.yml build
-docker compose -f deploy/docker-compose.yml run --rm rf render /data/acme-webshop
+npm install
+npm run web:build && npm start                # web app on http://localhost:3000, data in ./data
+npm run render -- examples/acme-webshop       # CLI: → examples/acme-webshop/out/PT-2026-042-v1.0.{pdf,docx}
+npm run check  -- examples/acme-webshop       # parse + preflight only
 ```
+
+## The web app
+
+- **Opdrachtgevers**: the organisations you report for; each points at a theme. The theme editor covers the quick case (logo + colour) and the full one (fonts, cover image, texts, raw `theme.yaml`), with a one-click proof report in nl or en.
+- **Opdrachten**: metadata form (scope, team, standards, tooling, texts, version history), the nine-step status bar, export of the engagement folder as `.tar`.
+- **Bevindingen**: three-pane workbench — list sorted by severity, markdown editor (paste or drop screenshots: they are uploaded, resized to ≤ 2400 px and inserted as markdown), and a side panel with live preview styled like the report, PDF preview of just this finding, live format checks with CVSS scoring, images and version history. `Ctrl+S` saves; every save is a version.
+- **Plakken**: paste a markdown export with several findings; each `## ` becomes a finding.
+- **Bibliotheek**: save any finding as a reusable, genericised template (affected list and screenshots stripped); pick from it when starting a new finding. Usage is counted.
+- **Rapport**: render PDF and/or DOCX in any language, theme and template; preflight diagnostics are shown before anything is rendered, every render is kept.
+
+Storage: `data/reportforge.sqlite` (SQLite via Node's built-in driver — no database server), `data/files/` (screenshots), `data/renders/`, `data/engagements/` (materialised folders). Back up `data/` and `modules/themes/`.
 
 ## An engagement folder
 
@@ -101,6 +114,7 @@ Standards are one YAML file each in `modules/standards/`; risk models live in `p
 npm test               # unit: parser, CVSS 3.1/4.0 (400 reference vectors), matrix
 npm run test:render    # renders every tests/fixtures/* engagement to PDF+DOCX, rasters all pages,
                        # fails on ink in the margins or on a changed page (snapshot); --update to accept
+npm run test:e2e       # starts the web server on a scratch dir and drives the whole API
 ```
 
 `tests/fixtures/stress` is the torture test: 30 findings, a 196-character title, 50 affected hosts, 8000×200 and 400×6000 images, a 400-line code block with 220-character lines, 300-character tokens and the matrix model.
@@ -114,7 +128,7 @@ bash deploy/proxmox/create-vm.sh --id 9100 --name reportforge --ip 192.168.1.60/
      --sshkey ~/.ssh/id_ed25519.pub --repo https://github.com/<you>/reportforge.git
 ```
 
-This downloads the Ubuntu 24.04 cloud image, creates the VM with cloud-init (Docker, git, unattended security updates), clones the repo to `/opt/reportforge` and builds the image. Updating: `cd /opt/reportforge && git pull && docker compose -f deploy/docker-compose.yml build`. Backups: `deploy/backup.sh /mnt/nas/reportforge` from cron.
+This downloads the Ubuntu 24.04 cloud image, creates the VM with cloud-init (Docker, git, unattended security updates), clones the repo to `/opt/reportforge` and starts the web app on port 3000. Updating: `cd /opt/reportforge && git pull && docker compose -f deploy/docker-compose.yml up -d --build`. Backups: `deploy/backup.sh /mnt/nas/reportforge` from cron.
 
 ## Licence
 

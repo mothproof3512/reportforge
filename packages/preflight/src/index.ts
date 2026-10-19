@@ -27,6 +27,8 @@ export function preflight(mods: Modules, ctx: ReportContext): Diagnostic[] {
   if (eng.title.length > LIMITS.title) warn(`Titel is ${eng.title.length} tekens; boven ${LIMITS.title} wordt het voorblad druk.`, { file: 'engagement.yaml' });
   if (!eng.classification) warn('Geen classificatie opgegeven (bijv. Vertrouwelijk).', { file: 'engagement.yaml' });
   if (eng.scope.length === 0) warn('Scope is leeg.', { file: 'engagement.yaml' });
+  if (!eng.authors?.length) warn('Geen auteurs opgegeven.', { file: 'engagement.yaml' });
+  if (!eng.client?.name) err('Naam van de eindklant ontbreekt.', { file: 'engagement.yaml' });
   if (!eng.executive_summary) warn('Geen executive_summary; er wordt een automatische samenvatting gebruikt.', { file: 'engagement.yaml' });
   if (!eng.conclusion) warn('Geen conclusion; er wordt een automatische conclusie gebruikt.', { file: 'engagement.yaml' });
   if (eng.period.start > eng.period.end) err('period.start ligt na period.end.', { file: 'engagement.yaml' });
