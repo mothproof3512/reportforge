@@ -1,0 +1,8 @@
+id: risk-overview
+name: Risk overview
+version: "1.0"
+category: risk
+description: Severity distribution, risk matrix (for the matrix model) and the complete findings table.
+documents: [report, retest]
+options:
+  by_standard: true

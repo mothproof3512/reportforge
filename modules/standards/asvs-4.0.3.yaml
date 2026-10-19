@@ -1,0 +1,24 @@
+id: asvs-4.0.3
+name: OWASP Application Security Verification Standard
+short: ASVS
+version: "4.0.3"
+kind: verification
+url: https://owasp.org/www-project-application-security-verification-standard/
+description:
+  nl: De OWASP ASVS definieert verificatie-eisen voor applicatiebeveiliging op drie niveaus (L1 t/m L3). Bevindingen zijn gekoppeld aan het ASVS-hoofdstuk waarop ze betrekking hebben.
+  en: The OWASP ASVS defines application security verification requirements at three levels (L1 to L3). Findings are mapped to the ASVS chapter they relate to.
+items:
+  - { id: V1, title: Architecture, Design and Threat Modeling }
+  - { id: V2, title: Authentication }
+  - { id: V3, title: Session Management }
+  - { id: V4, title: Access Control }
+  - { id: V5, title: Validation, Sanitization and Encoding }
+  - { id: V6, title: Stored Cryptography }
+  - { id: V7, title: Error Handling and Logging }
+  - { id: V8, title: Data Protection }
+  - { id: V9, title: Communication }
+  - { id: V10, title: Malicious Code }
+  - { id: V11, title: Business Logic }
+  - { id: V12, title: Files and Resources }
+  - { id: V13, title: API and Web Service }
+  - { id: V14, title: Configuration }

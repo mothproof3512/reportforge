@@ -1,0 +1,8 @@
+title: Risk overview
+distribution: Distribution by severity
+matrix: Risk matrix
+impact: Impact
+likelihood: Likelihood
+all_findings: Overview of all findings
+by_standard: Findings per standard
+none: No findings were identified during the assessment.

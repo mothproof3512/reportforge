@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "finding",
+  "description": "Content of one finding as produced by the markdown parser.",
+  "type": "object",
+  "required": ["title", "severity", "sections"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^[A-Z]{1,4}-\\d{2,3}$" },
+    "title": { "type": "string", "minLength": 3, "maxLength": 110 },
+    "severity": { "enum": ["critical", "high", "medium", "low", "info"] },
+    "status": { "type": "string", "maxLength": 30 },
+    "source": { "type": "string", "maxLength": 40 },
+    "affected": { "type": "array", "items": { "type": "string", "maxLength": 120 }, "maxItems": 60 },
+    "sections": {
+      "type": "object",
+      "required": ["description", "impact", "recommendation"],
+      "properties": {
+        "description": { "type": "string", "format": "markdown", "maxLength": 6000 },
+        "impact": { "type": "string", "format": "markdown", "maxLength": 4000 },
+        "evidence": { "type": "string", "format": "markdown", "maxLength": 40000 },
+        "recommendation": { "type": "string", "format": "markdown", "maxLength": 6000 },
+        "references": { "type": "string", "format": "markdown", "maxLength": 3000 }
+      }
+    }
+  },
+  "options": {
+    "new_page": { "type": "boolean", "default": true, "description": "Start every finding on a new page" }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "name": "reportforge",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Modular, whitelabel pentest reporting framework. Markdown in, world-class PDF and DOCX out.",
+  "license": "MIT",
+  "type": "module",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "render": "tsx packages/cli/src/index.ts render",
+    "rf": "tsx packages/cli/src/index.ts",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "test:render": "tsx tests/render/run.ts",
+    "blocks:check": "tsx packages/cli/src/index.ts blocks check"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

@@ -1,0 +1,15 @@
+title: "Bijlage: risicoclassificatie"
+cvss_intro: "Bevindingen zijn gescoord met het Common Vulnerability Scoring System ({model}), een open standaard van FIRST. De basisscore (0,0–10,0) wordt bepaald door de aanvalsvector, de complexiteit, de benodigde rechten, de vereiste gebruikersinteractie en de impact op vertrouwelijkheid, integriteit en beschikbaarheid. De score is vertaald naar een ernstniveau volgens onderstaande tabel."
+matrix_intro: "Bevindingen zijn beoordeeld op impact (de schade als de kwetsbaarheid wordt misbruikt) en waarschijnlijkheid (de kans dat dit gebeurt), beide op een schaal van 1 tot 5. Het product bepaalt de ernst volgens onderstaande tabel."
+range: Score
+level: Ernst
+meaning: Betekenis
+status_title: Status van bevindingen
+critical: "Direct misbruikbaar met grote impact op de organisatie, bijvoorbeeld volledige overname van systemen of toegang tot grote hoeveelheden vertrouwelijke gegevens. Vereist onmiddellijke actie."
+high: "Misbruik is realistisch en leidt tot aanzienlijke schade, zoals ongeautoriseerde toegang tot gegevens of functionaliteit. Oplossen op korte termijn."
+medium: "Beperkte impact of misbruik vereist specifieke omstandigheden. Opnemen in de reguliere onderhoudscyclus."
+low: "Geringe impact; verzwaart vooral andere aanvallen. Oplossen wanneer het uitkomt."
+info: "Geen direct risico; observaties en verbeterpunten ter kennisgeving."
+status_confirmed: "Bevestigd: de kwetsbaarheid is daadwerkelijk aangetoond."
+status_likely: "Waarschijnlijk: sterke aanwijzingen, maar niet volledig aangetoond (bijvoorbeeld om schade te voorkomen)."
+status_fp: "Onjuist positief: door tooling gemeld, maar na verificatie geen kwetsbaarheid."

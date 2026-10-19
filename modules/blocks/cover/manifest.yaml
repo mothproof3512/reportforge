@@ -1,0 +1,8 @@
+id: cover
+name: Cover page
+version: "1.0"
+category: front
+description: Title page with client, provider, reference, version and classification. Style follows theme.page.cover (band | image | minimal).
+documents: [report, retest, attestation, testplan]
+options:
+  show_period: true

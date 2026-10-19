@@ -1,0 +1,2 @@
+title: Retest results
+intro: "The retest was performed on {date} and covers the findings from report version {version}. The table below shows the status of each finding after the retest."

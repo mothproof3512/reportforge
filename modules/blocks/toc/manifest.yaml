@@ -1,0 +1,8 @@
+id: toc
+name: Table of contents
+version: "1.0"
+category: front
+description: Two-level table of contents with leaders.
+documents: [report, retest, testplan]
+options:
+  depth: 2

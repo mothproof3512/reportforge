@@ -1,0 +1,9 @@
+id: finding
+name: Finding
+version: "1.0"
+category: finding
+description: One finding, rendered once per finding in the engagement (title, metadata card, affected systems, description, impact, evidence, recommendation, references).
+documents: [report, retest]
+each: findings
+options:
+  new_page: true

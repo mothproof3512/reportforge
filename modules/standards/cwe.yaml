@@ -1,0 +1,65 @@
+id: cwe
+name: Common Weakness Enumeration
+short: CWE
+kind: taxonomy
+url: https://cwe.mitre.org/
+description:
+  nl: CWE is de referentielijst van typen softwarezwakheden; per bevinding wordt het meest passende CWE-nummer vermeld.
+  en: CWE is the reference list of software weakness types; each finding lists the most applicable CWE identifier.
+items:
+  - { id: CWE-16, title: Configuration }
+  - { id: CWE-20, title: Improper Input Validation }
+  - { id: CWE-22, title: Path Traversal }
+  - { id: CWE-73, title: External Control of File Name or Path }
+  - { id: CWE-77, title: Command Injection }
+  - { id: CWE-78, title: OS Command Injection }
+  - { id: CWE-79, title: Cross-site Scripting (XSS) }
+  - { id: CWE-89, title: SQL Injection }
+  - { id: CWE-90, title: LDAP Injection }
+  - { id: CWE-91, title: XML Injection }
+  - { id: CWE-94, title: Code Injection }
+  - { id: CWE-98, title: PHP Remote File Inclusion }
+  - { id: CWE-200, title: Exposure of Sensitive Information }
+  - { id: CWE-209, title: Error Message Information Exposure }
+  - { id: CWE-250, title: Execution with Unnecessary Privileges }
+  - { id: CWE-259, title: Hard-coded Password }
+  - { id: CWE-284, title: Improper Access Control }
+  - { id: CWE-285, title: Improper Authorization }
+  - { id: CWE-287, title: Improper Authentication }
+  - { id: CWE-294, title: Authentication Bypass by Capture-replay }
+  - { id: CWE-295, title: Improper Certificate Validation }
+  - { id: CWE-306, title: Missing Authentication for Critical Function }
+  - { id: CWE-307, title: Improper Restriction of Excessive Authentication Attempts }
+  - { id: CWE-311, title: Missing Encryption of Sensitive Data }
+  - { id: CWE-319, title: Cleartext Transmission of Sensitive Information }
+  - { id: CWE-326, title: Inadequate Encryption Strength }
+  - { id: CWE-327, title: Broken or Risky Cryptographic Algorithm }
+  - { id: CWE-346, title: Origin Validation Error }
+  - { id: CWE-352, title: Cross-Site Request Forgery (CSRF) }
+  - { id: CWE-384, title: Session Fixation }
+  - { id: CWE-400, title: Uncontrolled Resource Consumption }
+  - { id: CWE-434, title: Unrestricted Upload of File with Dangerous Type }
+  - { id: CWE-476, title: NULL Pointer Dereference }
+  - { id: CWE-502, title: Deserialization of Untrusted Data }
+  - { id: CWE-521, title: Weak Password Requirements }
+  - { id: CWE-522, title: Insufficiently Protected Credentials }
+  - { id: CWE-523, title: Unprotected Transport of Credentials }
+  - { id: CWE-538, title: Insertion of Sensitive Information into Externally-Accessible File or Directory }
+  - { id: CWE-548, title: Exposure of Information Through Directory Listing }
+  - { id: CWE-601, title: Open Redirect }
+  - { id: CWE-611, title: XML External Entity (XXE) }
+  - { id: CWE-613, title: Insufficient Session Expiration }
+  - { id: CWE-614, title: Sensitive Cookie Without 'Secure' Attribute }
+  - { id: CWE-639, title: Authorization Bypass Through User-Controlled Key (IDOR) }
+  - { id: CWE-640, title: Weak Password Recovery Mechanism }
+  - { id: CWE-693, title: Protection Mechanism Failure }
+  - { id: CWE-798, title: Use of Hard-coded Credentials }
+  - { id: CWE-862, title: Missing Authorization }
+  - { id: CWE-863, title: Incorrect Authorization }
+  - { id: CWE-918, title: Server-Side Request Forgery (SSRF) }
+  - { id: CWE-942, title: Permissive Cross-domain Policy }
+  - { id: CWE-1004, title: Sensitive Cookie Without 'HttpOnly' Flag }
+  - { id: CWE-1021, title: Improper Restriction of Rendered UI Layers (Clickjacking) }
+  - { id: CWE-1104, title: Use of Unmaintained Third Party Components }
+  - { id: CWE-1275, title: Sensitive Cookie with Improper SameSite Attribute }
+  - { id: CWE-1336, title: Server-Side Template Injection }

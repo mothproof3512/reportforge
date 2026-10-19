@@ -1,0 +1,58 @@
+# Default theme. Every client theme is layered on top of this one, so a client
+# theme only needs to list what differs (often just a logo and `primary`).
+id: _default
+name: Reportforge
+version: 1
+
+provider:
+  name: Reportforge Security
+  short: Reportforge
+  address:
+    - Voorbeeldstraat 1
+    - 1234 AB Amsterdam
+  website: https://example.com
+  email: security@example.com
+
+colors:
+  primary: "#0B2545"      # deep navy — headings, cover band, rules
+  accent: "#1F7A8C"       # teal — numbering, highlights
+  ink: "#1A1D23"          # body text
+  muted: "#5B6472"        # captions, labels
+  rule: "#D9DEE5"         # hairlines
+  surface: "#F4F6F9"      # table header fill, callouts
+  codeBg: "#F1F3F6"
+  severity:
+    critical: "#7F1D1D"
+    high: "#C2410C"
+    medium: "#B7791F"
+    low: "#1D4ED8"
+    info: "#4B5563"
+
+fonts:
+  body: Inter
+  heading: Inter
+  mono: JetBrains Mono
+  base_size: 10pt
+
+page:
+  size: a4
+  margin: { top: 22mm, bottom: 22mm, left: 20mm, right: 20mm }
+  cover: band          # band | image | minimal
+
+assets:
+  logo: logo.svg
+  logo_mono: logo-mono.svg
+
+texts:
+  disclaimer:
+    nl: |
+      Dit rapport is opgesteld op basis van een beveiligingsonderzoek dat is uitgevoerd in de hierin beschreven periode en scope. Een penetratietest geeft een momentopname van de beveiliging; het ontbreken van bevindingen betekent niet dat er geen kwetsbaarheden bestaan. Wijzigingen aan de geteste omgeving na de testperiode vallen buiten de reikwijdte van dit rapport.
+
+      Dit rapport is uitsluitend bestemd voor {client} en mag zonder schriftelijke toestemming niet aan derden worden verstrekt.
+    en: |
+      This report is based on a security assessment performed within the period and scope described herein. A penetration test is a point-in-time assessment; the absence of findings does not mean that no vulnerabilities exist. Changes to the tested environment after the test period fall outside the scope of this report.
+
+      This report is intended solely for {client} and may not be distributed to third parties without written consent.
+  confidentiality:
+    nl: Vertrouwelijk — bevat gedetailleerde informatie over kwetsbaarheden in de systemen van {client}.
+    en: Confidential — contains detailed information about vulnerabilities in the systems of {client}.

@@ -1,0 +1,8 @@
+id: executive-summary
+name: Executive summary
+version: "1.0"
+category: context
+description: Management summary with key figures, the summary text from engagement.yaml (markdown) and the top findings.
+documents: [report, retest]
+options:
+  top_n: 5

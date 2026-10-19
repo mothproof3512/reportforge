@@ -1,0 +1,7 @@
+title: Managementsamenvatting
+key_figures: Kerncijfers
+findings_total: bevindingen
+auto_intro: "{provider} heeft in opdracht van {client} in de periode {start} tot en met {end} een penetratietest uitgevoerd op {scope_count} onderdelen. Het onderzoek heeft {total} bevindingen opgeleverd: {critical} kritiek, {high} hoog, {medium} middel, {low} laag en {info} informatief."
+auto_note: "Deze samenvatting is automatisch gegenereerd. Voeg `executive_summary` toe aan engagement.yaml voor een eigen managementsamenvatting."
+top_findings: Belangrijkste bevindingen
+no_findings: Tijdens het onderzoek zijn geen bevindingen gedaan die een beveiligingsrisico vormen.

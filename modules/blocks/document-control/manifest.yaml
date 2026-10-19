@@ -1,0 +1,6 @@
+id: document-control
+name: Document control
+version: "1.0"
+category: front
+description: Document metadata (authors, reviewers, classification) and version history.
+documents: [report, retest, attestation, testplan]

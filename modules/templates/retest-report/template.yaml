@@ -1,0 +1,15 @@
+id: retest-report
+name: Retest report
+document: retest
+blocks:
+  - cover
+  - document-control
+  - toc
+  - executive-summary
+  - scope
+  - retest-overview
+  - findings-intro
+  - finding
+  - conclusion
+  - appendix-severity
+  - disclaimer

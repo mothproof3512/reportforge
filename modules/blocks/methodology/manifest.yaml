@@ -1,0 +1,6 @@
+id: methodology
+name: Methodology
+version: "1.0"
+category: context
+description: Test approach text, the standards used (with their descriptions) and the risk model.
+documents: [report, retest, attestation, testplan]
