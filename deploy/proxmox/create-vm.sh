@@ -68,8 +68,11 @@ CLOUD
 echo "▶ creating VM ${ID} (${NAME})"
 qm create "$ID" --name "$NAME" --memory "$MEM" --cores "$CORES" --cpu host --net0 "virtio,bridge=${BRIDGE}" \
    --scsihw virtio-scsi-single --agent enabled=1 --ostype l26 --serial0 socket --vga serial0
-qm importdisk "$ID" "$IMG" "$STORAGE" >/dev/null
-qm set "$ID" --scsi0 "${STORAGE}:vm-${ID}-disk-0,discard=on,ssd=1"
+qm importdisk "$ID" "$IMG" "$STORAGE" --format qcow2 >/dev/null
+# Volume names differ per storage type (LVM: vm-9100-disk-0, dir: 9100/vm-9100-disk-0.qcow2); take what Proxmox assigned
+VOL=$(qm config "$ID" | sed -n 's/^unused0: //p')
+[[ -z "$VOL" ]] && { echo "import failed: no unused disk found on $STORAGE"; exit 1; }
+qm set "$ID" --scsi0 "${VOL},discard=on,ssd=1"
 qm disk resize "$ID" scsi0 "$DISK"
 qm set "$ID" --ide2 "${STORAGE}:cloudinit" --boot order=scsi0
 qm set "$ID" --ipconfig0 "$IPCONFIG" --cicustom "user=local:snippets/$(basename "$SNIPPET")"

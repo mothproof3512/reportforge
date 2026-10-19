@@ -5,7 +5,7 @@ import { join, extname, basename } from 'node:path';
 import { execFileSync } from 'node:child_process';
 import sharp from 'sharp';
 import { parse as parseYaml, stringify as toYaml } from 'yaml';
-import { loadModules, resolveTheme, type Modules } from '@reportforge/core';
+import { loadModules, resolveTheme, loadLibrary, libraryLanguages, type Modules } from '@reportforge/core';
 import { parseFindings, parseMarkdown } from '@reportforge/markdown';
 import { assess, scoreCvss31, scoreCvss40 } from '@reportforge/risk';
 import { Router, HttpError, type Req, type Res } from './http.ts';
@@ -350,7 +350,30 @@ export function buildApi(db: Db, p: Paths): Router {
     res.header('Content-Disposition', req.query.get('download') ? `attachment; filename="${basename(path)}"` : `inline; filename="${basename(path)}"`).file(path);
   });
 
+
+  // Bundled library (modules/library/<lang>/*.md): seeded once on first start, re-runnable from the UI (skips existing titles).
+  const seedLibrary = (languages?: string[]) => {
+    const existing = new Set((db.prepare('SELECT lower(title) AS t, language AS l FROM library').all() as any[]).map((r) => `${r.l}:${r.t}`));
+    const ins = db.prepare('INSERT INTO library (title, language, tags, markdown, severity) VALUES (?,?,?,?,?)');
+    let added = 0, skipped = 0, errors = 0;
+    for (const lang of languages ?? libraryLanguages(p.root)) {
+      for (const e of loadLibrary(p.root, lang)) {
+        if (e.diagnostics.some((d) => d.level === 'error')) { errors++; continue; }
+        if (existing.has(`${lang}:${e.title.toLowerCase()}`)) { skipped++; continue; }
+        ins.run(e.title, lang, e.tags, e.markdown, e.severity); added++;
+      }
+    }
+    return { added, skipped, errors };
+  };
+  if (!setting(db, 'library_seeded')) {
+    const r = seedLibrary();
+    setSetting(db, 'library_seeded', now());
+    if (r.added) console.log(`bibliotheek: ${r.added} standaardbevindingen geladen`);
+  }
+
   // ---- library
+  r.post('/api/library/seed', async (req, res) => { const b = await req.json().catch(() => ({})); res.json(seedLibrary(b.languages)); });
+  r.get('/api/library/bundled', (req, res) => res.json(libraryLanguages(p.root).map((l) => ({ language: l, count: loadLibrary(p.root, l).length }))));
   r.get('/api/library', (req, res) => {
     const q = `%${String(req.query.get('q') ?? '').trim()}%`;
     res.json(db.prepare('SELECT id, title, language, tags, severity, used_count, updated_at FROM library WHERE title LIKE ? OR tags LIKE ? OR markdown LIKE ? ORDER BY used_count DESC, title LIMIT 200').all(q, q, q));
