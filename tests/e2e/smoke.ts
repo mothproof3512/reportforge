@@ -81,10 +81,14 @@ async function main() {
   // english render with default theme
   const r2 = await api('POST', `/api/engagements/${eng.id}/render`, { formats: ['pdf'], language: 'en', theme: '_default' });
   assert.ok(r2.ok);
-  // library
+  // library: bundled seed loaded at first start, re-seed skips existing
+  const seeded = await api('GET', '/api/library?q=');
+  assert.ok(seeded.length >= 50, 'bundled library seeded');
+  const reseed = await api('POST', '/api/library/seed', {});
+  assert.equal(reseed.added, 0); assert.equal(reseed.skipped, seeded.length);
   const lib = await api('POST', `/api/findings/${list[1].id}/to-library`, { tags: 'web,xss' });
   assert.ok(!lib.markdown.includes('](../images/'), 'images stripped');
-  assert.equal((await api('GET', '/api/library?q=xss')).length, 1);
+  assert.ok((await api('GET', '/api/library?q=xss')).some((x: any) => x.id === lib.id));
   const fromLib = await api('POST', `/api/engagements/${eng.id}/findings`, { markdown: lib.markdown, library_id: lib.id });
   assert.equal(fromLib.created.length, 1);
   assert.equal((await api('GET', `/api/library/${lib.id}`)).used_count, 1);
