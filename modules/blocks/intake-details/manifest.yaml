@@ -1,0 +1,6 @@
+id: intake-details
+name: Intake details
+version: "1.0"
+category: context
+description: Goal, background, test type, credentials, test window, preconditions, rules of engagement and deliverables from engagement.intake.
+documents: [intake, testplan]

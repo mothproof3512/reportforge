@@ -87,6 +87,21 @@ const MIGRATIONS: string[] = [
   CREATE INDEX findings_eng ON findings(engagement_id, position);
   CREATE INDEX renders_eng ON renders(engagement_id, created_at);
   `,
+  `
+  CREATE TABLE deliveries (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    engagement_id INTEGER NOT NULL REFERENCES engagements(id) ON DELETE CASCADE,
+    render_id INTEGER,
+    document TEXT NOT NULL,
+    version TEXT NOT NULL,
+    language TEXT NOT NULL,
+    pdf TEXT, docx TEXT,
+    sha256_pdf TEXT, sha256_docx TEXT,
+    note TEXT NOT NULL DEFAULT '',
+    created_at TEXT NOT NULL DEFAULT (datetime('now'))
+  );
+  ALTER TABLE renders ADD COLUMN template TEXT NOT NULL DEFAULT 'pentest-report';
+  `,
 ];
 
 export function openDb(file: string): Db {

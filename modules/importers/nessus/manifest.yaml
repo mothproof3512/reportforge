@@ -1,0 +1,5 @@
+id: nessus
+name: Nessus (.nessus XML)
+tool: Nessus
+formats: [nessus, xml]
+description: "Tenable Nessus export (.nessus, XML v2). Plugins are merged across hosts; host:port pairs become the affected list. Informational plugins (severity 0) are skipped unless minSeverity is info."

@@ -62,9 +62,15 @@ async function main() {
   const fixtures = readdirSync(FIXTURES).filter((f) => existsSync(join(FIXTURES, f, 'engagement.yaml')) && (!only || f === only));
   mkdirSync(SNAP, { recursive: true });
   let failed = 0;
-  for (const name of fixtures) {
+  const jobs = fixtures.flatMap((name) => {
+    const tf = join(FIXTURES, name, 'templates');
+    const tpls = existsSync(tf) ? readFileSync(tf, 'utf8').split('\n').map((s) => s.trim()).filter(Boolean) : ['pentest-report'];
+    return tpls.map((template) => ({ fixture: name, template, name: template === 'pentest-report' ? name : `${name}--${template}` }));
+  });
+  for (const job of jobs) {
+    const { name } = job;
     const t0 = Date.now();
-    const { ctx, diagnostics } = await loadEngagement(mods, join(FIXTURES, name));
+    const { ctx, diagnostics } = await loadEngagement(mods, join(FIXTURES, job.fixture), { template: job.template });
     const errors = [...diagnostics, ...preflight(mods, ctx)].filter((d) => d.level === 'error');
     if (errors.length) { console.log(`✖ ${name}: ${errors.map((e) => e.message).join('; ')}`); failed++; continue; }
     const outDir = join(OUT, name);

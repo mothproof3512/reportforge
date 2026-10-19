@@ -1,0 +1,8 @@
+title: Result
+intro: "The assessment resulted in {total} findings, distributed over the severity levels in the table below."
+intro_retest: "Of the {total} findings in the original report, {resolved} have been resolved after the retest; {open} findings remain open."
+none: No findings posing a security risk were identified during the assessment.
+conclusion_none_high: "There are no open findings rated high or critical."
+conclusion_open_high: "There are {n} open findings rated high or critical; {provider} recommends remediating these with priority and commissioning a retest."
+found: Found
+open_after: Open after retest

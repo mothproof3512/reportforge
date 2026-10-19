@@ -11,6 +11,8 @@ import { assess, scoreCvss31, scoreCvss40 } from '@reportforge/risk';
 import { Router, HttpError, type Req, type Res } from './http.ts';
 import { now, type Db } from './db.ts';
 import { materialize, renderEngagement, previewFinding, engagementRow, type Paths } from './materialize.ts';
+import { registerProcess } from './process.ts';
+import { loadImporters } from '@reportforge/importers';
 
 // ---------------------------------------------------------------- auth
 function hashPassword(pw: string): string { const salt = randomBytes(16); return salt.toString('hex') + ':' + scryptSync(pw, salt, 64).toString('hex'); }
@@ -41,6 +43,8 @@ function findingMeta(markdown: string) {
 export function buildApi(db: Db, p: Paths): Router {
   const r = new Router();
   let modsCache: Modules | undefined;
+  let importersCache: Awaited<ReturnType<typeof loadImporters>> | undefined;
+  loadImporters(p.root).then((i) => { importersCache = i; }).catch((e) => console.error('importers:', e.message));
   const mods = (fresh = false) => (fresh || !modsCache ? (modsCache = loadModules(p.root)) : modsCache);
 
   // ---- auth
@@ -76,6 +80,7 @@ export function buildApi(db: Db, p: Paths): Router {
       standards: Object.values(m.standards).map((s) => ({ id: s.id, name: s.name, short: s.short, version: s.version, kind: s.kind, items: s.items.length })),
       templates: Object.values(m.templates).filter((t) => t.id !== 'finding-preview').map((t) => ({ id: t.id, name: t.name, document: t.document, blocks: t.blocks.map((b) => b.type) })),
       blocks: Object.values(m.blocks).map((b) => ({ id: b.manifest.id, name: b.manifest.name, category: b.manifest.category, documents: b.manifest.documents, description: b.manifest.description })),
+      importers: Object.values(importersCache ?? {}).map((i) => ({ id: i.manifest.id, name: i.manifest.name, formats: i.manifest.formats, description: i.manifest.description })),
       riskModels: [{ id: 'cvss31', name: 'CVSS 3.1' }, { id: 'cvss40', name: 'CVSS 4.0' }, { id: 'matrix', name: 'Risicomatrix (impact × waarschijnlijkheid)' }],
       languages: ['nl', 'en'],
       steps: ['Intake', 'Testplan', 'Test uitvoeren', 'Rapportage', 'TPM/attestation', 'Opleveren', 'Hertest', 'Bijgewerkte rapportage/TPM', 'Opleveren v2'],
@@ -248,6 +253,32 @@ export function buildApi(db: Db, p: Paths): Router {
     res.json(db.prepare('SELECT * FROM library WHERE id = ?').get(info.lastInsertRowid), 201);
   });
 
+  // ---- import tool exports → markdown findings (preview; commit=1 creates them)
+  r.post('/api/engagements/:id/import', async (req, res) => {
+    const eid = id(req); engagementRow(db, eid);
+    importersCache ??= await loadImporters(p.root);
+    const imp = importersCache[String(req.query.get('importer') ?? '')];
+    if (!imp) throw new HttpError(400, `Onbekende importer; beschikbaar: ${Object.keys(importersCache).join(', ')}`);
+    const body = await req.body();
+    let result;
+    try { result = await imp.importFindings(body, { lang: (req.query.get('lang') as any) ?? 'nl', minSeverity: req.query.get('min_severity') ?? undefined }); }
+    catch (e: any) { throw new HttpError(400, e.message); }
+    if (req.query.get('commit') === '1') {
+      const only = req.query.get('only')?.split(',').map(Number);
+      const maxPos = (db.prepare('SELECT COALESCE(MAX(position), 0) AS m FROM findings WHERE engagement_id = ?').get(eid) as any).m as number;
+      const created: any[] = [];
+      result.findings.forEach((f, i) => {
+        if (only && !only.includes(i)) return;
+        const info = db.prepare('INSERT INTO findings (engagement_id, position, markdown, title, severity) VALUES (?,?,?,?,?)').run(eid, maxPos + created.length + 1, f.markdown, f.title, f.severity);
+        db.prepare('INSERT INTO finding_versions (finding_id, markdown) VALUES (?, ?)').run(info.lastInsertRowid, f.markdown);
+        created.push(db.prepare('SELECT id, title, severity FROM findings WHERE id = ?').get(info.lastInsertRowid));
+      });
+      db.prepare('UPDATE engagements SET updated_at = ? WHERE id = ?').run(now(), eid);
+      return res.json({ created, warnings: result.warnings, tool: result.tool }, 201);
+    }
+    res.json({ findings: result.findings.map((f, i) => ({ index: i, title: f.title, severity: f.severity, affected: f.affected, merged: f.merged, markdown: f.markdown })), warnings: result.warnings, tool: result.tool });
+  });
+
   // ---- parse / assess (editor side panel)
   r.post('/api/parse', async (req, res) => {
     const b = await req.json();
@@ -300,7 +331,7 @@ export function buildApi(db: Db, p: Paths): Router {
     const out = await renderEngagement(db, p, id(req), { formats: b.formats, language: b.language, theme: b.theme, template: b.template, mods: mods(true) });
     res.json({ ...out, pdf: out.pdf ? `/api/file?path=${encodeURIComponent(out.pdf)}` : undefined, docx: out.docx ? `/api/file?path=${encodeURIComponent(out.docx)}` : undefined });
   });
-  r.get('/api/engagements/:id/renders', (req, res) => res.json((db.prepare('SELECT * FROM renders WHERE engagement_id = ? ORDER BY id DESC LIMIT 30').all(id(req)) as any[]).map((x) => ({ ...x, diagnostics: JSON.parse(x.diagnostics), pdf: x.pdf ? `/api/file?path=${encodeURIComponent(x.pdf)}` : null, docx: x.docx ? `/api/file?path=${encodeURIComponent(x.docx)}` : null }))));
+  r.get('/api/engagements/:id/renders', (req, res) => res.json((db.prepare('SELECT * FROM renders WHERE engagement_id = ? ORDER BY id DESC LIMIT 60').all(id(req)) as any[]).map((x) => ({ ...x, diagnostics: JSON.parse(x.diagnostics), pdf: x.pdf ? `/api/file?path=${encodeURIComponent(x.pdf)}` : null, docx: x.docx ? `/api/file?path=${encodeURIComponent(x.docx)}` : null }))));
   r.post('/api/engagements/:id/preview', async (req, res) => {
     const b = await req.json();
     const out = await previewFinding(db, p, id(req), String(b.markdown ?? ''), { language: b.language, theme: b.theme });
@@ -339,6 +370,7 @@ export function buildApi(db: Db, p: Paths): Router {
   });
   r.delete('/api/library/:id', (req, res) => { db.prepare('DELETE FROM library WHERE id = ?').run(id(req)); res.json({ ok: true }); });
 
+  registerProcess(r, db, p);
   return r;
 }
 

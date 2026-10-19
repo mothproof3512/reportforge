@@ -1,0 +1,6 @@
+id: attestation-statement
+name: Attestation statement
+version: "1.0"
+category: attestation
+description: Formal statement for third parties — who tested what, when, how — without technical details. Text can be overridden via engagement.attestation.statement.
+documents: [attestation]

@@ -1,0 +1,11 @@
+id: attestation-extended
+name: TPM — uitgebreid (met bevindingen op titelniveau)
+document: attestation
+blocks:
+  - cover
+  - document-control
+  - attestation-statement
+  - attestation-summary
+  - attestation-findings
+  - attestation-signature
+  - disclaimer

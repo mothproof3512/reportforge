@@ -1,0 +1,6 @@
+id: attestation-findings
+name: Attestation findings list
+version: "1.0"
+category: attestation
+description: Findings on title level with severity and status — no technical details. For the extended TPM variant.
+documents: [attestation]

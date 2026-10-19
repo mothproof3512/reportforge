@@ -1,0 +1,5 @@
+id: burp
+name: Burp Suite (XML export)
+tool: Burp Suite
+formats: [xml]
+description: "Burp Suite Professional → Issues → Report selected issues → XML (with base64-encoded requests). Issues of the same type are merged; confidence becomes the status (Certain → Confirmed, otherwise Likely)."

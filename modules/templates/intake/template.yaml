@@ -1,0 +1,8 @@
+id: intake
+name: Intakedocument
+document: intake
+blocks:
+  - cover
+  - document-control
+  - intake-details
+  - scope

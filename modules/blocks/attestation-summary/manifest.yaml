@@ -1,0 +1,6 @@
+id: attestation-summary
+name: Attestation summary
+version: "1.0"
+category: attestation
+description: Result on headlines — counts per severity (open after retest when applicable) and a conclusion sentence.
+documents: [attestation]

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { api, type Client, type Diagnostic, type Engagement, type Meta } from '../api';
 import { Diagnostics, Field, LinesEditor, SubTable, confirmDialog, go, relTime, useToast } from '../ui';
 import { FindingsWorkbench } from './findings';
+import { IntakeTab, TestplanTab, DocumentsTab } from './process';
 
 export function EngagementPage({ id, tab, meta }: { id: number; tab: string; meta: Meta }) {
   const [eng, setEng] = useState<Engagement | null>(null);
@@ -23,9 +24,9 @@ export function EngagementPage({ id, tab, meta }: { id: number; tab: string; met
       </div>
       <div className="steps">{meta.steps.map((s, i) => <button key={s} className={i + 1 < eng.step ? 'done' : i + 1 === eng.step ? 'current' : ''} onClick={() => setStep(i + 1)} title={`Stap ${i + 1}`}><b>{i + 1}</b><span>{s}</span></button>)}</div>
       <div className="tabs">
-        {[['overview', 'Opdracht'], ['findings', 'Bevindingen'], ['report', 'Rapport']].map(([k, l]) => <a key={k} href={`#/engagements/${id}/${k}`} className={tab === k ? 'active' : ''}>{l}</a>)}
+        {[['overview', 'Opdracht'], ['intake', 'Intake'], ['testplan', 'Testplan'], ['findings', 'Bevindingen'], ['documents', 'Documenten']].map(([k, l]) => <a key={k} href={`#/engagements/${id}/${k}`} className={tab === k ? 'active' : ''}>{l}</a>)}
       </div>
-      {tab === 'report' ? <ReportTab eng={eng} meta={meta} /> : <Overview eng={eng} meta={meta} onSaved={setEng} />}
+      {tab === 'intake' ? <IntakeTab eng={eng} onSaved={setEng} /> : tab === 'testplan' ? <TestplanTab eng={eng} meta={meta} onSaved={setEng} /> : tab === 'documents' || tab === 'report' ? <DocumentsTab eng={eng} meta={meta} onSaved={setEng} /> : <Overview eng={eng} meta={meta} onSaved={setEng} />}
     </div>
   );
 }
@@ -130,51 +131,3 @@ function Overview({ eng, meta, onSaved }: { eng: Engagement; meta: Meta; onSaved
   );
 }
 
-// ---------------------------------------------------------------- report tab
-function ReportTab({ eng, meta }: { eng: Engagement; meta: Meta }) {
-  const [renders, setRenders] = useState<any[]>([]);
-  const [busy, setBusy] = useState(false);
-  const [last, setLast] = useState<any>(null);
-  const [opts, setOpts] = useState({ language: eng.data.language ?? eng.client_language, theme: eng.data.theme ?? eng.client_theme, template: eng.data.template ?? 'pentest-report', pdf: true, docx: true });
-  const toast = useToast();
-  const load = () => api.get(`/api/engagements/${eng.id}/renders`).then(setRenders);
-  useEffect(() => { load(); }, [eng.id]);
-  const render = async () => {
-    setBusy(true);
-    try {
-      const r = await api.post(`/api/engagements/${eng.id}/render`, { formats: [opts.pdf && 'pdf', opts.docx && 'docx'].filter(Boolean), language: opts.language, theme: opts.theme, template: opts.template });
-      setLast(r); load();
-      toast(r.ok ? `Gerenderd in ${(r.durationMs / 1000).toFixed(1)} s` : 'Niet gerenderd: los eerst de fouten op', !r.ok);
-    } catch (e: any) { toast(e.message, true); } finally { setBusy(false); }
-  };
-  const errs = (last?.diagnostics ?? []) as Diagnostic[];
-  return (
-    <div>
-      <div className="panel">
-        <h2 style={{ marginTop: 0 }}>Renderen</h2>
-        <div className="grid3">
-          <Field label="Taal"><select value={opts.language} onChange={(e) => setOpts({ ...opts, language: e.target.value })}><option value="nl">Nederlands</option><option value="en">English</option></select></Field>
-          <Field label="Thema"><select value={opts.theme} onChange={(e) => setOpts({ ...opts, theme: e.target.value })}>{meta.themes.map((t) => <option key={t.slug} value={t.slug}>{t.name}</option>)}</select></Field>
-          <Field label="Sjabloon"><select value={opts.template} onChange={(e) => setOpts({ ...opts, template: e.target.value })}>{meta.templates.map((t) => <option key={t.id} value={t.id}>{t.name}</option>)}</select></Field>
-        </div>
-        <div className="actions">
-          <label><input type="checkbox" checked={opts.pdf} onChange={(e) => setOpts({ ...opts, pdf: e.target.checked })} /> PDF</label>
-          <label><input type="checkbox" checked={opts.docx} onChange={(e) => setOpts({ ...opts, docx: e.target.checked })} /> DOCX</label>
-          <button className="btn primary" onClick={render} disabled={busy || !meta.typst}>{busy ? 'Bezig…' : 'Rapport renderen'}</button>
-          {!meta.typst && <span className="muted small">typst is niet gevonden op de server</span>}
-        </div>
-      </div>
-      {last && <div className="panel">
-        <h2 style={{ marginTop: 0 }}>{last.ok ? 'Resultaat' : 'Niet gerenderd'}</h2>
-        {last.ok && <div className="actions" style={{ marginBottom: 12 }}>{last.pdf && <a className="btn" href={last.pdf} target="_blank">Open PDF</a>}{last.pdf && <a className="btn" href={last.pdf + '&download=1'}>Download PDF</a>}{last.docx && <a className="btn" href={last.docx + '&download=1'}>Download DOCX</a>}</div>}
-        <Diagnostics items={errs} emptyText="Preflight: geen opmerkingen." />
-        {last.ok && last.pdf && <iframe className="pdfframe" src={last.pdf} title="PDF" style={{ marginTop: 14 }} />}
-      </div>}
-      <h2>Eerdere renders</h2>
-      {renders.length === 0 ? <div className="empty">Nog niet gerenderd.</div> : (
-        <table className="list"><thead><tr><th>Wanneer</th><th>Versie</th><th>Taal</th><th>Thema</th><th>Status</th><th>Bestanden</th></tr></thead>
-          <tbody>{renders.map((r) => <tr key={r.id}><td>{relTime(r.created_at)}</td><td>v{r.version}</td><td>{r.language}</td><td>{r.theme}</td><td>{r.ok ? 'OK' : <span style={{ color: 'var(--danger)' }}>fout</span>} <span className="muted small">{(r.duration_ms / 1000).toFixed(1)} s · {r.diagnostics.length} opmerkingen</span></td><td className="row-actions">{r.pdf && <a className="btn small" href={r.pdf} target="_blank">PDF</a>}{r.docx && <a className="btn small" href={r.docx + '&download=1'}>DOCX</a>}</td></tr>)}</tbody></table>
-      )}
-    </div>
-  );
-}

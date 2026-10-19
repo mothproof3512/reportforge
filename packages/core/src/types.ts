@@ -73,7 +73,34 @@ export interface Engagement {
   recommendations?: string;       // markdown (strategic)
   document_history?: HistoryEntry[];
   retest?: { of_version: string; date: string };
+  intake?: Intake;
+  testplan?: TestPlan;
   [extra: string]: unknown;
+}
+
+export interface Intake {
+  goal?: string;                 // markdown: why the test, what question must it answer
+  background?: string;           // markdown: system description
+  test_type?: string;            // black-box | grey-box | white-box
+  credentials?: string;          // markdown: accounts/roles to be provided
+  test_window?: string;          // e.g. "werkdagen 09:00–17:00"
+  preconditions?: string;        // markdown: whitelisting, contacts, environments
+  allowed?: string[];            // allowed techniques
+  not_allowed?: string[];        // forbidden (DoS, social engineering, …)
+  deliverables?: string[];
+  emergency_contact?: string;
+  notes?: string;
+}
+
+export interface ChecklistItemState { id: string; status: 'tested' | 'not-tested' | 'n/a' | 'finding'; note?: string }
+export interface Checklist { standard: string; items: ChecklistItemState[] }
+
+export interface TestPlan {
+  approach?: string;             // markdown: overall approach
+  per_scope?: Array<{ asset: string; approach: string }>;
+  planning?: Array<{ phase: string; start?: string; end?: string; notes?: string }>;
+  checklists?: Checklist[];
+  go_nogo?: string;              // markdown
 }
 
 export interface ThemeColors {
@@ -156,7 +183,7 @@ export interface ReportContext {
     highest?: Severity;
   };
   standards: Standard[];
-  coverage?: Array<{ standard: string; item: string; status: string; note?: string }>;
+  coverage: Array<{ standard: string; item: string; title: string; category?: string; status: string; note?: string; findings: string[] }>;
   images: Record<string, ImageInfo>;     // key = path as referenced in markdown
   generated: { at: string; tool: string };
 }

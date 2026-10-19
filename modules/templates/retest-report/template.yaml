@@ -12,4 +12,5 @@ blocks:
   - finding
   - conclusion
   - appendix-severity
+  - { type: checklist, options: { mode: coverage } }
   - disclaimer

@@ -51,7 +51,7 @@ export function SubTable<T extends Record<string, any>>({ rows, onChange, column
   return (
     <div>
       <table className="subtable">
-        <thead><tr>{columns.map((c) => <td key={c.key} className="field-label" style={{ width: c.width }}>{c.label}</td>)}<td className="rm" /></tr></thead>
+        <thead><tr>{columns.map((c) => <th key={c.key} className="field-label" style={{ width: c.width, display: "table-cell", textAlign: "left" }}>{c.label}</th>)}<th className="rm" /></tr></thead>
         <tbody>
           {rows.map((r, i) => <tr key={i}>
             {columns.map((c) => <td key={c.key}>{c.type === 'select' ? <select value={r[c.key] ?? ''} onChange={(e) => set(i, c.key, e.target.value)}><option value="">—</option>{c.options?.map((o) => <option key={o}>{o}</option>)}</select> : <input type={c.type ?? 'text'} value={r[c.key] ?? ''} onChange={(e) => set(i, c.key, e.target.value)} />}</td>)}

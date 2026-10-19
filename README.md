@@ -8,7 +8,7 @@ Modular, whitelabel pentest reporting. Markdown findings in, world-class PDF and
 - **Risk models**: CVSS 3.1, CVSS 4.0 (verified against the FIRST reference implementation) and an impact × likelihood matrix.
 - **Layout that cannot break**: images are scaled to the text column and capped in height, code wraps (even 300-character tokens), tables break across pages with repeated headers, and the render tests raster every page and fail on any ink in the margins.
 
-Two ways to work: the **web app** (opdrachtgevers with themes, engagements, a finding editor with live preview, library, one-click PDF/DOCX) and the **CLI** (an engagement folder in, files out). Both read the same engagement-folder format, so nothing is locked inside the app. Phase 3 adds the full process flow (intake, testplan with checklists, TPM variants, retest).
+Two ways to work: the **web app** (opdrachtgevers with themes, engagements, a finding editor with live preview, library, one-click PDF/DOCX) and the **CLI** (an engagement folder in, files out). Both read the same engagement-folder format, so nothing is locked inside the app. The app follows the nine-step process: intake → test plan → testing → report → TPM → delivery → retest → updated report/TPM → delivery.
 
 ## Quick start
 
@@ -36,7 +36,9 @@ npm run check  -- examples/acme-webshop       # parse + preflight only
 - **Bevindingen**: three-pane workbench — list sorted by severity, markdown editor (paste or drop screenshots: they are uploaded, resized to ≤ 2400 px and inserted as markdown), and a side panel with live preview styled like the report, PDF preview of just this finding, live format checks with CVSS scoring, images and version history. `Ctrl+S` saves; every save is a version.
 - **Plakken**: paste a markdown export with several findings; each `## ` becomes a finding.
 - **Bibliotheek**: save any finding as a reusable, genericised template (affected list and screenshots stripped); pick from it when starting a new finding. Usage is counted.
-- **Rapport**: render PDF and/or DOCX in any language, theme and template; preflight diagnostics are shown before anything is rendered, every render is kept.
+- **Intake** and **Testplan**: forms that become the intake document (with signature block for the rules of engagement) and the test plan. The checklist generator picks standards from the scope types (web → WSTG, api → API Top 10, mobile → MASVS, plus ASVS when selected) and tracks the status per item; items with a mapped finding become "Finding" automatically. The checklist is the "Dekking" appendix in the report and in the test plan.
+- **Importeren**: Nuclei (JSON/JSONL), Burp Suite (XML) and Nessus (.nessus) exports become findings in the markdown contract — same issue across hosts merged into one finding, CVSS/CWE/CVE carried over, requests decoded, HTML descriptions converted — with a preview to pick what to add. Imported findings carry a verification line that preflight flags until you remove it. CLI: `npm run rf -- import nessus scan.nessus -o findings/`.
+- **Documenten**: render the intake document, test plan, report, TPM (four variants: short, standard, extended with findings on title level, compliance with coverage per standard) and the retest report, in any language and theme. **Opleveren** freezes a render under `data/renders/_deliveries/` with SHA-256 hashes and a DELIVERY.txt, and advances the step. **Hertest starten** bumps the version, extends the version history and marks every finding "Not retested"; the retest status per finding is set from the workbench and feeds the retest report, report v2 and TPM v2.
 
 Storage: `data/reportforge.sqlite` (SQLite via Node's built-in driver — no database server), `data/files/` (screenshots), `data/renders/`, `data/engagements/` (materialised folders). Back up `data/` and `modules/themes/`.
 
@@ -51,7 +53,7 @@ my-engagement/
 └─ theme/theme.yaml     optional: engagement-specific theme override
 ```
 
-See `examples/acme-webshop/engagement.yaml` for every field.
+See `examples/acme-webshop/engagement.yaml` for every field, including `intake`, `testplan` (with checklists) and `attestation`. Templates: `pentest-report`, `retest-report`, `intake`, `testplan`, `attestation-short|standard|extended|compliance` (`npm run render -- <dir> -t testplan`).
 
 ## The finding format
 
@@ -71,7 +73,7 @@ See `examples/acme-webshop/engagement.yaml` for every field.
 ### References
 ```
 
-Optional metadata on the same line: `**CVSS 4.0**: 7.1 (\`CVSS:4.0/...\`)`, `**Risk**: impact=3, likelihood=4`, `**Mapping**: A01:2021, WSTG-ATHZ-04`, `**CWE**: 639`, `**Retest**: Resolved (note)`, `**ID**: F-07`.
+Optional metadata on the same line: `**CVSS 4.0**: 7.1 (\`CVSS:4.0/...\`)`, `**Risk**: impact=3, likelihood=4`, `**Mapping**: A01:2021, WSTG-ATHZ-04`, `**CWE**: 639`, `**Retest**: Resolved (note)` (statuses: Resolved, Partially resolved, Open, Not tested, Risk accepted), `**ID**: F-07`.
 Section headings may also be Dutch (Beschrijving, Impact, Bewijs, Aanbeveling, Referenties). Unknown `###` sections are kept as extra sections. Every `## ` heading starts a new finding.
 
 The explicit **Severity** always wins over the computed one (senior judgement), but a mismatch is reported so it is a conscious decision. Findings are numbered F-01… in order of severity and score.
@@ -106,7 +108,17 @@ modules/blocks/my-block/
 
 Then list it in a template (`modules/templates/<id>/template.yaml`) and run `npm run blocks:check`. `ctx` is the full report context (engagement, findings, stats, standards), `theme` the resolved theme, `t` the merged dictionary (`t.core.*`, `t.blocks.<id>.*`, `t.severity.*`). Shared Typst helpers (badges, images, code, tables, callouts) live in `modules/lib/rf.typ`; Word helpers in `packages/render-docx/src/helpers.ts`.
 
-Standards are one YAML file each in `modules/standards/`; risk models live in `packages/risk`.
+Standards are one YAML file each in `modules/standards/` (OWASP Top 10, WSTG, ASVS, API Top 10, MASVS, PTES, NIST SP 800-115, CWE, MITRE ATT&CK); risk models live in `packages/risk`.
+
+## Adding an importer
+
+```
+modules/importers/my-tool/
+├─ manifest.yaml       id, name, tool, formats, description
+└─ import.ts           export function importFindings(input: Buffer, opts): ImportResult
+```
+
+Build `FindingDraft` objects and call `toMarkdown()` from `@reportforge/importers` (helpers: `parseXml`, `htmlToMarkdown`, `clip`, `fence`). Because the output is the markdown contract, imported findings get the same parsing, scoring and rendering as hand-written ones. See `modules/importers/nessus/import.ts` for a 40-line example and `tests/unit/importers.test.ts` for the fixtures.
 
 ## Tests
 
@@ -124,11 +136,11 @@ npm run test:e2e       # starts the web server on a scratch dir and drives the w
 On the PVE host, as root:
 
 ```bash
-bash deploy/proxmox/create-vm.sh --id 9100 --name reportforge --ip 192.168.1.60/24 --gw 192.168.1.1 \
+bash deploy/proxmox/create-vm.sh --id 9100 --name reportforge \
      --sshkey ~/.ssh/id_ed25519.pub --repo https://github.com/<you>/reportforge.git
 ```
 
-This downloads the Ubuntu 24.04 cloud image, creates the VM with cloud-init (Docker, git, unattended security updates), clones the repo to `/opt/reportforge` and starts the web app on port 3000. Updating: `cd /opt/reportforge && git pull && docker compose -f deploy/docker-compose.yml up -d --build`. Backups: `deploy/backup.sh /mnt/nas/reportforge` from cron.
+DHCP by default; add `--ip 192.168.1.60/24 --gw 192.168.1.1` for a static address. This downloads the Ubuntu 24.04 cloud image, creates the VM with cloud-init (Docker, git, unattended security updates), clones the repo to `/opt/reportforge` and starts the web app on port 3000. Updating: `cd /opt/reportforge && git pull && docker compose -f deploy/docker-compose.yml up -d --build`. Backups: `deploy/backup.sh /mnt/nas/reportforge` from cron.
 
 ## Licence
 

@@ -1,0 +1,7 @@
+title: Statement
+statement: "{provider} hereby declares that, commissioned by {client}, it performed a penetration test on the components listed below between {start} and {end}. The assessment was carried out by qualified security specialists in accordance with the standards and methodologies listed below, combining manual testing with automated tooling."
+statement_retest: "On {retest_date} a retest of the findings from report version {of_version} was performed; the status stated below is the status after this retest."
+scope_title: Components assessed
+method_title: Methodology and standards
+limits_title: Scope of this statement
+limits: "This statement describes the outcome of a point-in-time assessment and does not guarantee that the assessed components are free of vulnerabilities. Changes after the test period and components outside the scope are not covered. The full report with technical details is available from {client}."

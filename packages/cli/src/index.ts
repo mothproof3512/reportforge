@@ -15,6 +15,8 @@ import { loadModules, loadEngagement } from '@reportforge/core';
 import { preflight, formatDiagnostics } from '@reportforge/preflight';
 import { renderTypst, typstVersion } from '@reportforge/render-typst';
 import { renderDocx } from '@reportforge/render-docx';
+import { loadImporters } from '@reportforge/importers';
+import { readFileSync } from 'node:fs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
 const program = new Command();
@@ -94,6 +96,29 @@ blocks.command('check').action(() => {
     if (missing.length) { bad++; console.log(`✖ template ${id}: onbekende blokken ${missing.join(', ')}`); } else console.log(`✔ template ${id} (${tpl.blocks.length} blokken)`);
   }
   process.exit(bad ? 1 : 0);
+});
+
+program.command('import')
+  .description('convert a tool export into markdown findings')
+  .argument('<importer>', 'nuclei | burp | nessus (see `rf importers`)')
+  .argument('<file>', 'export file')
+  .option('-o, --out <dir>', 'write one .md per finding into this folder (default: print to stdout)')
+  .option('-l, --lang <lang>', 'nl or en', 'nl')
+  .option('--min-severity <sev>', 'skip findings below this severity (critical|high|medium|low|info)')
+  .action(async (importer: string, file: string, o) => {
+    const imps = await loadImporters(ROOT);
+    const imp = imps[importer];
+    if (!imp) { console.error(`✖ onbekende importer "${importer}"; beschikbaar: ${Object.keys(imps).join(', ')}`); process.exit(1); }
+    const r = await imp.importFindings(readFileSync(file), { lang: o.lang, minSeverity: o.minSeverity });
+    for (const w of r.warnings) console.error('  ⚠ ' + w);
+    if (o.out) {
+      mkdirSync(o.out, { recursive: true });
+      r.findings.forEach((f, i) => { const name = `${String(i + 1).padStart(2, '0')}-${f.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 50)}.md`; writeFileSync(join(o.out, name), f.markdown); console.log(`✔ ${name}  [${f.severity}] ${f.merged > 1 ? `(${f.merged} samengevoegd)` : ''}`); });
+    } else console.log(r.findings.map((f) => f.markdown).join('\n'));
+    console.error(`${r.findings.length} bevindingen uit ${r.tool}`);
+  });
+program.command('importers').description('list importers').action(async () => {
+  for (const i of Object.values(await loadImporters(ROOT))) console.log(`${i.manifest.id.padEnd(10)} ${i.manifest.formats.join(',').padEnd(12)} ${i.manifest.name}`);
 });
 
 program.command('standards').description('list standards').action(() => {

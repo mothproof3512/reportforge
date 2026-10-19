@@ -1,0 +1,6 @@
+id: attestation-signature
+name: Signature
+version: "1.0"
+category: attestation
+description: Place, date, signatory and signature image (theme asset `signature`, optional).
+documents: [attestation, intake, testplan]

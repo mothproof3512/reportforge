@@ -1,0 +1,8 @@
+id: attestation-short
+name: TPM — kort (1 pagina)
+document: attestation
+blocks:
+  - { type: cover, options: { show_period: true } }
+  - attestation-statement
+  - attestation-summary
+  - attestation-signature

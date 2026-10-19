@@ -32,6 +32,11 @@ const MARKDOWN_PATHS = [
   /^findings\.\d+\.retest\.note$/,
   /^theme\.texts\.[^.]+\.(nl|en)$/,
   /^engagement\.scope\.\d+\.description$/,
+  /^engagement\.intake\.(goal|background|credentials|preconditions|notes)$/,
+  /^engagement\.testplan\.(approach|go_nogo)$/,
+  /^engagement\.testplan\.per_scope\.\d+\.approach$/,
+  /^engagement\.testplan\.planning\.\d+\.notes$/,
+  /^engagement\.attestation\.(statement|scope_note|conclusion)$/,
 ];
 
 const TYPST_KEYWORDS = new Set(['for', 'in', 'let', 'if', 'else', 'not', 'and', 'or', 'none', 'auto', 'true', 'false', 'import', 'include', 'set', 'show', 'return', 'while', 'break', 'continue', 'as', 'context']);
@@ -107,7 +112,7 @@ export function renderTypst(mods: Modules, ctx: ReportContext, outPdf: string, o
   const sevs = ['critical', 'high', 'medium', 'low', 'info'] as const;
   const ctxData = {
     document: ctx.document, lang, engagement: eng, findings: ctx.findings, stats: ctx.stats, standards: ctx.standards,
-    coverage: ctx.coverage ?? [], generated: ctx.generated,
+    coverage: ctx.coverage, generated: ctx.generated,
     fmt: {
       date: formatDate(eng.date, lang), period_start: formatDate(eng.period.start, lang), period_end: formatDate(eng.period.end, lang),
       retest_date: eng.retest ? formatDate(eng.retest.date, lang) : '',
