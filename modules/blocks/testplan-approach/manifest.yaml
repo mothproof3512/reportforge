@@ -1,0 +1,6 @@
+id: testplan-approach
+name: Test plan approach
+version: "1.0"
+category: context
+description: Overall approach, approach per scope item, planning and go/no-go from engagement.testplan.
+documents: [testplan]

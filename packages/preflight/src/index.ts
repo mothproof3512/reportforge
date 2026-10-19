@@ -67,6 +67,7 @@ export function preflight(mods: Modules, ctx: ReportContext): Diagnostic[] {
       }
       if (/<(img|table|div|span)[\s>]/i.test(s)) warn(`${f.id}: HTML in markdown wordt als platte tekst getoond.`, at);
     }
+    if (/_(Automatisch geïmporteerd; handmatig verifiëren|Automatically imported; verify manually)/.test(f.sections.description ?? '')) warn(`${f.id} bevat nog de importmarkering; verifieer de bevinding en verwijder de regel uit de beschrijving.`, at);
     if (!f.mapping.length && ctx.standards.length) warn(`${f.id} heeft geen mapping naar een standaard (**Mapping**: …).`, at);
   }
 

@@ -1,0 +1,10 @@
+id: attestation-standard
+name: TPM — standaard
+document: attestation
+blocks:
+  - cover
+  - document-control
+  - attestation-statement
+  - attestation-summary
+  - attestation-signature
+  - disclaimer

@@ -2,9 +2,10 @@
 # Creates an Ubuntu 24.04 cloud-init VM on Proxmox and installs Reportforge in it.
 # Run as root on the PVE host:
 #
-#   bash create-vm.sh --id 9100 --name reportforge --ip 192.168.1.60/24 --gw 192.168.1.1 \
-#        --sshkey ~/.ssh/id_ed25519.pub --repo https://github.com/<you>/reportforge.git
+#   bash create-vm.sh --id 9100 --name reportforge --sshkey ~/.ssh/id_ed25519.pub \
+#        --repo https://github.com/<you>/reportforge.git
 #
+# Networking is DHCP unless --ip and --gw are given (e.g. --ip 192.168.1.60/24 --gw 192.168.1.1).
 # Defaults: 2 vCPU, 4 GB RAM, 40 GB disk on local-lvm, bridge vmbr0.
 set -euo pipefail
 
@@ -17,7 +18,9 @@ while [[ $# -gt 0 ]]; do
     *) echo "unknown option $1"; exit 1;;
   esac
 done
-[[ -z "$IP" || -z "$GW" || -z "$SSHKEY" || -z "$REPO" ]] && { echo "--ip, --gw, --sshkey and --repo are required"; exit 1; }
+[[ -z "$SSHKEY" || -z "$REPO" ]] && { echo "--sshkey and --repo are required"; exit 1; }
+[[ -n "$IP" && -z "$GW" ]] && { echo "--gw is required when --ip is given"; exit 1; }
+IPCONFIG="ip=dhcp"; [[ -n "$IP" ]] && IPCONFIG="ip=${IP},gw=${GW}"
 [[ -f "$SSHKEY" ]] || { echo "ssh key $SSHKEY not found"; exit 1; }
 
 IMG=/var/lib/vz/template/iso/noble-server-cloudimg-amd64.img
@@ -69,7 +72,12 @@ qm importdisk "$ID" "$IMG" "$STORAGE" >/dev/null
 qm set "$ID" --scsi0 "${STORAGE}:vm-${ID}-disk-0,discard=on,ssd=1"
 qm disk resize "$ID" scsi0 "$DISK"
 qm set "$ID" --ide2 "${STORAGE}:cloudinit" --boot order=scsi0
-qm set "$ID" --ipconfig0 "ip=${IP},gw=${GW}" --cicustom "user=local:snippets/$(basename "$SNIPPET")"
+qm set "$ID" --ipconfig0 "$IPCONFIG" --cicustom "user=local:snippets/$(basename "$SNIPPET")"
 qm start "$ID"
 echo "▶ VM started. Installation runs inside the VM for a few minutes."
-echo "   Open http://${IP%/*}:3000 when it is done (ssh ${USER}@${IP%/*}; cat /var/log/reportforge-install.done)"
+if [[ -n "$IP" ]]; then
+  echo "   Open http://${IP%/*}:3000 when it is done (ssh ${USER}@${IP%/*}; cat /var/log/reportforge-install.done)"
+else
+  echo "   DHCP: find the address with:  qm guest cmd $ID network-get-interfaces | grep -o 'ip-address.: .[0-9.]*' | grep -v 127.0.0.1"
+  echo "   (the guest agent reports it ~1 minute after boot), then open http://<ip>:3000"
+fi

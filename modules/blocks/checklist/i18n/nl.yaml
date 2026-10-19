@@ -1,0 +1,5 @@
+title_plan: Checklist
+title_coverage: "Bijlage: dekking per standaard"
+intro_plan: Onderstaande testonderdelen worden tijdens de test doorlopen. De status wordt tijdens de uitvoering bijgehouden en in het rapport opgenomen.
+intro_coverage: Per gehanteerde standaard is aangegeven welke onderdelen zijn getest, welke niet van toepassing waren en bij welke onderdelen een bevinding is gedaan.
+summary: "{tested} van {total} onderdelen getest, {finding} met een bevinding, {na} niet van toepassing, {nottested} niet getest."

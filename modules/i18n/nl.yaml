@@ -66,3 +66,16 @@ core:
     open: Open
     not-tested: Niet hergetest
     risk-accepted: Risico geaccepteerd
+  intake_report: Intakedocument
+  testplan_report: Testplan
+  category: Categorie
+  item: Onderdeel
+  checklist_status:
+    tested: Getest
+    not-tested: Niet getest
+    n/a: N.v.t.
+    finding: Bevinding
+  open_findings: Open bevindingen
+  signature: Handtekening
+  place_date: Plaats en datum
+  agreed: Voor akkoord

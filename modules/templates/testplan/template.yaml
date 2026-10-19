@@ -1,0 +1,12 @@
+id: testplan
+name: Testplan
+document: testplan
+blocks:
+  - cover
+  - document-control
+  - toc
+  - scope
+  - testplan-approach
+  - methodology
+  - { type: checklist, options: { mode: plan } }
+  - { type: intake-details, options: { rules_only: true } }

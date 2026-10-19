@@ -30,6 +30,9 @@
       ],
       "@reportforge/preflight": [
         "./packages/preflight/src/index.ts"
+      ],
+      "@reportforge/importers": [
+        "./packages/importers/src/index.ts"
       ]
     }
   },

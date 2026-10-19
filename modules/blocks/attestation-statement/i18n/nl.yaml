@@ -1,0 +1,7 @@
+title: Verklaring
+statement: "{provider} verklaart hierbij dat zij in opdracht van {client} in de periode van {start} tot en met {end} een penetratietest heeft uitgevoerd op de hieronder genoemde onderdelen. Het onderzoek is uitgevoerd door gekwalificeerde beveiligingsspecialisten volgens de hieronder genoemde standaarden en methodieken, met een combinatie van handmatig onderzoek en geautomatiseerde tooling."
+statement_retest: "Op {retest_date} is een hertest uitgevoerd op de bevindingen uit rapportversie {of_version}; de hieronder vermelde status is de status na deze hertest."
+scope_title: Onderzochte onderdelen
+method_title: Methodiek en standaarden
+limits_title: Reikwijdte van deze verklaring
+limits: "Deze verklaring beschrijft de uitkomst van een momentopname en biedt geen garantie dat de onderzochte onderdelen vrij zijn van kwetsbaarheden. Wijzigingen na de testperiode en onderdelen buiten de scope vallen buiten deze verklaring. De volledige rapportage met technische details is beschikbaar bij {client}."

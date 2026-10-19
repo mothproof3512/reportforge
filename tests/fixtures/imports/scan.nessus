@@ -1,0 +1,50 @@
+<?xml version="1.0" ?>
+<NessusClientData_v2>
+<Policy><policyName>Advanced Scan</policyName></Policy>
+<Report name="DMZ scan" xmlns:cm="http://www.nessus.org/cm">
+<ReportHost name="203.0.113.4"><HostProperties><tag name="host-fqdn">static.voorbeeldwebshop.nl</tag><tag name="operating-system">Linux Kernel 5.15</tag></HostProperties>
+<ReportItem port="443" svc_name="www" protocol="tcp" severity="4" pluginID="153584" pluginName="Apache 2.4.49 Path Traversal and Remote Code Execution (CVE-2021-41773)" pluginFamily="Web Servers">
+<description>The version of Apache httpd installed on the remote host is 2.4.49. It is, therefore, affected by a path traversal vulnerability in the path normalization code (CVE-2021-41773). An unauthenticated, remote attacker can exploit this to read files outside the document root and, if CGI scripts are enabled, execute arbitrary code.</description>
+<solution>Upgrade to Apache version 2.4.51 or later.</solution>
+<synopsis>The remote web server is affected by a path traversal vulnerability.</synopsis>
+<cvss3_base_score>9.8</cvss3_base_score>
+<cvss3_vector>CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H</cvss3_vector>
+<cve>CVE-2021-41773</cve>
+<cve>CVE-2021-42013</cve>
+<see_also>https://httpd.apache.org/security/vulnerabilities_24.html</see_also>
+<plugin_output>
+URL      : https://203.0.113.4/
+Version  : 2.4.49
+Fixed    : 2.4.51
+</plugin_output>
+</ReportItem>
+<ReportItem port="443" svc_name="www" protocol="tcp" severity="2" pluginID="10107" pluginName="HTTP Server Type and Version" pluginFamily="Web Servers">
+<description>This plugin attempts to determine the type and the version of the remote web server.</description>
+<solution>n/a</solution>
+<synopsis>A web server is running on the remote host.</synopsis>
+<plugin_output>The remote web server type is : Apache/2.4.49 (Unix)</plugin_output>
+</ReportItem>
+<ReportItem port="22" svc_name="ssh" protocol="tcp" severity="0" pluginID="10267" pluginName="SSH Server Type and Version Information" pluginFamily="Service detection">
+<description>It is possible to obtain information about the remote SSH server.</description><solution>n/a</solution><synopsis>An SSH server is listening on this port.</synopsis>
+<plugin_output>SSH version : SSH-2.0-OpenSSH_8.9p1</plugin_output>
+</ReportItem>
+</ReportHost>
+<ReportHost name="203.0.113.5"><HostProperties><tag name="host-fqdn">legacy.voorbeeldwebshop.nl</tag></HostProperties>
+<ReportItem port="443" svc_name="www" protocol="tcp" severity="4" pluginID="153584" pluginName="Apache 2.4.49 Path Traversal and Remote Code Execution (CVE-2021-41773)" pluginFamily="Web Servers">
+<description>The version of Apache httpd installed on the remote host is 2.4.49.</description><solution>Upgrade to Apache version 2.4.51 or later.</solution><synopsis>The remote web server is affected by a path traversal vulnerability.</synopsis>
+<cvss3_base_score>9.8</cvss3_base_score><cvss3_vector>CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H</cvss3_vector><cve>CVE-2021-41773</cve>
+<plugin_output>Version : 2.4.49</plugin_output>
+</ReportItem>
+<ReportItem port="443" svc_name="www" protocol="tcp" severity="1" pluginID="42873" pluginName="SSL Medium Strength Cipher Suites Supported (SWEET32)" pluginFamily="General">
+<description>The remote host supports the use of SSL ciphers that offer medium strength encryption. Nessus regards medium strength as any encryption that uses key lengths at least 64 bits and less than 112 bits, or else that uses the 3DES encryption suite.</description>
+<solution>Reconfigure the affected application if possible to avoid use of medium strength ciphers.</solution>
+<synopsis>The remote service supports the use of medium strength SSL ciphers.</synopsis>
+<cvss3_base_score>7.5</cvss3_base_score><cvss3_vector>CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N</cvss3_vector><cve>CVE-2016-2183</cve>
+<plugin_output>Here is the list of medium strength SSL ciphers supported by the remote server :
+  Medium Strength Ciphers (> 64-bit and < 112-bit key, or 3DES)
+    TLSv1.2
+      DES-CBC3-SHA   Kx=RSA   Au=RSA   Enc=3DES-CBC(168)   Mac=SHA1</plugin_output>
+</ReportItem>
+</ReportHost>
+</Report>
+</NessusClientData_v2>

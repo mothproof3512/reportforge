@@ -221,7 +221,7 @@
   show heading: set text(font: theme.fonts.heading, fill: c.headingColor)
   show heading.where(level: 1): it => {
     set text(size: 18pt, weight: "bold")
-    block(above: 0pt, below: 1.1em, breakable: false, [
+    block(above: 2.4em, below: 1.1em, breakable: false, [
       #if it.numbering != none { text(fill: c.accent, size: 11pt, weight: "semibold", tracking: 0.08em)[#counter(heading).display(it.numbering)]; v(0.2em) }
       #it.body
       #v(0.35em)

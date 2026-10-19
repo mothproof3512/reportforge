@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<!DOCTYPE issues [<!ELEMENT issues (issue*)>]>
+<issues burpVersion="2026.8" exportTime="Thu Sep 04 14:02:11 CEST 2026">
+  <issue>
+    <serialNumber>5012874501234</serialNumber>
+    <type>1049088</type>
+    <name>SQL injection</name>
+    <host ip="203.0.113.10">https://shop.voorbeeldwebshop.nl</host>
+    <path><![CDATA[/search]]></path>
+    <location><![CDATA[/search [q parameter]]]></location>
+    <severity>High</severity>
+    <confidence>Certain</confidence>
+    <issueBackground><![CDATA[<p>SQL injection vulnerabilities arise when user-controllable data is incorporated into database SQL queries in an unsafe manner. An attacker can supply crafted input to break out of the data context in which their input appears and interfere with the structure of the surrounding query.</p><p>A wide range of damaging attacks can often be delivered via SQL injection, including <b>reading or modifying critical application data</b>, interfering with application logic, escalating privileges within the database and taking control of the database server.</p>]]></issueBackground>
+    <remediationBackground><![CDATA[<p>The most effective way to prevent SQL injection attacks is to use parameterized queries (also known as prepared statements) for all database access.</p><ul><li>Use parameterized queries.</li><li>Never concatenate user input into SQL.</li></ul>]]></remediationBackground>
+    <references><![CDATA[<ul><li><a href="https://portswigger.net/web-security/sql-injection">SQL injection</a></li></ul>]]></references>
+    <vulnerabilityClassifications><![CDATA[<ul><li><a href="https://cwe.mitre.org/data/definitions/89.html">CWE-89: Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')</a></li></ul>]]></vulnerabilityClassifications>
+    <issueDetail><![CDATA[The <b>q</b> parameter appears to be vulnerable to SQL injection attacks. The payload <b>' waitfor delay '0:0:20'--</b> was submitted in the q parameter. The application took <b>20146</b> milliseconds to respond to the request, compared with <b>221</b> milliseconds for the original request.]]></issueDetail>
+    <requestresponse>
+      <request base64="true" method="GET"><![CDATA[R0VUIC9zZWFyY2g/cT1sYXB0b3AlMjclMjBBTkQlMjAlMjhTRUxFQ1QlMjBwZ19zbGVlcCUyODUlMjklMjktLSBIVFRQLzEuMQ0KSG9zdDogc2hvcC52b29yYmVlbGR3ZWJzaG9wLm5sDQpVc2VyLUFnZW50OiBNb3ppbGxhLzUuMA0KDQo=]]></request>
+      <response base64="true"><![CDATA[SFRUUC8xLjEgMjAwIE9LDQpDb250ZW50LVR5cGU6IHRleHQvaHRtbDsgY2hhcnNldD11dGYtOA0KQ29udGVudC1MZW5ndGg6IDQ4MjExDQoNCjwhZG9jdHlwZSBodG1sPjxodG1sPi4uLg==]]></response>
+      <responseRedirected>false</responseRedirected>
+    </requestresponse>
+  </issue>
+  <issue>
+    <serialNumber>5012874501235</serialNumber>
+    <type>1049088</type>
+    <name>SQL injection</name>
+    <host ip="203.0.113.10">https://shop.voorbeeldwebshop.nl</host>
+    <path><![CDATA[/api/suggest]]></path>
+    <location><![CDATA[/api/suggest [q parameter]]]></location>
+    <severity>High</severity>
+    <confidence>Firm</confidence>
+    <issueBackground><![CDATA[<p>SQL injection vulnerabilities arise when user-controllable data is incorporated into database SQL queries in an unsafe manner.</p>]]></issueBackground>
+    <remediationBackground><![CDATA[<p>Use parameterized queries.</p>]]></remediationBackground>
+    <vulnerabilityClassifications><![CDATA[<ul><li><a href="https://cwe.mitre.org/data/definitions/89.html">CWE-89</a></li></ul>]]></vulnerabilityClassifications>
+    <issueDetail><![CDATA[Time-based payload confirmed.]]></issueDetail>
+  </issue>
+  <issue>
+    <serialNumber>5012874501301</serialNumber>
+    <type>5243904</type>
+    <name>Strict transport security not enforced</name>
+    <host ip="203.0.113.10">https://shop.voorbeeldwebshop.nl</host>
+    <path><![CDATA[/]]></path>
+    <location><![CDATA[/]]></location>
+    <severity>Low</severity>
+    <confidence>Certain</confidence>
+    <issueBackground><![CDATA[<p>The application fails to prevent users from connecting to it over unencrypted connections.</p>]]></issueBackground>
+    <remediationBackground><![CDATA[<p>The application should instruct web browsers to only access the application using HTTPS by setting the <code>Strict-Transport-Security</code> header.</p>]]></remediationBackground>
+    <vulnerabilityClassifications><![CDATA[<ul><li><a href="https://cwe.mitre.org/data/definitions/523.html">CWE-523</a></li></ul>]]></vulnerabilityClassifications>
+    <issueDetail><![CDATA[The HSTS max-age is 300 seconds.]]></issueDetail>
+  </issue>
+  <issue>
+    <serialNumber>5012874501302</serialNumber>
+    <type>7340288</type>
+    <name>Email addresses disclosed</name>
+    <host ip="203.0.113.10">https://shop.voorbeeldwebshop.nl</host>
+    <path><![CDATA[/contact]]></path>
+    <severity>Information</severity>
+    <confidence>Certain</confidence>
+    <issueBackground><![CDATA[<p>The presence of email addresses within application responses does not necessarily constitute a security vulnerability.</p>]]></issueBackground>
+    <issueDetail><![CDATA[The following email address was disclosed in the response: info@voorbeeldwebshop.nl]]></issueDetail>
+  </issue>
+</issues>

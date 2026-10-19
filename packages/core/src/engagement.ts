@@ -158,10 +158,22 @@ export async function loadEngagement(mods: Modules, engagementDir: string, opts:
   const byStatus: Record<string, number> = {};
   for (const f of findings) byStatus[f.status] = (byStatus[f.status] ?? 0) + 1;
 
+  // Coverage: checklist states from the test plan, joined with findings mapped to the same item
+  const coverage: ReportContext['coverage'] = [];
+  for (const cl of eng.testplan?.checklists ?? []) {
+    const std = mods.standards[cl.standard];
+    if (!std) { diagnostics.push({ level: 'warning', message: `Checklist verwijst naar onbekende standaard "${cl.standard}".`, file: 'engagement.yaml' }); continue; }
+    for (const it of cl.items ?? []) {
+      const def = std.items.find((x) => x.id === it.id);
+      const mapped = findings.filter((f) => f.mapping.some((m) => m.standard === cl.standard && m.item === it.id)).map((f) => f.id);
+      coverage.push({ standard: cl.standard, item: it.id, title: def?.title ?? it.id, category: def?.category, status: mapped.length ? 'finding' : it.status ?? 'not-tested', note: it.note, findings: mapped });
+    }
+  }
+
   const ctx: ReportContext = {
     document: opts.document ?? template.document, lang, engagement: eng, theme, template, findings,
     stats: { total: findings.length, bySeverity, openBySeverity, byStatus, highest: findings[0]?.severity },
-    standards, images,
+    standards, images, coverage,
     generated: { at: new Date().toISOString(), tool: 'reportforge 0.1.0' },
   };
   return { ctx, diagnostics, dir };

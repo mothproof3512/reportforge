@@ -1,0 +1,42 @@
+id: mitre-attack
+name: MITRE ATT&CK (Enterprise)
+short: ATT&CK
+version: "v17"
+kind: taxonomy
+url: https://attack.mitre.org/
+description:
+  nl: MITRE ATT&CK beschrijft tactieken en technieken van aanvallers. Bevindingen uit infrastructuur- en red-team-opdrachten zijn gekoppeld aan de techniek die ermee mogelijk wordt. Subset van veelgebruikte technieken; uitbreidbaar in modules/standards/mitre-attack.yaml.
+  en: MITRE ATT&CK describes adversary tactics and techniques. Findings from infrastructure and red-team engagements are mapped to the technique they enable. Subset of common techniques; extend in modules/standards/mitre-attack.yaml.
+items:
+  - { id: T1595, category: Reconnaissance, title: Active Scanning, url: https://attack.mitre.org/techniques/T1595/ }
+  - { id: T1590, category: Reconnaissance, title: Gather Victim Network Information, url: https://attack.mitre.org/techniques/T1590/ }
+  - { id: T1190, category: Initial Access, title: Exploit Public-Facing Application, url: https://attack.mitre.org/techniques/T1190/ }
+  - { id: T1133, category: Initial Access, title: External Remote Services, url: https://attack.mitre.org/techniques/T1133/ }
+  - { id: T1078, category: Initial Access, title: Valid Accounts, url: https://attack.mitre.org/techniques/T1078/ }
+  - { id: T1566, category: Initial Access, title: Phishing, url: https://attack.mitre.org/techniques/T1566/ }
+  - { id: T1059, category: Execution, title: Command and Scripting Interpreter, url: https://attack.mitre.org/techniques/T1059/ }
+  - { id: T1203, category: Execution, title: Exploitation for Client Execution, url: https://attack.mitre.org/techniques/T1203/ }
+  - { id: T1505.003, category: Persistence, title: Server Software Component — Web Shell, url: https://attack.mitre.org/techniques/T1505/003/ }
+  - { id: T1136, category: Persistence, title: Create Account, url: https://attack.mitre.org/techniques/T1136/ }
+  - { id: T1068, category: Privilege Escalation, title: Exploitation for Privilege Escalation, url: https://attack.mitre.org/techniques/T1068/ }
+  - { id: T1548, category: Privilege Escalation, title: Abuse Elevation Control Mechanism, url: https://attack.mitre.org/techniques/T1548/ }
+  - { id: T1110, category: Credential Access, title: Brute Force, url: https://attack.mitre.org/techniques/T1110/ }
+  - { id: T1110.003, category: Credential Access, title: Brute Force — Password Spraying, url: https://attack.mitre.org/techniques/T1110/003/ }
+  - { id: T1552, category: Credential Access, title: Unsecured Credentials, url: https://attack.mitre.org/techniques/T1552/ }
+  - { id: T1555, category: Credential Access, title: Credentials from Password Stores, url: https://attack.mitre.org/techniques/T1555/ }
+  - { id: T1003, category: Credential Access, title: OS Credential Dumping, url: https://attack.mitre.org/techniques/T1003/ }
+  - { id: T1557, category: Credential Access, title: Adversary-in-the-Middle, url: https://attack.mitre.org/techniques/T1557/ }
+  - { id: T1046, category: Discovery, title: Network Service Discovery, url: https://attack.mitre.org/techniques/T1046/ }
+  - { id: T1087, category: Discovery, title: Account Discovery, url: https://attack.mitre.org/techniques/T1087/ }
+  - { id: T1021, category: Lateral Movement, title: Remote Services, url: https://attack.mitre.org/techniques/T1021/ }
+  - { id: T1210, category: Lateral Movement, title: Exploitation of Remote Services, url: https://attack.mitre.org/techniques/T1210/ }
+  - { id: T1550, category: Lateral Movement, title: Use Alternate Authentication Material, url: https://attack.mitre.org/techniques/T1550/ }
+  - { id: T1005, category: Collection, title: Data from Local System, url: https://attack.mitre.org/techniques/T1005/ }
+  - { id: T1213, category: Collection, title: Data from Information Repositories, url: https://attack.mitre.org/techniques/T1213/ }
+  - { id: T1071, category: Command and Control, title: Application Layer Protocol, url: https://attack.mitre.org/techniques/T1071/ }
+  - { id: T1048, category: Exfiltration, title: Exfiltration Over Alternative Protocol, url: https://attack.mitre.org/techniques/T1048/ }
+  - { id: T1567, category: Exfiltration, title: Exfiltration Over Web Service, url: https://attack.mitre.org/techniques/T1567/ }
+  - { id: T1486, category: Impact, title: Data Encrypted for Impact, url: https://attack.mitre.org/techniques/T1486/ }
+  - { id: T1498, category: Impact, title: Network Denial of Service, url: https://attack.mitre.org/techniques/T1498/ }
+  - { id: T1499, category: Impact, title: Endpoint Denial of Service, url: https://attack.mitre.org/techniques/T1499/ }
+  - { id: T1565, category: Impact, title: Data Manipulation, url: https://attack.mitre.org/techniques/T1565/ }

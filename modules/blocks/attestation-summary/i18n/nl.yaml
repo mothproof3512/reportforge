@@ -1,0 +1,8 @@
+title: Resultaat
+intro: "Het onderzoek heeft {total} bevindingen opgeleverd, verdeeld over de ernstniveaus in onderstaande tabel."
+intro_retest: "Van de {total} bevindingen uit het oorspronkelijke rapport zijn er na de hertest {resolved} opgelost; {open} bevindingen staan nog open."
+none: Tijdens het onderzoek zijn geen bevindingen gedaan die een beveiligingsrisico vormen.
+conclusion_none_high: "Er zijn geen openstaande bevindingen van het niveau hoog of kritiek."
+conclusion_open_high: "Er zijn {n} openstaande bevindingen van het niveau hoog of kritiek; {provider} adviseert deze met prioriteit te verhelpen en een hertest te laten uitvoeren."
+found: Gevonden
+open_after: Open na hertest

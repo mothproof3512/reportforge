@@ -66,3 +66,16 @@ core:
     open: Open
     not-tested: Not retested
     risk-accepted: Risk accepted
+  intake_report: Intake document
+  testplan_report: Test plan
+  category: Category
+  item: Item
+  checklist_status:
+    tested: Tested
+    not-tested: Not tested
+    n/a: N/a
+    finding: Finding
+  open_findings: Open findings
+  signature: Signature
+  place_date: Place and date
+  agreed: Agreed

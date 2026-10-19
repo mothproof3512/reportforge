@@ -1,0 +1,6 @@
+id: attestation-coverage
+name: Attestation coverage
+version: "1.0"
+category: attestation
+description: Per standard the share of checklist items tested, for compliance-oriented TPMs (ISO 27001, SOC 2, DORA, NIS2).
+documents: [attestation]

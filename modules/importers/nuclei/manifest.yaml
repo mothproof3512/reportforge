@@ -1,0 +1,5 @@
+id: nuclei
+name: Nuclei (JSON / JSONL export)
+tool: Nuclei
+formats: [json, jsonl]
+description: "Output of `nuclei -jsonl -o out.jsonl` (or -json). Results with the same template are merged into one finding with all matched hosts in the affected list."

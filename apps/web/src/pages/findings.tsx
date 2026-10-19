@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { marked } from 'marked';
 import DOMPurify from 'dompurify';
 import { api, FINDING_TEMPLATE, SEVERITY_LABEL, type Diagnostic, type Engagement, type FindingRow, type LibraryRow, type Meta } from '../api';
-import { Diagnostics, Modal, Sev, confirmDialog, go, useToast } from '../ui';
+import { Diagnostics, Field, Modal, Sev, confirmDialog, go, useToast } from '../ui';
 
 const SEV_ORDER: Record<string, number> = { critical: 0, high: 1, medium: 2, low: 3, info: 4, '': 5 };
 
@@ -19,6 +19,7 @@ export function FindingsWorkbench({ eng, meta }: { eng: Engagement; meta: Meta }
   const [versions, setVersions] = useState<any[]>([]);
   const [libOpen, setLibOpen] = useState(false);
   const [pasteOpen, setPasteOpen] = useState(false);
+  const [importOpen, setImportOpen] = useState(false);
   const [drag, setDrag] = useState(false);
   const ta = useRef<HTMLTextAreaElement>(null);
   const toast = useToast();
@@ -94,13 +95,13 @@ export function FindingsWorkbench({ eng, meta }: { eng: Engagement; meta: Meta }
       <aside className="wb-list">
         <div className="head">
           <div><a href={`#/engagements/${eng.id}/overview`} className="muted small">← {eng.reference}</a><div style={{ fontWeight: 600 }}>Bevindingen <span className="muted">({rows.length})</span></div></div>
-          <div className="row-actions"><button className="btn small primary" onClick={() => addNew()}>Nieuw</button><button className="btn small" onClick={() => setPasteOpen(true)} title="Plak markdown met één of meer bevindingen">Plakken</button><button className="btn small" onClick={() => setLibOpen(true)}>Bibliotheek</button></div>
+          <div className="row-actions"><button className="btn small primary" onClick={() => addNew()}>Nieuw</button><button className="btn small" onClick={() => setPasteOpen(true)} title="Plak markdown met één of meer bevindingen">Plakken</button><button className="btn small" onClick={() => setLibOpen(true)}>Bibliotheek</button><button className="btn small" onClick={() => setImportOpen(true)} title="Nuclei, Burp of Nessus export">Importeren</button></div>
         </div>
         <div className="items">
           {sortedRows.map((r) => <div key={r.id} className={'fitem' + (r.id === sel ? ' active' : '')} onClick={() => select(r.id)}><div><div className="id">{idOf(r)}</div><div className="t">{r.title || '(zonder titel)'}</div></div><Sev s={r.severity} /></div>)}
           {rows.length === 0 && <div className="empty" style={{ margin: 14 }}>Nog geen bevindingen. Plak markdown, kies uit de bibliotheek of begin met een lege bevinding.</div>}
         </div>
-        <div className="head" style={{ borderTop: '1px solid var(--line-2)', borderBottom: 0 }}><a className="btn small" href={`#/engagements/${eng.id}/report`}>Naar rapport →</a></div>
+        <div className="head" style={{ borderTop: '1px solid var(--line-2)', borderBottom: 0 }}><a className="btn small" href={`#/engagements/${eng.id}/documents`}>Naar documenten →</a></div>
       </aside>
 
       <section className={'wb-editor' + (drag ? ' drop' : '')} onDragOver={(e) => { e.preventDefault(); setDrag(true); }} onDragLeave={() => setDrag(false)} onDrop={(e) => { e.preventDefault(); setDrag(false); uploadFiles(e.dataTransfer.files); }}>
@@ -110,6 +111,9 @@ export function FindingsWorkbench({ eng, meta }: { eng: Engagement; meta: Meta }
           <button className="btn small" onClick={() => document.getElementById('rf-upload')?.click()} disabled={sel === null}>Afbeelding…</button>
           <input id="rf-upload" type="file" accept="image/*" multiple style={{ display: 'none' }} onChange={(e) => { if (e.target.files) uploadFiles(e.target.files); e.target.value = ''; }} />
           <button className="btn small" onClick={toLibrary} disabled={sel === null}>→ Bibliotheek</button>
+          {eng.data.retest && <select value={f0?.retest?.status ?? ''} disabled={sel === null} title="Hertest-status" style={{ width: 'auto', padding: '3px 6px' }} onChange={async (e) => { if (!e.target.value || sel === null) return; const note = window.prompt('Toelichting bij de hertest (optioneel):', f0?.retest?.note ?? '') ?? ''; const r = await api.post(`/api/findings/${sel}/retest`, { status: e.target.value, note }); setText(r.markdown); setSaved(r.markdown); loadRows(); }}>
+            <option value="">Hertest…</option><option value="resolved">Opgelost</option><option value="partially-resolved">Deels opgelost</option><option value="open">Open</option><option value="not-tested">Niet hergetest</option><option value="risk-accepted">Risico geaccepteerd</option>
+          </select>}
           <span className="sp" />
           <button className="btn small ghost danger" onClick={remove} disabled={sel === null}>Verwijderen</button>
         </div>
@@ -137,6 +141,7 @@ export function FindingsWorkbench({ eng, meta }: { eng: Engagement; meta: Meta }
       </aside>
 
       <Modal open={pasteOpen} title="Bevinding(en) plakken" onClose={() => setPasteOpen(false)} width={760}><PasteDialog onDone={async (md) => { setPasteOpen(false); await addNew(md); }} /></Modal>
+      <Modal open={importOpen} title="Importeren uit tooling" onClose={() => setImportOpen(false)} width={820}><ImportDialog eng={eng} meta={meta} onDone={async (n) => { setImportOpen(false); const list = await loadRows(); toast(`${n} bevinding(en) geïmporteerd; elke bevinding draagt een verificatiemarkering tot je hem hebt nagelopen`); if (list.length && sel === null) select(list[0].id); }} /></Modal>
       <Modal open={libOpen} title="Uit de bibliotheek" onClose={() => setLibOpen(false)} width={760}><LibraryPicker onPick={async (l) => { setLibOpen(false); await addNew(l.markdown!, l.id); }} /></Modal>
     </div>
   );
@@ -201,6 +206,47 @@ function Preview({ parsed, eng, fid, riskModel, meta }: { parsed: any; eng: Enga
       </div>
       {parsed.affected.length > 0 && <><h3>Betrokken systemen</h3><ul>{parsed.affected.map((x: string, i: number) => <li key={i}><code>{x}</code></li>)}</ul></>}
       {sections.map(([label, key]) => parsed.sections[key] ? <div key={key}><h3>{label}</h3><div dangerouslySetInnerHTML={html(parsed.sections[key])} /></div> : null)}
+    </div>
+  );
+}
+
+function ImportDialog({ eng, meta, onDone }: { eng: Engagement; meta: Meta; onDone: (n: number) => void }) {
+  const [importer, setImporter] = useState(meta.importers[0]?.id ?? '');
+  const [file, setFile] = useState<File | null>(null);
+  const [minSev, setMinSev] = useState('info');
+  const [preview, setPreview] = useState<any>(null);
+  const [sel, setSel] = useState<Set<number>>(new Set());
+  const [busy, setBusy] = useState(false);
+  const toast = useToast();
+  const lang = eng.data.language ?? eng.client_language;
+  const run = async (commit: boolean) => {
+    if (!file) return;
+    setBusy(true);
+    try {
+      const q = `importer=${importer}&lang=${lang}&min_severity=${minSev}` + (commit ? `&commit=1&only=${[...sel].join(',')}` : '');
+      const r = await api.uploadRaw(`/api/engagements/${eng.id}/import?${q}`, await file.arrayBuffer());
+      if (commit) onDone(r.created.length);
+      else { setPreview(r); setSel(new Set(r.findings.map((f: any) => f.index))); }
+    } catch (e: any) { toast(e.message, true); } finally { setBusy(false); }
+  };
+  const imp = meta.importers.find((i) => i.id === importer);
+  return (
+    <div>
+      <div className="grid3">
+        <Field label="Tool"><select value={importer} onChange={(e) => { setImporter(e.target.value); setPreview(null); }}>{meta.importers.map((i) => <option key={i.id} value={i.id}>{i.name}</option>)}</select></Field>
+        <Field label="Exportbestand"><input type="file" onChange={(e) => { setFile(e.target.files?.[0] ?? null); setPreview(null); }} /></Field>
+        <Field label="Minimale ernst"><select value={minSev} onChange={(e) => setMinSev(e.target.value)}><option value="info">Alles</option><option value="low">Laag en hoger</option><option value="medium">Middel en hoger</option><option value="high">Hoog en hoger</option></select></Field>
+      </div>
+      {imp?.description && <p className="muted small">{imp.description}</p>}
+      {!preview && <button className="btn primary" disabled={!file || busy} onClick={() => run(false)}>{busy ? 'Bezig…' : 'Analyseren'}</button>}
+      {preview && <>
+        <p className="small">{preview.findings.length} bevinding(en) uit {preview.tool}; gelijke issues over meerdere hosts zijn samengevoegd. Kies wat je wilt toevoegen.</p>
+        {preview.warnings.map((w: string, i: number) => <div key={i} className="notice small">{w}</div>)}
+        <div style={{ maxHeight: 360, overflow: 'auto', border: '1px solid var(--line)', borderRadius: 6 }}>
+          {preview.findings.map((f: any) => <label key={f.index} className="fitem" style={{ gridTemplateColumns: 'auto 1fr auto' }}><input type="checkbox" checked={sel.has(f.index)} onChange={(e) => { const n = new Set(sel); e.target.checked ? n.add(f.index) : n.delete(f.index); setSel(n); }} /><div><div className="t">{f.title}</div><div className="muted small">{f.affected.slice(0, 3).join(', ')}{f.affected.length > 3 ? ` +${f.affected.length - 3}` : ''}{f.merged > 1 ? ` · ${f.merged} samengevoegd` : ''}</div></div><Sev s={f.severity} /></label>)}
+        </div>
+        <div className="actions" style={{ marginTop: 12 }}><button className="btn primary" disabled={!sel.size || busy} onClick={() => run(true)}>{sel.size} toevoegen</button><button className="btn" onClick={() => setPreview(null)}>Terug</button></div>
+      </>}
     </div>
   );
 }

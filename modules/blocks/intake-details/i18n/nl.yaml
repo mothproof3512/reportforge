@@ -1,0 +1,18 @@
+title: Intake
+goal: Doel van het onderzoek
+background: Achtergrond en omgeving
+test_type: Soort test
+credentials: Accounts en toegang
+test_window: Testvenster
+preconditions: Randvoorwaarden
+rules: Spelregels
+allowed: Toegestaan
+not_allowed: Niet toegestaan
+deliverables: Op te leveren
+emergency: Contact bij incidenten
+agreement: Akkoord
+agreement_text: "Door ondertekening verklaart {client} dat {provider} gemachtigd is de hierboven beschreven testwerkzaamheden uit te voeren op de in de scope genoemde onderdelen, binnen het testvenster en onder de genoemde spelregels."
+types:
+  black-box: Black-box (zonder voorkennis of accounts)
+  grey-box: Grey-box (met accounts en beperkte documentatie)
+  white-box: White-box (met broncode en volledige documentatie)

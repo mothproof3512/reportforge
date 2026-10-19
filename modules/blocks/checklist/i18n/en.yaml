@@ -1,0 +1,5 @@
+title_plan: Checklist
+title_coverage: "Appendix: coverage per standard"
+intro_plan: The test items below are covered during the test. Their status is tracked during execution and included in the report.
+intro_coverage: For each standard applied, this appendix lists which items were tested, which were not applicable and which resulted in a finding.
+summary: "{tested} of {total} items tested, {finding} with a finding, {na} not applicable, {nottested} not tested."

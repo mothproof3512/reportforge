@@ -93,6 +93,44 @@ async function main() {
   assert.ok(tp.pdf);
   const tar = await api('GET', `/api/engagements/${eng.id}/export`);
   assert.ok(tar.byteLength > 1000);
+  // ---- importers
+  const imPrev = await api('POST', `/api/engagements/${eng.id}/import?importer=nuclei&lang=nl`, undefined, readFileSync(join(ROOT, 'tests/fixtures/imports/nuclei.jsonl')), { 'content-type': 'application/octet-stream' });
+  assert.equal(imPrev.findings.length, 3);
+  const imDone = await api('POST', `/api/engagements/${eng.id}/import?importer=nuclei&lang=nl&commit=1&only=0,2`, undefined, readFileSync(join(ROOT, 'tests/fixtures/imports/nuclei.jsonl')), { 'content-type': 'application/octet-stream' });
+  assert.equal(imDone.created.length, 2);
+  await assert.rejects(api('POST', `/api/engagements/${eng.id}/import?importer=burp`, undefined, readFileSync(join(ROOT, 'tests/fixtures/imports/nuclei.jsonl')), { 'content-type': 'application/octet-stream' }), /400/);
+  for (const c of imDone.created) await api('DELETE', `/api/findings/${c.id}`);
+  // ---- phase 3: process flow
+  await api('PUT', `/api/engagements/${eng.id}`, { data: { intake: y.intake, testplan: { approach: y.testplan.approach, planning: y.testplan.planning }, attestation: y.attestation } });
+  const sug = await api('GET', `/api/engagements/${eng.id}/checklists/suggest`);
+  assert.ok(sug.suggested.includes('wstg-4.2') && sug.suggested.includes('owasp-api-top10-2023'), 'suggestions from scope types');
+  const gen = await api('POST', `/api/engagements/${eng.id}/checklists/generate`, { standards: sug.suggested });
+  assert.equal(gen.data.testplan.checklists.length, 2);
+  assert.equal(gen.data.testplan.checklists.find((c: any) => c.standard === 'wstg-4.2').items.length, 100);
+  for (const tpl of ['intake', 'testplan', 'attestation-short', 'attestation-compliance', 'pentest-report']) {
+    const rr = await api('POST', `/api/engagements/${eng.id}/render`, { formats: ['pdf', 'docx'], template: tpl });
+    assert.ok(rr.ok, `${tpl}: ` + JSON.stringify(rr.diagnostics.filter((d: any) => d.level === 'error')));
+  }
+  const rendersAll = await api('GET', `/api/engagements/${eng.id}/renders`);
+  const reportRender = rendersAll.find((x: any) => x.template === 'pentest-report' && x.ok);
+  const del = await api('POST', `/api/engagements/${eng.id}/deliver`, { render_id: reportRender.id, note: 'Verzonden per beveiligde mail' });
+  assert.equal(del.sha256_pdf.length, 64);
+  assert.equal((await api('GET', `/api/engagements/${eng.id}`)).step, 6);
+  // retest
+  const rt = await api('POST', `/api/engagements/${eng.id}/retest/start`, { date: '2026-12-01' });
+  assert.equal(rt.data.version, '2.0'); assert.equal(rt.data.retest.of_version, '1.0'); assert.equal(rt.step, 7);
+  const fl = await api('GET', `/api/engagements/${eng.id}/findings`);
+  const f1 = await api('GET', `/api/findings/${fl[0].id}`);
+  assert.ok(/\*\*Retest\*\*: Not tested/.test(f1.markdown), 'retest marker added');
+  const f1b = await api('POST', `/api/findings/${fl[0].id}/retest`, { status: 'resolved', note: 'fix verified' });
+  assert.ok(/\*\*Retest\*\*: Resolved \(fix verified\)/.test(f1b.markdown), f1b.markdown.split('\n')[2]);
+  const rr2 = await api('POST', `/api/engagements/${eng.id}/render`, { formats: ['pdf'], template: 'retest-report' });
+  assert.ok(rr2.ok, JSON.stringify(rr2.diagnostics.filter((d: any) => d.level === 'error')));
+  const rr3 = await api('POST', `/api/engagements/${eng.id}/render`, { formats: ['pdf'], template: 'attestation-extended' });
+  assert.ok(rr3.ok);
+  await api('POST', `/api/engagements/${eng.id}/deliver`, { render_id: rr2.renderId });
+  assert.equal((await api('GET', `/api/engagements/${eng.id}`)).step, 9);
+  assert.equal((await api('GET', `/api/engagements/${eng.id}/deliveries`)).length, 2);
   // delete cascade
   await api('DELETE', `/api/engagements/${eng.id}`);
   assert.equal((await api('GET', '/api/engagements')).length, 0);

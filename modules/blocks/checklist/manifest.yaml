@@ -1,0 +1,8 @@
+id: checklist
+name: Checklist / coverage
+version: "1.0"
+category: appendix
+description: "Checklist per standard. mode: plan lists the items to test (test plan); mode: coverage shows the status per item and the findings linked to it (report appendix)."
+documents: [testplan, report, retest, attestation]
+options:
+  mode: coverage

@@ -1,0 +1,18 @@
+title: Intake
+goal: Objective
+background: Background and environment
+test_type: Type of test
+credentials: Accounts and access
+test_window: Test window
+preconditions: Preconditions
+rules: Rules of engagement
+allowed: Allowed
+not_allowed: Not allowed
+deliverables: Deliverables
+emergency: Incident contact
+agreement: Agreement
+agreement_text: "By signing, {client} declares that {provider} is authorised to perform the test activities described above on the components listed in the scope, within the test window and under the stated rules of engagement."
+types:
+  black-box: Black-box (no prior knowledge or accounts)
+  grey-box: Grey-box (with accounts and limited documentation)
+  white-box: White-box (with source code and full documentation)

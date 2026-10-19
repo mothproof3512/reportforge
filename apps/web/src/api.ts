@@ -14,9 +14,10 @@ export const api = {
   put: <T = any>(p: string, b?: unknown) => call<T>('PUT', p, b),
   del: <T = any>(p: string) => call<T>('DELETE', p),
   upload: <T = any>(p: string, file: Blob) => call<T>('POST', p, undefined, file),
+  uploadRaw: <T = any>(p: string, data: ArrayBuffer) => call<T>('POST', p, undefined, data),
 };
 
-export interface Meta { themes: Array<{ slug: string; name: string; provider?: string; primary?: string }>; standards: Array<{ id: string; name: string; short: string; version?: string; kind: string; items: number }>; templates: Array<{ id: string; name: string; document: string; blocks: string[] }>; blocks: any[]; riskModels: Array<{ id: string; name: string }>; languages: string[]; steps: string[]; typst: string | null }
+export interface Meta { importers: Array<{ id: string; name: string; formats: string[]; description?: string }>; themes: Array<{ slug: string; name: string; provider?: string; primary?: string }>; standards: Array<{ id: string; name: string; short: string; version?: string; kind: string; items: number }>; templates: Array<{ id: string; name: string; document: string; blocks: string[] }>; blocks: any[]; riskModels: Array<{ id: string; name: string }>; languages: string[]; steps: string[]; typst: string | null }
 export interface Client { id: number; name: string; slug: string; theme: string; language: string; risk_model: string; notes: string; engagements?: number }
 export interface EngagementRow { id: number; reference: string; title: string; step: number; client_name: string; client_id: number; end_client: string; version: string; date: string; findings: number; updated_at: string }
 export interface Engagement { id: number; client_id: number; reference: string; title: string; step: number; data: any; client_slug: string; client_theme: string; client_language: string; client_risk_model: string; client_name: string; updated_at: string }

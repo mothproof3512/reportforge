@@ -57,3 +57,99 @@ recommendations: |
 document_history:
   - { version: "0.9", date: 2026-09-16, author: J. Jansen, change: Conceptrapport ter review }
   - { version: "1.0", date: 2026-09-19, author: J. Jansen, change: Definitief na interne review en bespreking met opdrachtgever }
+
+# ---- stap 1: intake
+intake:
+  goal: |
+    Vaststellen in hoeverre een aanvaller zonder voorkennis, of met een regulier klantaccount, ongeautoriseerde toegang kan krijgen tot klantgegevens of de dienstverlening van de webshop kan verstoren. Aanleiding is de migratie naar het nieuwe klantportaal en de aanstaande ISO 27001-audit.
+  background: |
+    De webshop (storefront) en het klantportaal zijn Python/Django-applicaties achter een gedeelde REST API (v2). De omgeving draait in een eigen DMZ bij een Nederlandse hostingpartij; betalingen lopen via Mollie en vallen buiten scope.
+  test_type: grey-box
+  credentials: |
+    Twee klantaccounts (`tester1`, `tester2`) op de acceptatieomgeving, aangemaakt door de opdrachtgever; geen medewerkersaccounts. Broncode wordt niet ter beschikking gesteld.
+  test_window: Werkdagen 08:00–18:00 op acceptatie; infrastructuurscans op productie uitsluitend na afstemming met Tom Bakker.
+  preconditions: |
+    - De IP-adressen van de testers worden gewhitelist op de WAF.
+    - De opdrachtgever zorgt dat acceptatie een recente kopie van productie is (geanonimiseerde data).
+    - Bevindingen van niveau kritiek worden direct telefonisch gemeld.
+  allowed:
+    - Handmatige en geautomatiseerde kwetsbaarheidsonderzoeken op de in scope genoemde onderdelen
+    - Verificatie van kwetsbaarheden door beperkte exploitatie op acceptatie
+    - Poortscans en servicedetectie op de DMZ-range
+  not_allowed:
+    - Denial-of-service of volumetrische tests
+    - Exploitatie op productie
+    - Social engineering, phishing of fysieke toegang
+    - Wijzigen of verwijderen van productiegegevens
+  deliverables:
+    - Rapportage (PDF en DOCX) met managementsamenvatting en technische bevindingen
+    - Third Party Memorandum voor de auditor
+    - Hertest van de bevindingen binnen drie maanden
+  emergency_contact: Tom Bakker, 06-00000000 (werkdagen) · servicedesk@voorbeeldwebshop.nl
+
+# ---- stap 2: testplan
+testplan:
+  approach: |
+    De test wordt uitgevoerd als grey-box penetratietest volgens PTES, met de OWASP WSTG 4.2 als checklist voor de webapplicaties en de OWASP API Security Top 10 voor de REST API. Elk scope-onderdeel doorloopt de fasen verkenning, kwetsbaarheidsanalyse, exploitatie (beperkt, alleen acceptatie) en rapportage.
+  per_scope:
+    - { asset: https://shop.voorbeeldwebshop.nl, approach: "Volledige WSTG-doorloop met nadruk op invoervalidatie (zoeken, filters, checkout) en sessiebeheer." }
+    - { asset: https://mijn.voorbeeldwebshop.nl, approach: "Autorisatie op objectniveau (orders, adressen, retouren), accountfuncties en wachtwoordreset." }
+    - { asset: https://api.voorbeeldwebshop.nl/v2, approach: "API Top 10: BOLA/BFLA, rate limiting, massa-assignment, foutafhandeling; vergelijking van gedrag tussen portaal en API." }
+    - { asset: 203.0.113.0/28, approach: "Poortscan, servicedetectie en versiecontrole; geen exploitatie (productie)." }
+  planning:
+    - { phase: Kick-off en toegang, start: 2026-09-01, end: 2026-09-01 }
+    - { phase: Verkenning en analyse, start: 2026-09-02, end: 2026-09-05 }
+    - { phase: Exploitatie en verificatie, start: 2026-09-08, end: 2026-09-11 }
+    - { phase: Rapportage en review, start: 2026-09-12, end: 2026-09-19 }
+    - { phase: Hertest, start: 2026-12-01, end: 2026-12-05, notes: Na doorvoeren van de maatregelen }
+  go_nogo: |
+    Go op 1 september 2026 na bevestiging van de whitelisting en de testaccounts door de opdrachtgever.
+  checklists:
+    - standard: owasp-api-top10-2023
+      items:
+        - { id: API1:2023, status: tested }
+        - { id: API2:2023, status: tested }
+        - { id: API3:2023, status: tested, note: Geen massa-assignment aangetroffen }
+        - { id: API4:2023, status: tested }
+        - { id: API5:2023, status: tested }
+        - { id: API6:2023, status: n/a, note: Geen gevoelige bedrijfsprocessen in de API buiten checkout }
+        - { id: API7:2023, status: tested }
+        - { id: API8:2023, status: tested }
+        - { id: API9:2023, status: tested, note: v1 is niet meer bereikbaar }
+        - { id: API10:2023, status: not-tested, note: Betaalprovider buiten scope }
+    - standard: wstg-4.2
+      items:
+        - { id: WSTG-INFO-02, status: tested }
+        - { id: WSTG-INFO-04, status: tested }
+        - { id: WSTG-CONF-04, status: tested }
+        - { id: WSTG-CONF-06, status: tested }
+        - { id: WSTG-CONF-07, status: tested }
+        - { id: WSTG-CONF-12, status: tested }
+        - { id: WSTG-IDNT-04, status: tested }
+        - { id: WSTG-ATHN-01, status: tested }
+        - { id: WSTG-ATHN-02, status: tested }
+        - { id: WSTG-ATHN-03, status: tested }
+        - { id: WSTG-ATHN-07, status: tested }
+        - { id: WSTG-ATHN-09, status: tested }
+        - { id: WSTG-ATHZ-02, status: tested }
+        - { id: WSTG-ATHZ-04, status: tested }
+        - { id: WSTG-SESS-02, status: tested }
+        - { id: WSTG-SESS-05, status: tested }
+        - { id: WSTG-SESS-06, status: tested }
+        - { id: WSTG-INPV-01, status: tested }
+        - { id: WSTG-INPV-02, status: tested }
+        - { id: WSTG-INPV-05, status: tested }
+        - { id: WSTG-INPV-12, status: tested }
+        - { id: WSTG-INPV-17, status: tested }
+        - { id: WSTG-ERRH-01, status: tested }
+        - { id: WSTG-CRYP-01, status: tested }
+        - { id: WSTG-BUSL-01, status: tested }
+        - { id: WSTG-BUSL-05, status: tested }
+        - { id: WSTG-CLNT-09, status: tested }
+        - { id: WSTG-APIT-01, status: n/a, note: Geen GraphQL }
+
+# ---- stap 5: TPM / attestation
+attestation:
+  variant: standard
+  signatory: { name: M. Peters, role: Principal consultant }
+  place: Amsterdam

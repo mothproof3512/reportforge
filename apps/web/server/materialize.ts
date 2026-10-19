@@ -66,6 +66,9 @@ export function materialize(db: Db, p: Paths, id: number, overrides: { language?
     recommendations: d.recommendations,
     document_history: d.document_history,
     retest: d.retest,
+    intake: d.intake,
+    testplan: d.testplan,
+    attestation: d.attestation,
   };
   for (const k of Object.keys(yaml)) if (yaml[k] === undefined || yaml[k] === null || yaml[k] === '') delete yaml[k];
   writeFileSync(join(dir, 'engagement.yaml'), toYaml(yaml));
@@ -77,7 +80,7 @@ export function materialize(db: Db, p: Paths, id: number, overrides: { language?
   return dir;
 }
 
-export interface RenderOutcome { ok: boolean; diagnostics: Diagnostic[]; pdf?: string; docx?: string; durationMs: number; dir: string }
+export interface RenderOutcome { ok: boolean; diagnostics: Diagnostic[]; pdf?: string; docx?: string; durationMs: number; dir: string; renderId?: number }
 
 export async function renderEngagement(db: Db, p: Paths, id: number, opts: { formats?: string[]; language?: string; theme?: string; template?: string; mods?: Modules } = {}): Promise<RenderOutcome> {
   const t0 = Date.now();
@@ -96,7 +99,7 @@ export async function renderEngagement(db: Db, p: Paths, id: number, opts: { for
   const outDir = join(p.renders, String(id));
   mkdirSync(outDir, { recursive: true });
   const stamp = new Date().toISOString().replace(/[-:]/g, '').slice(0, 15);
-  const base = `${ctx.engagement.reference}-v${ctx.engagement.version}-${ctx.lang}-${stamp}`.replace(/[^\w.-]+/g, '_');
+  const base = `${ctx.engagement.reference}-${ctx.template.id}-v${ctx.engagement.version}-${ctx.lang}-${stamp}`.replace(/[^\w.-]+/g, '_');
   const out: RenderOutcome = { ok: errors.length === 0, diagnostics: all, durationMs: 0, dir };
   if (errors.length === 0) {
     try {
@@ -108,8 +111,9 @@ export async function renderEngagement(db: Db, p: Paths, id: number, opts: { for
     }
   }
   out.durationMs = Date.now() - t0;
-  db.prepare('INSERT INTO renders (engagement_id, document, version, language, theme, pdf, docx, diagnostics, ok, duration_ms) VALUES (?,?,?,?,?,?,?,?,?,?)')
-    .run(id, ctx.document, ctx.engagement.version, ctx.lang, ctx.theme.id, out.pdf ?? null, out.docx ?? null, JSON.stringify(out.diagnostics), out.ok ? 1 : 0, out.durationMs);
+  const info = db.prepare('INSERT INTO renders (engagement_id, document, version, language, theme, template, pdf, docx, diagnostics, ok, duration_ms) VALUES (?,?,?,?,?,?,?,?,?,?,?)')
+    .run(id, ctx.document, ctx.engagement.version, ctx.lang, ctx.theme.id, ctx.template.id, out.pdf ?? null, out.docx ?? null, JSON.stringify(out.diagnostics), out.ok ? 1 : 0, out.durationMs);
+  out.renderId = Number(info.lastInsertRowid);
   return out;
 }
 
