@@ -1,0 +1,357 @@
+# Sanzo Wada, "A Dictionary of Color Combinations" (Haishoku Sōkan, 1933): 159 colours, 348 combinations.
+# Data converted from the open data set https://github.com/dblodorn/sanzo-wada (MIT) by scripts/sanzo-wada.mjs.
+# `roles` is Reportforge's suggestion for primary (headings, cover), accent (eyebrows, rules) and surface
+# (light fills); `report_fit` scores legibility and contrast on white paper, `top` ranks the best 30.
+id: sanzo-wada
+name: Sanzo Wada — Dictionary of Color Combinations
+year: 1933
+colors: 159
+combinations:
+  - { number: 1, colors: [{ name: "English Red", hex: "#DE4500" }, { name: "Cerulian Blue", hex: "#29BDAD" }] }
+  - { number: 2, colors: [{ name: "Yellow Orange", hex: "#FF8C00" }, { name: "Dark Tyrian Blue", hex: "#0D2B52" }] }
+  - { number: 3, colors: [{ name: "Raw Sienna", hex: "#B85E00" }, { name: "Pale Lemon Yellow", hex: "#FFF59E" }] }
+  - { number: 4, colors: [{ name: "Isabella Color", hex: "#C3A55C" }, { name: "Red Violet", hex: "#3400A3" }] }
+  - { number: 5, colors: [{ name: "Cossack Green", hex: "#328E13" }, { name: "Vandar Poel's Blue", hex: "#003E83" }], roles: { primary: "#003E83", accent: "#328E13" }, report_fit: 0.778 }
+  - { number: 6, colors: [{ name: "Grenadine Pink", hex: "#FF616B" }, { name: "Deep Indigo", hex: "#000831" }] }
+  - { number: 7, colors: [{ name: "Orange", hex: "#FF5200" }, { name: "Glaucous Green", hex: "#B3E8C2" }] }
+  - { number: 8, colors: [{ name: "Cinnamon Rufous", hex: "#C2612C" }, { name: "Grayish Lavender - A", hex: "#B8B8FF" }] }
+  - { number: 9, colors: [{ name: "Violet Red", hex: "#3D0079" }, { name: "Dull Blue Violet", hex: "#6E66D4" }], roles: { primary: "#3D0079", accent: "#6E66D4" }, report_fit: 0.603 }
+  - { number: 10, colors: [{ name: "Cinnamon Rufous", hex: "#C2612C" }, { name: "Dark Citrine", hex: "#7E8743" }] }
+  - { number: 11, colors: [{ name: "Ivory Buff", hex: "#EBD999" }, { name: "Mineral Gray", hex: "#9FC2B2" }] }
+  - { number: 12, colors: [{ name: "Isabella Color", hex: "#C3A55C" }, { name: "Green Blue", hex: "#2DBC94" }] }
+  - { number: 13, colors: [{ name: "Raw Sienna", hex: "#B85E00" }, { name: "Veronia Purple", hex: "#7E3075" }], roles: { primary: "#7E3075", accent: "#B85E00" }, report_fit: 0.715 }
+  - { number: 14, colors: [{ name: "Spinel Red", hex: "#FF4DC9" }, { name: "Naples Yellow", hex: "#FAED8F" }] }
+  - { number: 15, colors: [{ name: "Benzol Green", hex: "#00D973" }, { name: "Grayish Lavender - A", hex: "#B8B8FF" }] }
+  - { number: 16, colors: [{ name: "Vandyke Red", hex: "#740909" }, { name: "Pale King's Blue", hex: "#ABF5ED" }] }
+  - { number: 17, colors: [{ name: "Eugenia Red | B", hex: "#E62E73" }, { name: "Sea Green", hex: "#33FF7D" }] }
+  - { number: 18, colors: [{ name: "Fawn", hex: "#D1B0B3" }, { name: "Dusky Madder Violet", hex: "#2D0060" }] }
+  - { number: 19, colors: [{ name: "Mars Brown Tobacco", hex: "#522000" }, { name: "Night Green", hex: "#7AFF00" }] }
+  - { number: 20, colors: [{ name: "Calamine BLue", hex: "#80FFCC" }, { name: "Laelia Pink", hex: "#CC85D1" }] }
+  - { number: 21, colors: [{ name: "Grenadine Pink", hex: "#FF616B" }, { name: "Sea Green", hex: "#33FF7D" }] }
+  - { number: 22, colors: [{ name: "Yellow", hex: "#FFFF00" }, { name: "Deep Lyons Blue", hex: "#0024CC" }] }
+  - { number: 23, colors: [{ name: "Cinnamon Buff", hex: "#FFBF6E" }, { name: "Light Mauve", hex: "#9161F2" }] }
+  - { number: 24, colors: [{ name: "Sepia", hex: "#503D00" }, { name: "Veronia Purple", hex: "#7E3075" }], roles: { primary: "#503D00", accent: "#7E3075" }, report_fit: 0.774 }
+  - { number: 25, colors: [{ name: "Etruscan Red", hex: "#C9303E" }, { name: "Nile Blue", hex: "#BFFFE6" }] }
+  - { number: 26, colors: [{ name: "Golden Yellow", hex: "#FA9442" }, { name: "Pale Raw Umber", hex: "#5E4017" }] }
+  - { number: 27, colors: [{ name: "Corinthian Pink", hex: "#FFA6D9" }, { name: "Slate Color", hex: "#1B3644" }] }
+  - { number: 28, colors: [{ name: "Madder Brown", hex: "#651300" }, { name: "Deep Indigo", hex: "#000831" }] }
+  - { number: 29, colors: [{ name: "Krongbergs Green", hex: "#759243" }, { name: "Salvia Blue", hex: "#96BFE6" }] }
+  - { number: 30, colors: [{ name: "Pompeian Red", hex: "#A90636" }, { name: "Mineral Gray", hex: "#9FC2B2" }] }
+  - { number: 31, colors: [{ name: "Red Orange", hex: "#E81900" }, { name: "Pale Lemon Yellow", hex: "#FFF59E" }] }
+  - { number: 32, colors: [{ name: "Ochraceous Salmon", hex: "#D99E73" }, { name: "Night Green", hex: "#7AFF00" }] }
+  - { number: 33, top: 23, colors: [{ name: "Raw Sienna", hex: "#B85E00" }, { name: "Slate Color", hex: "#1B3644" }], roles: { primary: "#1B3644", accent: "#B85E00" }, report_fit: 0.876 }
+  - { number: 34, colors: [{ name: "Eosine Pink", hex: "#FF5EC4" }, { name: "Neutral Gray", hex: "#B5D1CC" }] }
+  - { number: 35, colors: [{ name: "Light Brown Drab", hex: "#B08699" }, { name: "Carmine Red", hex: "#A10B2B" }], roles: { primary: "#A10B2B", accent: "#B08699" }, report_fit: 0.47 }
+  - { number: 36, colors: [{ name: "Sulphine Yellow", hex: "#BAA600" }, { name: "Turquoise Green", hex: "#B5FFC2" }] }
+  - { number: 37, top: 30, colors: [{ name: "Brick Red", hex: "#A32100" }, { name: "Red Violet", hex: "#3400A3" }], roles: { primary: "#3400A3", accent: "#A32100" }, report_fit: 0.844 }
+  - { number: 38, colors: [{ name: "Diamine Green", hex: "#1B8E13" }, { name: "Deep Lyons Blue", hex: "#0024CC" }], roles: { primary: "#0024CC", accent: "#1B8E13" }, report_fit: 0.684 }
+  - { number: 39, colors: [{ name: "Carmine", hex: "#D60036" }, { name: "Helvetia Blue", hex: "#0057BA" }], roles: { primary: "#0057BA", accent: "#D60036" }, report_fit: 0.71 }
+  - { number: 40, colors: [{ name: "Vinaceous Tawny", hex: "#C74300" }, { name: "Citron Yellow", hex: "#A6D40D" }] }
+  - { number: 41, colors: [{ name: "Dark Citrine", hex: "#7E8743" }, { name: "Calamine BLue", hex: "#80FFCC" }] }
+  - { number: 42, colors: [{ name: "Yellow Ocher", hex: "#E0B81F" }, { name: "Violet", hex: "#2619D1" }] }
+  - { number: 43, colors: [{ name: "Corinthian Pink", hex: "#FFA6D9" }, { name: "Aconite Violet", hex: "#9C52F2" }] }
+  - { number: 44, colors: [{ name: "Light Porcelain Green", hex: "#23C17C" }, { name: "Olympic Blue", hex: "#4F8FE6" }] }
+  - { number: 45, colors: [{ name: "Seashell Pink", hex: "#FFCFC4" }, { name: "Lemon Yellow", hex: "#F2FF26" }] }
+  - { number: 46, colors: [{ name: "Orange", hex: "#FF5200" }, { name: "Black", hex: "#000000" }] }
+  - { number: 47, colors: [{ name: "Etruscan Red", hex: "#C9303E" }, { name: "Grayish Lavender - B", hex: "#BFABCC" }] }
+  - { number: 48, colors: [{ name: "Rosolanc Purple", hex: "#B319AB" }, { name: "Helvetia Blue", hex: "#0057BA" }], roles: { primary: "#0057BA", accent: "#B319AB" }, report_fit: 0.707 }
+  - { number: 49, colors: [{ name: "Pale King's Blue", hex: "#ABF5ED" }, { name: "Blue", hex: "#0D75FF" }] }
+  - { number: 50, colors: [{ name: "Ivory Buff", hex: "#EBD999" }, { name: "Dusky Madder Violet", hex: "#2D0060" }] }
+  - { number: 51, colors: [{ name: "Carmine Red", hex: "#A10B2B" }, { name: "Blue", hex: "#0D75FF" }], roles: { primary: "#A10B2B", accent: "#0D75FF" }, report_fit: 0.726 }
+  - { number: 52, colors: [{ name: "Sulpher Yellow", hex: "#F5F5B8" }, { name: "Black", hex: "#000000" }] }
+  - { number: 53, colors: [{ name: "Yellow Orange", hex: "#FF8C00" }, { name: "Dusky Madder Violet", hex: "#2D0060" }] }
+  - { number: 54, colors: [{ name: "Benzol Green", hex: "#00D973" }, { name: "Light Glaucous Blue", hex: "#A6E6DB" }] }
+  - { number: 55, colors: [{ name: "Old Rose", hex: "#D94D99" }, { name: "White", hex: "#FFFFFF" }] }
+  - { number: 56, colors: [{ name: "Grayish Lavender - B", hex: "#BFABCC" }, { name: "Violet", hex: "#2619D1" }] }
+  - { number: 57, top: 18, colors: [{ name: "Taupe Brown", hex: "#6B2E63" }, { name: "Slate Color", hex: "#1B3644" }], roles: { primary: "#1B3644", accent: "#6B2E63" }, report_fit: 0.896 }
+  - { number: 58, colors: [{ name: "Hay's Russet", hex: "#681916" }, { name: "Sea Green", hex: "#33FF7D" }] }
+  - { number: 59, colors: [{ name: "Eosine Pink", hex: "#FF5EC4" }, { name: "Citrine", hex: "#A3AD00" }] }
+  - { number: 60, colors: [{ name: "Pale Lemon Yellow", hex: "#FFF59E" }, { name: "Dark Tyrian Blue", hex: "#0D2B52" }] }
+  - { number: 61, colors: [{ name: "Light Green Yellow", hex: "#BDF226" }, { name: "Cotinga Purple", hex: "#340059" }] }
+  - { number: 62, colors: [{ name: "Yellow", hex: "#FFFF00" }, { name: "Black", hex: "#000000" }] }
+  - { number: 63, colors: [{ name: "Vistoris Lake", hex: "#5C2C45" }, { name: "Cerulian Blue", hex: "#29BDAD" }] }
+  - { number: 64, colors: [{ name: "Aconite Violet", hex: "#9C52F2" }, { name: "Dark Soft Violet", hex: "#4D52DE" }], roles: { primary: "#4D52DE", accent: "#9C52F2" }, report_fit: 0.38 }
+  - { number: 65, colors: [{ name: "Sulphine Yellow", hex: "#BAA600" }, { name: "Calamine BLue", hex: "#80FFCC" }] }
+  - { number: 66, colors: [{ name: "Olive Ocher", hex: "#D1BD19" }, { name: "Olive Green", hex: "#58771E" }] }
+  - { number: 67, colors: [{ name: "Olympic Blue", hex: "#4F8FE6" }, { name: "Dark Tyrian Blue", hex: "#0D2B52" }], roles: { primary: "#0D2B52", accent: "#4F8FE6" }, report_fit: 0.627 }
+  - { number: 68, colors: [{ name: "Light Brown Drab", hex: "#B08699" }, { name: "Yellow", hex: "#FFFF00" }] }
+  - { number: 69, colors: [{ name: "Warm Gray", hex: "#9CB29E" }, { name: "Black", hex: "#000000" }] }
+  - { number: 70, colors: [{ name: "Raw Sienna", hex: "#B85E00" }, { name: "Lincoln Green", hex: "#405416" }], roles: { primary: "#405416", accent: "#B85E00" }, report_fit: 0.641 }
+  - { number: 71, colors: [{ name: "Pompeian Red", hex: "#A90636" }, { name: "Ochraceous Salmon", hex: "#D99E73" }] }
+  - { number: 72, colors: [{ name: "Sulpher Yellow", hex: "#F5F5B8" }, { name: "Pale King's Blue", hex: "#ABF5ED" }] }
+  - { number: 73, colors: [{ name: "Pale Raw Umber", hex: "#5E4017" }, { name: "Rainette Green", hex: "#85B857" }] }
+  - { number: 74, colors: [{ name: "Turquoise Green", hex: "#B5FFC2" }, { name: "Green Blue", hex: "#2DBC94" }] }
+  - { number: 75, colors: [{ name: "Pale King's Blue", hex: "#ABF5ED" }, { name: "Violet Blue", hex: "#202D85" }] }
+  - { number: 76, colors: [{ name: "Pale Lemon Yellow", hex: "#FFF59E" }, { name: "Warm Gray", hex: "#9CB29E" }] }
+  - { number: 77, colors: [{ name: "Eugenia Red | B", hex: "#E62E73" }, { name: "Vandar Poel's Blue", hex: "#003E83" }], roles: { primary: "#003E83", accent: "#E62E73" }, report_fit: 0.812 }
+  - { number: 78, colors: [{ name: "Pinkish Cinnamon", hex: "#F2AD78" }, { name: "Venice Green", hex: "#6BFFB3" }] }
+  - { number: 79, colors: [{ name: "Madder Brown", hex: "#651300" }, { name: "Green Blue", hex: "#2DBC94" }] }
+  - { number: 80, colors: [{ name: "Sulpher Yellow", hex: "#F5F5B8" }, { name: "Light Mauve", hex: "#9161F2" }] }
+  - { number: 81, colors: [{ name: "Golden Yellow", hex: "#FA9442" }, { name: "Warm Gray", hex: "#9CB29E" }] }
+  - { number: 82, colors: [{ name: "Hay's Russet", hex: "#681916" }, { name: "Dusky Madder Violet", hex: "#2D0060" }], roles: { primary: "#2D0060", accent: "#681916" }, report_fit: 0.834 }
+  - { number: 83, colors: [{ name: "Olive Buff", hex: "#BCD382" }, { name: "Violet Blue", hex: "#202D85" }] }
+  - { number: 84, colors: [{ name: "Seashell Pink", hex: "#FFCFC4" }, { name: "Deep Slate Green", hex: "#0F261F" }] }
+  - { number: 85, colors: [{ name: "Vinaceous Tawny", hex: "#C74300" }, { name: "Antwarp Blue", hex: "#008AA1" }], roles: { primary: "#C74300", accent: "#008AA1" }, report_fit: 0.638 }
+  - { number: 86, colors: [{ name: "Raw Sienna", hex: "#B85E00" }, { name: "Sea Green", hex: "#33FF7D" }] }
+  - { number: 87, colors: [{ name: "Corinthian Pink", hex: "#FFA6D9" }, { name: "Citron Yellow", hex: "#A6D40D" }] }
+  - { number: 88, colors: [{ name: "Seashell Pink", hex: "#FFCFC4" }, { name: "Blue", hex: "#0D75FF" }] }
+  - { number: 89, colors: [{ name: "Yellow Orange", hex: "#FF8C00" }, { name: "Violet Blue", hex: "#202D85" }] }
+  - { number: 90, colors: [{ name: "Eosine Pink", hex: "#FF5EC4" }, { name: "Aconite Violet", hex: "#9C52F2" }] }
+  - { number: 91, colors: [{ name: "Vistoris Lake", hex: "#5C2C45" }, { name: "Orange Rufous", hex: "#C05200" }], roles: { primary: "#5C2C45", accent: "#C05200" }, report_fit: 0.719 }
+  - { number: 92, colors: [{ name: "Coral Red", hex: "#FF7399" }, { name: "Benzol Green", hex: "#00D973" }] }
+  - { number: 93, colors: [{ name: "Citrine", hex: "#A3AD00" }, { name: "Light Glaucous Blue", hex: "#A6E6DB" }] }
+  - { number: 94, colors: [{ name: "Ivory Buff", hex: "#EBD999" }, { name: "Dusky Green", hex: "#00592E" }] }
+  - { number: 95, top: 20, colors: [{ name: "Hay's Russet", hex: "#681916" }, { name: "Dull Violet Black", hex: "#06004F" }], roles: { primary: "#06004F", accent: "#681916" }, report_fit: 0.887 }
+  - { number: 96, colors: [{ name: "Yellow Ocher", hex: "#E0B81F" }, { name: "Olive", hex: "#718600" }] }
+  - { number: 97, colors: [{ name: "Corinthian Pink", hex: "#FFA6D9" }, { name: "Etruscan Red", hex: "#C9303E" }] }
+  - { number: 98, top: 21, colors: [{ name: "Madder Brown", hex: "#651300" }, { name: "Violet Blue", hex: "#202D85" }], roles: { primary: "#651300", accent: "#202D85" }, report_fit: 0.885 }
+  - { number: 99, colors: [{ name: "Pale Lemon Yellow", hex: "#FFF59E" }, { name: "Cerulian Blue", hex: "#29BDAD" }] }
+  - { number: 100, colors: [{ name: "Buffy Citrine", hex: "#888D2A" }, { name: "Dull Blue Violet", hex: "#6E66D4" }], roles: { primary: "#6E66D4", accent: "#888D2A" }, report_fit: 0.61 }
+  - { number: 101, colors: [{ name: "Cameo Pink", hex: "#E6ADCF" }, { name: "Deep Lyons Blue", hex: "#0024CC" }] }
+  - { number: 102, colors: [{ name: "Ivory Buff", hex: "#EBD999" }, { name: "Orange Rufous", hex: "#C05200" }] }
+  - { number: 103, colors: [{ name: "Cinnamon Rufous", hex: "#C2612C" }, { name: "Dusky Madder Violet", hex: "#2D0060" }], roles: { primary: "#2D0060", accent: "#C2612C" }, report_fit: 0.8 }
+  - { number: 104, colors: [{ name: "Carmine Red", hex: "#A10B2B" }, { name: "Sulpher Yellow", hex: "#F5F5B8" }] }
+  - { number: 105, colors: [{ name: "Cameo Pink", hex: "#E6ADCF" }, { name: "Chromium Green", hex: "#66AB56" }] }
+  - { number: 106, colors: [{ name: "Antwarp Blue", hex: "#008AA1" }, { name: "Dull Violet Black", hex: "#06004F" }], roles: { primary: "#06004F", accent: "#008AA1" }, report_fit: 0.641 }
+  - { number: 107, colors: [{ name: "Apricot Yellow", hex: "#FFE600" }, { name: "Light Grayish Olive", hex: "#76844E" }] }
+  - { number: 108, colors: [{ name: "Eosine Pink", hex: "#FF5EC4" }, { name: "Brick Red", hex: "#A32100" }] }
+  - { number: 109, colors: [{ name: "Pale Lemon Yellow", hex: "#FFF59E" }, { name: "Blackish Olive", hex: "#324E2A" }] }
+  - { number: 110, colors: [{ name: "Brown", hex: "#6C2B11" }, { name: "Vandyke Brown", hex: "#362304" }], roles: { primary: "#362304", accent: "#6C2B11" }, report_fit: 0.662 }
+  - { number: 111, colors: [{ name: "Pale Lemon Yellow", hex: "#FFF59E" }, { name: "Yellow Green", hex: "#A6FF47" }] }
+  - { number: 112, colors: [{ name: "Grenadine Pink", hex: "#FF616B" }, { name: "Black", hex: "#000000" }] }
+  - { number: 113, colors: [{ name: "Seashell Pink", hex: "#FFCFC4" }, { name: "Vandyke Brown", hex: "#362304" }] }
+  - { number: 114, colors: [{ name: "Orange Yellow", hex: "#FFAB00" }, { name: "Antwarp Blue", hex: "#008AA1" }] }
+  - { number: 115, colors: [{ name: "Naples Yellow", hex: "#FAED8F" }, { name: "Peach Red", hex: "#FF3319" }] }
+  - { number: 116, colors: [{ name: "Cameo Pink", hex: "#E6ADCF" }, { name: "Blue Violet", hex: "#4733FF" }] }
+  - { number: 117, colors: [{ name: "Carmine", hex: "#D60036" }, { name: "Black", hex: "#000000" }] }
+  - { number: 118, colors: [{ name: "Yellow Ocher", hex: "#E0B81F" }, { name: "Vandyke Brown", hex: "#362304" }] }
+  - { number: 119, colors: [{ name: "Light Glaucous Blue", hex: "#A6E6DB" }, { name: "Dark Tyrian Blue", hex: "#0D2B52" }] }
+  - { number: 120, colors: [{ name: "Cameo Pink", hex: "#E6ADCF" }, { name: "Pompeian Red", hex: "#A90636" }] }
+  - { number: 121, colors: [{ name: "Brown", hex: "#6C2B11" }, { name: "Ochraceous Salmon", hex: "#D99E73" }, { name: "Lincoln Green", hex: "#405416" }], roles: { primary: "#6C2B11", accent: "#405416" }, report_fit: 0.799 }
+  - { number: 122, colors: [{ name: "Carmine", hex: "#D60036" }, { name: "Cream Yellow", hex: "#FFB852" }, { name: "Benzol Green", hex: "#00D973" }] }
+  - { number: 123, colors: [{ name: "Coral Red", hex: "#FF7399" }, { name: "Lemon Yellow", hex: "#F2FF26" }, { name: "Taupe Brown", hex: "#6B2E63" }] }
+  - { number: 124, colors: [{ name: "Pale Burnt Lake", hex: "#730F1F" }, { name: "Yellow Ocher", hex: "#E0B81F" }, { name: "Olive Yellow", hex: "#99B333" }] }
+  - { number: 125, colors: [{ name: "Fawn", hex: "#D1B0B3" }, { name: "Cerulian Blue", hex: "#29BDAD" }, { name: "Violet Blue", hex: "#202D85" }] }
+  - { number: 126, colors: [{ name: "Ivory Buff", hex: "#EBD999" }, { name: "Yellow Ocher", hex: "#E0B81F" }, { name: "Deep Lyons Blue", hex: "#0024CC" }] }
+  - { number: 127, colors: [{ name: "Cinnamon Buff", hex: "#FFBF6E" }, { name: "Pistachio Green", hex: "#56AA69" }, { name: "Dark Soft Violet", hex: "#4D52DE" }] }
+  - { number: 128, colors: [{ name: "Corinthian Pink", hex: "#FFA6D9" }, { name: "Venice Green", hex: "#6BFFB3" }, { name: "Light Mauve", hex: "#9161F2" }] }
+  - { number: 129, colors: [{ name: "Apricot Yellow", hex: "#FFE600" }, { name: "Khaki", hex: "#B68400" }, { name: "Salvia Blue", hex: "#96BFE6" }] }
+  - { number: 130, colors: [{ name: "Raw Sienna", hex: "#B85E00" }, { name: "Carmine Red", hex: "#A10B2B" }, { name: "Violet", hex: "#2619D1" }], roles: { primary: "#2619D1", accent: "#A10B2B" }, report_fit: 0.816 }
+  - { number: 131, colors: [{ name: "Raw Sienna", hex: "#B85E00" }, { name: "English Red", hex: "#DE4500" }, { name: "Peacock Blue", hex: "#00CF91" }], roles: { primary: "#B85E00", accent: "#DE4500" }, report_fit: 0.33 }
+  - { number: 132, colors: [{ name: "Sulpher Yellow", hex: "#F5F5B8" }, { name: "Golden Yellow", hex: "#FA9442" }, { name: "Citrine", hex: "#A3AD00" }] }
+  - { number: 133, colors: [{ name: "Vandyke Red", hex: "#740909" }, { name: "Citrine", hex: "#A3AD00" }, { name: "Sea Green", hex: "#33FF7D" }] }
+  - { number: 134, colors: [{ name: "Eosine Pink", hex: "#FF5EC4" }, { name: "Light Mauve", hex: "#9161F2" }, { name: "Red Violet", hex: "#3400A3" }], roles: { primary: "#3400A3", accent: "#9161F2" }, report_fit: 0.576 }
+  - { number: 135, colors: [{ name: "Sulpher Yellow", hex: "#F5F5B8" }, { name: "Cossack Green", hex: "#328E13" }, { name: "Salvia Blue", hex: "#96BFE6" }] }
+  - { number: 136, colors: [{ name: "Scarlet", hex: "#D50C42" }, { name: "Dull Viridian Green", hex: "#19CC33" }, { name: "Red Violet", hex: "#3400A3" }], roles: { primary: "#3400A3", accent: "#D50C42" }, report_fit: 0.677 }
+  - { number: 137, colors: [{ name: "Etruscan Red", hex: "#C9303E" }, { name: "Cinnamon Buff", hex: "#FFBF6E" }, { name: "Pistachio Green", hex: "#56AA69" }] }
+  - { number: 138, colors: [{ name: "Golden Yellow", hex: "#FA9442" }, { name: "Lemon Yellow", hex: "#F2FF26" }, { name: "Venice Green", hex: "#6BFFB3" }] }
+  - { number: 139, colors: [{ name: "Salvia Blue", hex: "#96BFE6" }, { name: "Deep Indigo", hex: "#000831" }, { name: "Neutral Gray", hex: "#B5D1CC" }] }
+  - { number: 140, colors: [{ name: "Golden Yellow", hex: "#FA9442" }, { name: "Antwarp Blue", hex: "#008AA1" }, { name: "Slate Color", hex: "#1B3644" }], roles: { primary: "#1B3644", accent: "#008AA1" }, report_fit: 0.622 }
+  - { number: 141, colors: [{ name: "Orange", hex: "#FF5200" }, { name: "Yellow Green", hex: "#A6FF47" }, { name: "Dark Tyrian Blue", hex: "#0D2B52" }], roles: { primary: "#0D2B52", accent: "#FF5200", surface: "#A6FF47" }, report_fit: 0.784 }
+  - { number: 142, colors: [{ name: "Hydrangea Red", hex: "#9E194D" }, { name: "Sulphine Yellow", hex: "#BAA600" }, { name: "Salvia Blue", hex: "#96BFE6" }] }
+  - { number: 143, colors: [{ name: "Blue", hex: "#0D75FF" }, { name: "Lilac", hex: "#B875EB" }, { name: "Warm Gray", hex: "#9CB29E" }] }
+  - { number: 144, colors: [{ name: "Rosolanc Purple", hex: "#B319AB" }, { name: "Orange", hex: "#FF5200" }, { name: "Black", hex: "#000000" }] }
+  - { number: 145, top: 15, colors: [{ name: "Brown", hex: "#6C2B11" }, { name: "Citron Yellow", hex: "#A6D40D" }, { name: "Dull Violet Black", hex: "#06004F" }], roles: { primary: "#06004F", accent: "#6C2B11" }, report_fit: 0.907 }
+  - { number: 146, colors: [{ name: "Khaki", hex: "#B68400" }, { name: "Deep Grayish Olive", hex: "#505423" }, { name: "Diamine Green", hex: "#1B8E13" }], roles: { primary: "#505423", accent: "#1B8E13" }, report_fit: 0.684 }
+  - { number: 147, colors: [{ name: "Spinel Red", hex: "#FF4DC9" }, { name: "Vandyke Red", hex: "#740909" }, { name: "Turquoise Green", hex: "#B5FFC2" }] }
+  - { number: 148, colors: [{ name: "Olive Ocher", hex: "#D1BD19" }, { name: "Orange Yellow", hex: "#FFAB00" }, { name: "Cerulian Blue", hex: "#29BDAD" }] }
+  - { number: 149, colors: [{ name: "Olive Ocher", hex: "#D1BD19" }, { name: "Orange", hex: "#FF5200" }, { name: "Deep Slate Green", hex: "#0F261F" }], roles: { primary: "#0F261F", accent: "#FF5200" }, report_fit: 0.684 }
+  - { number: 150, colors: [{ name: "Seashell Pink", hex: "#FFCFC4" }, { name: "Citron Yellow", hex: "#A6D40D" }, { name: "Glaucous Green", hex: "#B3E8C2" }] }
+  - { number: 151, colors: [{ name: "Sulpher Yellow", hex: "#F5F5B8" }, { name: "Yellow Orange", hex: "#FF8C00" }, { name: "Vandar Poel's Blue", hex: "#003E83" }] }
+  - { number: 152, colors: [{ name: "Etruscan Red", hex: "#C9303E" }, { name: "Hay's Russet", hex: "#681916" }, { name: "Light Glaucous Blue", hex: "#A6E6DB" }], roles: { primary: "#681916", accent: "#C9303E", surface: "#A6E6DB" }, report_fit: 0.668 }
+  - { number: 153, colors: [{ name: "Eosine Pink", hex: "#FF5EC4" }, { name: "Orange Yellow", hex: "#FFAB00" }, { name: "Citron Yellow", hex: "#A6D40D" }] }
+  - { number: 154, colors: [{ name: "Carmine", hex: "#D60036" }, { name: "Yellow", hex: "#FFFF00" }, { name: "Blue", hex: "#0D75FF" }], roles: { primary: "#D60036", accent: "#0D75FF", surface: "#FFFF00" }, report_fit: 0.49 }
+  - { number: 155, colors: [{ name: "Jasper Red", hex: "#FA2B00" }, { name: "Benzol Green", hex: "#00D973" }, { name: "Deep Indigo", hex: "#000831" }] }
+  - { number: 156, colors: [{ name: "Olive Ocher", hex: "#D1BD19" }, { name: "Cobalt Green", hex: "#94FF94" }, { name: "Violet", hex: "#2619D1" }] }
+  - { number: 157, colors: [{ name: "Pansy Purple", hex: "#6F0043" }, { name: "Olive Ocher", hex: "#D1BD19" }, { name: "Olympic Blue", hex: "#4F8FE6" }], roles: { primary: "#6F0043", accent: "#4F8FE6" }, report_fit: 0.79 }
+  - { number: 158, colors: [{ name: "Lemon Yellow", hex: "#F2FF26" }, { name: "Cinnamon Rufous", hex: "#C2612C" }, { name: "Night Green", hex: "#7AFF00" }] }
+  - { number: 159, colors: [{ name: "Khaki", hex: "#B68400" }, { name: "Calamine BLue", hex: "#80FFCC" }, { name: "Grayish Lavender - A", hex: "#B8B8FF" }] }
+  - { number: 160, colors: [{ name: "Sulphine Yellow", hex: "#BAA600" }, { name: "Pale Raw Umber", hex: "#5E4017" }, { name: "Dark Medici Blue", hex: "#417777" }], roles: { primary: "#5E4017", accent: "#417777" }, report_fit: 0.803 }
+  - { number: 161, top: 16, colors: [{ name: "Brown", hex: "#6C2B11" }, { name: "Pinkish Cinnamon", hex: "#F2AD78" }, { name: "Helvetia Blue", hex: "#0057BA" }], roles: { primary: "#6C2B11", accent: "#0057BA" }, report_fit: 0.905 }
+  - { number: 162, colors: [{ name: "Old Rose", hex: "#D94D99" }, { name: "Rainette Green", hex: "#85B857" }, { name: "Lilac", hex: "#B875EB" }] }
+  - { number: 163, colors: [{ name: "Apricot Yellow", hex: "#FFE600" }, { name: "Turquoise Green", hex: "#B5FFC2" }, { name: "Antwarp Blue", hex: "#008AA1" }] }
+  - { number: 164, colors: [{ name: "Red Orange", hex: "#E81900" }, { name: "Orange Yellow", hex: "#FFAB00" }, { name: "Violet", hex: "#2619D1" }], roles: { primary: "#2619D1", accent: "#E81900" }, report_fit: 0.672 }
+  - { number: 165, colors: [{ name: "Cameo Pink", hex: "#E6ADCF" }, { name: "Spinel Red", hex: "#FF4DC9" }, { name: "Vistoris Lake", hex: "#5C2C45" }] }
+  - { number: 166, colors: [{ name: "Grenadine Pink", hex: "#FF616B" }, { name: "Naples Yellow", hex: "#FAED8F" }, { name: "Deep Slate Green", hex: "#0F261F" }] }
+  - { number: 167, colors: [{ name: "Ecru", hex: "#C0B490" }, { name: "Pale King's Blue", hex: "#ABF5ED" }, { name: "Vandar Poel's Blue", hex: "#003E83" }] }
+  - { number: 168, colors: [{ name: "Lemon Yellow", hex: "#F2FF26" }, { name: "Vandar Poel's Blue", hex: "#003E83" }, { name: "Veronia Purple", hex: "#7E3075" }], roles: { primary: "#003E83", accent: "#7E3075", surface: "#F2FF26" }, report_fit: 0.765 }
+  - { number: 169, colors: [{ name: "Corinthian Pink", hex: "#FFA6D9" }, { name: "Pale Lemon Yellow", hex: "#FFF59E" }, { name: "Warm Gray", hex: "#9CB29E" }] }
+  - { number: 170, colors: [{ name: "Rosolanc Purple", hex: "#B319AB" }, { name: "Orange Yellow", hex: "#FFAB00" }, { name: "Red Violet", hex: "#3400A3" }], roles: { primary: "#3400A3", accent: "#B319AB" }, report_fit: 0.709 }
+  - { number: 171, colors: [{ name: "Pale Burnt Lake", hex: "#730F1F" }, { name: "Yellow Orange", hex: "#FF8C00" }, { name: "Glaucous Green", hex: "#B3E8C2" }] }
+  - { number: 172, colors: [{ name: "Cinnamon Rufous", hex: "#C2612C" }, { name: "Antwarp Blue", hex: "#008AA1" }, { name: "Red Violet", hex: "#3400A3" }], roles: { primary: "#3400A3", accent: "#C2612C" }, report_fit: 0.815 }
+  - { number: 173, colors: [{ name: "Lemon Yellow", hex: "#F2FF26" }, { name: "Madder Brown", hex: "#651300" }, { name: "Turquoise Green", hex: "#B5FFC2" }] }
+  - { number: 174, colors: [{ name: "Corinthian Pink", hex: "#FFA6D9" }, { name: "Grayish Lavender - B", hex: "#BFABCC" }, { name: "Taupe Brown", hex: "#6B2E63" }] }
+  - { number: 175, colors: [{ name: "Pinkish Cinnamon", hex: "#F2AD78" }, { name: "Olive Buff", hex: "#BCD382" }, { name: "Blue Violet", hex: "#4733FF" }] }
+  - { number: 176, colors: [{ name: "Hermosa Pink", hex: "#FFB3F0" }, { name: "Seashell Pink", hex: "#FFCFC4" }, { name: "Calamine BLue", hex: "#80FFCC" }] }
+  - { number: 177, colors: [{ name: "Pale Burnt Lake", hex: "#730F1F" }, { name: "Buffy Citrine", hex: "#888D2A" }, { name: "Grayish Lavender - A", hex: "#B8B8FF" }], roles: { primary: "#730F1F", accent: "#888D2A" }, report_fit: 0.747 }
+  - { number: 178, colors: [{ name: "Ivory Buff", hex: "#EBD999" }, { name: "Light Glaucous Blue", hex: "#A6E6DB" }, { name: "Green Blue", hex: "#2DBC94" }] }
+  - { number: 179, colors: [{ name: "Red Orange", hex: "#E81900" }, { name: "Golden Yellow", hex: "#FA9442" }, { name: "Deep Lyons Blue", hex: "#0024CC" }], roles: { primary: "#0024CC", accent: "#E81900" }, report_fit: 0.594 }
+  - { number: 180, colors: [{ name: "Cinnamon Buff", hex: "#FFBF6E" }, { name: "Light Mauve", hex: "#9161F2" }, { name: "Neutral Gray", hex: "#B5D1CC" }] }
+  - { number: 181, colors: [{ name: "Carmine Red", hex: "#A10B2B" }, { name: "Violet", hex: "#2619D1" }, { name: "Cotinga Purple", hex: "#340059" }], roles: { primary: "#340059", accent: "#A10B2B" }, report_fit: 0.812 }
+  - { number: 182, colors: [{ name: "Raw Sienna", hex: "#B85E00" }, { name: "Vandyke Brown", hex: "#362304" }, { name: "Deep Indigo", hex: "#000831" }] }
+  - { number: 183, colors: [{ name: "Deep Violet / Plumbeous", hex: "#5C7287" }, { name: "Veronia Purple", hex: "#7E3075" }, { name: "Red Violet", hex: "#3400A3" }], roles: { primary: "#3400A3", accent: "#7E3075" }, report_fit: 0.692 }
+  - { number: 184, colors: [{ name: "Spinel Red", hex: "#FF4DC9" }, { name: "Ivory Buff", hex: "#EBD999" }, { name: "Light Grayish Olive", hex: "#76844E" }] }
+  - { number: 185, colors: [{ name: "Light Brown Drab", hex: "#B08699" }, { name: "Etruscan Red", hex: "#C9303E" }, { name: "Pale Lemon Yellow", hex: "#FFF59E" }], roles: { primary: "#C9303E", accent: "#B08699", surface: "#FFF59E" }, report_fit: 0.329 }
+  - { number: 186, colors: [{ name: "Hay's Russet", hex: "#681916" }, { name: "Ochraceous Salmon", hex: "#D99E73" }, { name: "Blue", hex: "#0D75FF" }], roles: { primary: "#681916", accent: "#0D75FF" }, report_fit: 0.808 }
+  - { number: 187, colors: [{ name: "Helvetia Blue", hex: "#0057BA" }, { name: "Grayish Lavender - B", hex: "#BFABCC" }, { name: "Aconite Violet", hex: "#9C52F2" }], roles: { primary: "#0057BA", accent: "#9C52F2" }, report_fit: 0.478 }
+  - { number: 188, colors: [{ name: "Rainette Green", hex: "#85B857" }, { name: "Salvia Blue", hex: "#96BFE6" }, { name: "Cobalt Green", hex: "#94FF94" }] }
+  - { number: 189, colors: [{ name: "Lemon Yellow", hex: "#F2FF26" }, { name: "Deep Slate Olive", hex: "#172713" }, { name: "Venice Green", hex: "#6BFFB3" }] }
+  - { number: 190, colors: [{ name: "Ivory Buff", hex: "#EBD999" }, { name: "English Red", hex: "#DE4500" }, { name: "Black", hex: "#000000" }] }
+  - { number: 191, colors: [{ name: "Light Brown Drab", hex: "#B08699" }, { name: "Yellow Ocher", hex: "#E0B81F" }, { name: "Blue", hex: "#0D75FF" }] }
+  - { number: 192, colors: [{ name: "Cream Yellow", hex: "#FFB852" }, { name: "Vandyke Brown", hex: "#362304" }, { name: "Deep Violet / Plumbeous", hex: "#5C7287" }], roles: { primary: "#362304", accent: "#5C7287" }, report_fit: 0.734 }
+  - { number: 193, colors: [{ name: "Grenadine Pink", hex: "#FF616B" }, { name: "Naples Yellow", hex: "#FAED8F" }, { name: "Light Porcelain Green", hex: "#23C17C" }] }
+  - { number: 194, colors: [{ name: "Jasper Red", hex: "#FA2B00" }, { name: "Seashell Pink", hex: "#FFCFC4" }, { name: "Olympic Blue", hex: "#4F8FE6" }] }
+  - { number: 195, colors: [{ name: "Spinel Red", hex: "#FF4DC9" }, { name: "Pale Lemon Yellow", hex: "#FFF59E" }, { name: "Neutral Gray", hex: "#B5D1CC" }] }
+  - { number: 196, colors: [{ name: "Citron Yellow", hex: "#A6D40D" }, { name: "Pale King's Blue", hex: "#ABF5ED" }, { name: "Blue Violet", hex: "#4733FF" }] }
+  - { number: 197, colors: [{ name: "Eosine Pink", hex: "#FF5EC4" }, { name: "Dark Soft Violet", hex: "#4D52DE" }, { name: "Neutral Gray", hex: "#B5D1CC" }] }
+  - { number: 198, colors: [{ name: "Burnt Sienna", hex: "#A93400" }, { name: "Apricot Yellow", hex: "#FFE600" }, { name: "Green", hex: "#40C945" }] }
+  - { number: 199, colors: [{ name: "Ochre Red", hex: "#A7374B" }, { name: "Light Brownish Olive", hex: "#706934" }, { name: "Deep Lyons Blue", hex: "#0024CC" }], roles: { primary: "#0024CC", accent: "#A7374B" }, report_fit: 0.704 }
+  - { number: 200, colors: [{ name: "Carmine Red", hex: "#A10B2B" }, { name: "Olive Buff", hex: "#BCD382" }, { name: "Chromium Green", hex: "#66AB56" }] }
+  - { number: 201, colors: [{ name: "Grenadine Pink", hex: "#FF616B" }, { name: "Olive", hex: "#718600" }, { name: "Cobalt Green", hex: "#94FF94" }] }
+  - { number: 202, colors: [{ name: "Turquoise Green", hex: "#B5FFC2" }, { name: "Cobalt Green", hex: "#94FF94" }, { name: "Slate Color", hex: "#1B3644" }] }
+  - { number: 203, colors: [{ name: "Pale Lemon Yellow", hex: "#FFF59E" }, { name: "Vinaceous Cinnamon", hex: "#F59994" }, { name: "Lincoln Green", hex: "#405416" }] }
+  - { number: 204, colors: [{ name: "Rosolanc Purple", hex: "#B319AB" }, { name: "Cinnamon Rufous", hex: "#C2612C" }, { name: "Light Glaucous Blue", hex: "#A6E6DB" }], roles: { primary: "#B319AB", accent: "#C2612C", surface: "#A6E6DB" }, report_fit: 0.671 }
+  - { number: 205, top: 5, colors: [{ name: "Pale Burnt Lake", hex: "#730F1F" }, { name: "Vinaceous Cinnamon", hex: "#F59994" }, { name: "Violet", hex: "#2619D1" }], roles: { primary: "#730F1F", accent: "#2619D1" }, report_fit: 0.957 }
+  - { number: 206, colors: [{ name: "Corinthian Pink", hex: "#FFA6D9" }, { name: "Golden Yellow", hex: "#FA9442" }, { name: "Cinnamon Rufous", hex: "#C2612C" }] }
+  - { number: 207, colors: [{ name: "Sudan Brown", hex: "#9B5348" }, { name: "Glaucous Green", hex: "#B3E8C2" }, { name: "Black", hex: "#000000" }] }
+  - { number: 208, colors: [{ name: "Sulpher Yellow", hex: "#F5F5B8" }, { name: "Green Blue", hex: "#2DBC94" }, { name: "Antwarp Blue", hex: "#008AA1" }] }
+  - { number: 209, colors: [{ name: "Ivory Buff", hex: "#EBD999" }, { name: "Yellow Orange", hex: "#FF8C00" }, { name: "Salvia Blue", hex: "#96BFE6" }] }
+  - { number: 210, colors: [{ name: "Cinnamon Buff", hex: "#FFBF6E" }, { name: "Lemon Yellow", hex: "#F2FF26" }, { name: "Lincoln Green", hex: "#405416" }] }
+  - { number: 211, colors: [{ name: "Apricot Orange", hex: "#FF7340" }, { name: "Olive Yellow", hex: "#99B333" }, { name: "Deep Indigo", hex: "#000831" }] }
+  - { number: 212, colors: [{ name: "Pompeian Red", hex: "#A90636" }, { name: "Orange Citrine", hex: "#8C6510" }, { name: "Salvia Blue", hex: "#96BFE6" }], roles: { primary: "#A90636", accent: "#8C6510" }, report_fit: 0.645 }
+  - { number: 213, colors: [{ name: "Vinaceous Cinnamon", hex: "#F59994" }, { name: "Apricot Yellow", hex: "#FFE600" }, { name: "Pale King's Blue", hex: "#ABF5ED" }] }
+  - { number: 214, colors: [{ name: "Ivory Buff", hex: "#EBD999" }, { name: "Sudan Brown", hex: "#9B5348" }, { name: "Violet", hex: "#2619D1" }], roles: { primary: "#2619D1", accent: "#9B5348", surface: "#EBD999" }, report_fit: 0.738 }
+  - { number: 215, colors: [{ name: "Cream Yellow", hex: "#FFB852" }, { name: "Blue", hex: "#0D75FF" }, { name: "Eupatorium Purple", hex: "#BF36E0" }] }
+  - { number: 216, colors: [{ name: "Jasper Red", hex: "#FA2B00" }, { name: "Green", hex: "#40C945" }, { name: "Black", hex: "#000000" }] }
+  - { number: 217, top: 12, colors: [{ name: "Pale Burnt Lake", hex: "#730F1F" }, { name: "Ochraceous Salmon", hex: "#D99E73" }, { name: "Diamine Green", hex: "#1B8E13" }], roles: { primary: "#730F1F", accent: "#1B8E13" }, report_fit: 0.914 }
+  - { number: 218, colors: [{ name: "Helvetia Blue", hex: "#0057BA" }, { name: "Grayish Lavender - A", hex: "#B8B8FF" }, { name: "Deep Violet / Plumbeous", hex: "#5C7287" }], roles: { primary: "#0057BA", accent: "#5C7287" }, report_fit: 0.382 }
+  - { number: 219, colors: [{ name: "Jasper Red", hex: "#FA2B00" }, { name: "Chromium Green", hex: "#66AB56" }, { name: "Dusky Green", hex: "#00592E" }], roles: { primary: "#00592E", accent: "#FA2B00" }, report_fit: 0.647 }
+  - { number: 220, colors: [{ name: "Pomegranite Purple", hex: "#B90078" }, { name: "Ochraceous Salmon", hex: "#D99E73" }, { name: "Aconite Violet", hex: "#9C52F2" }], roles: { primary: "#B90078", accent: "#9C52F2" }, report_fit: 0.461 }
+  - { number: 221, colors: [{ name: "Carmine Red", hex: "#A10B2B" }, { name: "Neutral Gray", hex: "#B5D1CC" }, { name: "Black", hex: "#000000" }] }
+  - { number: 222, colors: [{ name: "Yellow Ocher", hex: "#E0B81F" }, { name: "Yellow Orange", hex: "#FF8C00" }, { name: "Orange Rufous", hex: "#C05200" }] }
+  - { number: 223, colors: [{ name: "Light Brown Drab", hex: "#B08699" }, { name: "Ochraceous Salmon", hex: "#D99E73" }, { name: "Turquoise Green", hex: "#B5FFC2" }] }
+  - { number: 224, colors: [{ name: "Spinel Red", hex: "#FF4DC9" }, { name: "Dark Medici Blue", hex: "#417777" }, { name: "Taupe Brown", hex: "#6B2E63" }], roles: { primary: "#6B2E63", accent: "#417777" }, report_fit: 0.805 }
+  - { number: 225, top: 6, colors: [{ name: "Carmine", hex: "#D60036" }, { name: "Dusky Green", hex: "#00592E" }, { name: "Dark Slate Purple", hex: "#53225C" }], roles: { primary: "#53225C", accent: "#00592E" }, report_fit: 0.94 }
+  - { number: 226, top: 17, colors: [{ name: "Vistoris Lake", hex: "#5C2C45" }, { name: "Cream Yellow", hex: "#FFB852" }, { name: "Violet", hex: "#2619D1" }], roles: { primary: "#5C2C45", accent: "#2619D1" }, report_fit: 0.898 }
+  - { number: 227, colors: [{ name: "Hermosa Pink", hex: "#FFB3F0" }, { name: "Light Glaucous Blue", hex: "#A6E6DB" }, { name: "Cerulian Blue", hex: "#29BDAD" }] }
+  - { number: 228, colors: [{ name: "Carmine Red", hex: "#A10B2B" }, { name: "Pale Lemon Yellow", hex: "#FFF59E" }, { name: "Neutral Gray", hex: "#B5D1CC" }] }
+  - { number: 229, colors: [{ name: "Golden Yellow", hex: "#FA9442" }, { name: "Deep Slate Olive", hex: "#172713" }, { name: "Neutral Gray", hex: "#B5D1CC" }] }
+  - { number: 230, colors: [{ name: "Grenadine Pink", hex: "#FF616B" }, { name: "Turquoise Green", hex: "#B5FFC2" }, { name: "Cobalt Green", hex: "#94FF94" }] }
+  - { number: 231, top: 19, colors: [{ name: "Cameo Pink", hex: "#E6ADCF" }, { name: "Hay's Russet", hex: "#681916" }, { name: "Olympic Blue", hex: "#4F8FE6" }], roles: { primary: "#681916", accent: "#4F8FE6" }, report_fit: 0.895 }
+  - { number: 232, colors: [{ name: "Carmine", hex: "#D60036" }, { name: "Pinkish Cinnamon", hex: "#F2AD78" }, { name: "Deep Indigo", hex: "#000831" }] }
+  - { number: 233, top: 3, colors: [{ name: "Carmine Red", hex: "#A10B2B" }, { name: "Buffy Citrine", hex: "#888D2A" }, { name: "Violet Blue", hex: "#202D85" }], roles: { primary: "#202D85", accent: "#A10B2B" }, report_fit: 0.985 }
+  - { number: 234, colors: [{ name: "Cinnamon Buff", hex: "#FFBF6E" }, { name: "Pale Raw Umber", hex: "#5E4017" }, { name: "Pale King's Blue", hex: "#ABF5ED" }] }
+  - { number: 235, colors: [{ name: "Ivory Buff", hex: "#EBD999" }, { name: "Yellow Orange", hex: "#FF8C00" }, { name: "Grayish Lavender - B", hex: "#BFABCC" }] }
+  - { number: 236, colors: [{ name: "Khaki", hex: "#B68400" }, { name: "Deep Lyons Blue", hex: "#0024CC" }, { name: "Purple Drab", hex: "#754260" }], roles: { primary: "#0024CC", accent: "#754260" }, report_fit: 0.623 }
+  - { number: 237, colors: [{ name: "Carmine Red", hex: "#A10B2B" }, { name: "Madder Brown", hex: "#651300" }, { name: "Salvia Blue", hex: "#96BFE6" }], roles: { primary: "#651300", accent: "#A10B2B" }, report_fit: 0.704 }
+  - { number: 238, colors: [{ name: "Ochraceous Salmon", hex: "#D99E73" }, { name: "Cotinga Purple", hex: "#340059" }, { name: "Warm Gray", hex: "#9CB29E" }] }
+  - { number: 239, colors: [{ name: "Light Brown Drab", hex: "#B08699" }, { name: "Pyrite Yellow", hex: "#C4BF33" }, { name: "Glaucous Green", hex: "#B3E8C2" }] }
+  - { number: 240, colors: [{ name: "Fresh Color", hex: "#FF788C" }, { name: "Yellow", hex: "#FFFF00" }, { name: "Cerulian Blue", hex: "#29BDAD" }] }
+  - { number: 241, colors: [{ name: "Red Orange", hex: "#E81900" }, { name: "Pale Lemon Yellow", hex: "#FFF59E" }, { name: "Isabella Color", hex: "#C3A55C" }, { name: "Dark Medici Blue", hex: "#417777" }], roles: { primary: "#417777", accent: "#E81900", surface: "#FFF59E" }, report_fit: 0.674 }
+  - { number: 242, colors: [{ name: "Eosine Pink", hex: "#FF5EC4" }, { name: "Burnt Sienna", hex: "#A93400" }, { name: "Diamine Green", hex: "#1B8E13" }, { name: "Black", hex: "#000000" }] }
+  - { number: 243, top: 13, colors: [{ name: "Raw Sienna", hex: "#B85E00" }, { name: "Ivory Buff", hex: "#EBD999" }, { name: "Olive Green", hex: "#58771E" }, { name: "Slate Color", hex: "#1B3644" }], roles: { primary: "#1B3644", accent: "#58771E", surface: "#EBD999" }, report_fit: 0.914 }
+  - { number: 244, colors: [{ name: "Light Brown Drab", hex: "#B08699" }, { name: "Vinaceous Tawny", hex: "#C74300" }, { name: "Andover Green", hex: "#5C8A73" }, { name: "Antwarp Blue", hex: "#008AA1" }], roles: { primary: "#C74300", accent: "#008AA1" }, report_fit: 0.638 }
+  - { number: 245, top: 1, colors: [{ name: "Carmine Red", hex: "#A10B2B" }, { name: "Oil Green", hex: "#6EA900" }, { name: "Dark Tyrian Blue", hex: "#0D2B52" }, { name: "Slate Color", hex: "#1B3644" }], roles: { primary: "#0D2B52", accent: "#A10B2B" }, report_fit: 1 }
+  - { number: 246, colors: [{ name: "Corinthian Pink", hex: "#FFA6D9" }, { name: "Brick Red", hex: "#A32100" }, { name: "Sulpher Yellow", hex: "#F5F5B8" }, { name: "Cinnamon Buff", hex: "#FFBF6E" }] }
+  - { number: 247, colors: [{ name: "Raw Sienna", hex: "#B85E00" }, { name: "Apricot Yellow", hex: "#FFE600" }, { name: "Benzol Green", hex: "#00D973" }, { name: "Deep Lyons Blue", hex: "#0024CC" }], roles: { primary: "#0024CC", accent: "#B85E00", surface: "#FFE600" }, report_fit: 0.652 }
+  - { number: 248, colors: [{ name: "Eosine Pink", hex: "#FF5EC4" }, { name: "Khaki", hex: "#B68400" }, { name: "Grayish Lavender - A", hex: "#B8B8FF" }, { name: "Dark Slate Purple", hex: "#53225C" }], roles: { primary: "#53225C", accent: "#B68400" }, report_fit: 0.83 }
+  - { number: 249, top: 27, colors: [{ name: "Hay's Russet", hex: "#681916" }, { name: "Ecru", hex: "#C0B490" }, { name: "Olive Ocher", hex: "#D1BD19" }, { name: "Dark Medici Blue", hex: "#417777" }], roles: { primary: "#681916", accent: "#417777" }, report_fit: 0.856 }
+  - { number: 250, colors: [{ name: "Pyrite Yellow", hex: "#C4BF33" }, { name: "Peach Red", hex: "#FF3319" }, { name: "Sea Green", hex: "#33FF7D" }, { name: "Nile Blue", hex: "#BFFFE6" }] }
+  - { number: 251, top: 7, colors: [{ name: "Red", hex: "#A10045" }, { name: "Yellow", hex: "#FFFF00" }, { name: "Diamine Green", hex: "#1B8E13" }, { name: "Slate Color", hex: "#1B3644" }], roles: { primary: "#1B3644", accent: "#A10045", surface: "#FFFF00" }, report_fit: 0.94 }
+  - { number: 252, colors: [{ name: "Eugenia Red | B", hex: "#E62E73" }, { name: "Raw Sienna", hex: "#B85E00" }, { name: "Sulphine Yellow", hex: "#BAA600" }, { name: "Green Blue", hex: "#2DBC94" }], roles: { primary: "#B85E00", accent: "#E62E73" }, report_fit: 0.539 }
+  - { number: 253, colors: [{ name: "Lemon Yellow", hex: "#F2FF26" }, { name: "Apricot Orange", hex: "#FF7340" }, { name: "Cotinga Purple", hex: "#340059" }, { name: "Slate Color", hex: "#1B3644" }], roles: { primary: "#340059", accent: "#1B3644", surface: "#F2FF26" }, report_fit: 0.749 }
+  - { number: 254, colors: [{ name: "Corinthian Pink", hex: "#FFA6D9" }, { name: "Sulpher Yellow", hex: "#F5F5B8" }, { name: "Olive", hex: "#718600" }, { name: "Laelia Pink", hex: "#CC85D1" }] }
+  - { number: 255, colors: [{ name: "Raw Sienna", hex: "#B85E00" }, { name: "Pyrite Yellow", hex: "#C4BF33" }, { name: "Calamine BLue", hex: "#80FFCC" }, { name: "Black", hex: "#000000" }] }
+  - { number: 256, colors: [{ name: "Vinaceous Cinnamon", hex: "#F59994" }, { name: "Orange", hex: "#FF5200" }, { name: "Dull Viridian Green", hex: "#19CC33" }, { name: "Black", hex: "#000000" }] }
+  - { number: 257, colors: [{ name: "Spectrum Red", hex: "#F20000" }, { name: "Orange Yellow", hex: "#FFAB00" }, { name: "Blue", hex: "#0D75FF" }, { name: "Aconite Violet", hex: "#9C52F2" }] }
+  - { number: 258, top: 28, colors: [{ name: "Pale Burnt Lake", hex: "#730F1F" }, { name: "Pinkish Cinnamon", hex: "#F2AD78" }, { name: "Olive", hex: "#718600" }, { name: "Antwarp Blue", hex: "#008AA1" }], roles: { primary: "#730F1F", accent: "#008AA1" }, report_fit: 0.856 }
+  - { number: 259, colors: [{ name: "Lemon Yellow", hex: "#F2FF26" }, { name: "Green Blue", hex: "#2DBC94" }, { name: "Helvetia Blue", hex: "#0057BA" }, { name: "Warm Gray", hex: "#9CB29E" }] }
+  - { number: 260, colors: [{ name: "Old Rose", hex: "#D94D99" }, { name: "Vinaceous Cinnamon", hex: "#F59994" }, { name: "Glaucous Green", hex: "#B3E8C2" }, { name: "Sea Green", hex: "#33FF7D" }] }
+  - { number: 261, colors: [{ name: "Red", hex: "#A10045" }, { name: "Pale Lemon Yellow", hex: "#FFF59E" }, { name: "Calamine BLue", hex: "#80FFCC" }, { name: "Warm Gray", hex: "#9CB29E" }] }
+  - { number: 262, colors: [{ name: "Eugenia Red | B", hex: "#E62E73" }, { name: "Ivory Buff", hex: "#EBD999" }, { name: "Citrine", hex: "#A3AD00" }, { name: "Cossack Green", hex: "#328E13" }] }
+  - { number: 263, top: 8, colors: [{ name: "Burnt Sienna", hex: "#A93400" }, { name: "Pinkish Cinnamon", hex: "#F2AD78" }, { name: "Turquoise Green", hex: "#B5FFC2" }, { name: "Slate Color", hex: "#1B3644" }], roles: { primary: "#1B3644", accent: "#A93400", surface: "#B5FFC2" }, report_fit: 0.93 }
+  - { number: 264, colors: [{ name: "Corinthian Pink", hex: "#FFA6D9" }, { name: "Red Orange", hex: "#E81900" }, { name: "Dark Greenish Glaucous", hex: "#B3D9A3" }, { name: "Cerulian Blue", hex: "#29BDAD" }] }
+  - { number: 265, colors: [{ name: "Old Rose", hex: "#D94D99" }, { name: "Apricot Yellow", hex: "#FFE600" }, { name: "Olive Yellow", hex: "#99B333" }, { name: "Dull Violet Black", hex: "#06004F" }], roles: { primary: "#06004F", accent: "#D94D99", surface: "#FFE600" }, report_fit: 0.727 }
+  - { number: 266, colors: [{ name: "Spectrum Red", hex: "#F20000" }, { name: "Ivory Buff", hex: "#EBD999" }, { name: "Rainette Green", hex: "#85B857" }, { name: "Benzol Green", hex: "#00D973" }] }
+  - { number: 267, colors: [{ name: "Cream Yellow", hex: "#FFB852" }, { name: "Yellow Orange", hex: "#FF8C00" }, { name: "Benzol Green", hex: "#00D973" }, { name: "Blue", hex: "#0D75FF" }] }
+  - { number: 268, colors: [{ name: "Light Brown Drab", hex: "#B08699" }, { name: "Raw Sienna", hex: "#B85E00" }, { name: "Deep Slate Olive", hex: "#172713" }, { name: "Nile Blue", hex: "#BFFFE6" }], roles: { primary: "#172713", accent: "#B08699", surface: "#BFFFE6" }, report_fit: 0.69 }
+  - { number: 269, colors: [{ name: "Raw Sienna", hex: "#B85E00" }, { name: "Pale Burnt Lake", hex: "#730F1F" }, { name: "Aconite Violet", hex: "#9C52F2" }, { name: "Black", hex: "#000000" }] }
+  - { number: 270, colors: [{ name: "Eugenia Red | B", hex: "#E62E73" }, { name: "Sulpher Yellow", hex: "#F5F5B8" }, { name: "Olive Green", hex: "#58771E" }, { name: "Cossack Green", hex: "#328E13" }], roles: { primary: "#58771E", accent: "#E62E73", surface: "#F5F5B8" }, report_fit: 0.745 }
+  - { number: 271, colors: [{ name: "Pomegranite Purple", hex: "#B90078" }, { name: "Cobalt Green", hex: "#94FF94" }, { name: "Green Blue", hex: "#2DBC94" }, { name: "Deep Slate Green", hex: "#0F261F" }], roles: { primary: "#0F261F", accent: "#B90078", surface: "#94FF94" }, report_fit: 0.822 }
+  - { number: 272, colors: [{ name: "Pale Lemon Yellow", hex: "#FFF59E" }, { name: "Orange", hex: "#FF5200" }, { name: "Turquoise Green", hex: "#B5FFC2" }, { name: "Salvia Blue", hex: "#96BFE6" }] }
+  - { number: 273, colors: [{ name: "Hermosa Pink", hex: "#FFB3F0" }, { name: "Pansy Purple", hex: "#6F0043" }, { name: "Sudan Brown", hex: "#9B5348" }, { name: "Neutral Gray", hex: "#B5D1CC" }], roles: { primary: "#6F0043", accent: "#9B5348" }, report_fit: 0.632 }
+  - { number: 274, colors: [{ name: "Peach Red", hex: "#FF3319" }, { name: "Dark Citrine", hex: "#7E8743" }, { name: "Olympic Blue", hex: "#4F8FE6" }, { name: "Light Mauve", hex: "#9161F2" }] }
+  - { number: 275, colors: [{ name: "Etruscan Red", hex: "#C9303E" }, { name: "Ecru", hex: "#C0B490" }, { name: "Madder Brown", hex: "#651300" }, { name: "Taupe Brown", hex: "#6B2E63" }], roles: { primary: "#651300", accent: "#6B2E63" }, report_fit: 0.717 }
+  - { number: 276, colors: [{ name: "Eosine Pink", hex: "#FF5EC4" }, { name: "Seashell Pink", hex: "#FFCFC4" }, { name: "Yellow Green", hex: "#A6FF47" }, { name: "Black", hex: "#000000" }] }
+  - { number: 277, colors: [{ name: "Spinel Red", hex: "#FF4DC9" }, { name: "Rosolanc Purple", hex: "#B319AB" }, { name: "Olive", hex: "#718600" }, { name: "Dull Violet Black", hex: "#06004F" }], roles: { primary: "#06004F", accent: "#718600" }, report_fit: 0.786 }
+  - { number: 278, colors: [{ name: "Cream Yellow", hex: "#FFB852" }, { name: "Olive Ocher", hex: "#D1BD19" }, { name: "Cossack Green", hex: "#328E13" }, { name: "Dusky Green", hex: "#00592E" }], roles: { primary: "#00592E", accent: "#328E13" }, report_fit: 0.602 }
+  - { number: 279, top: 24, colors: [{ name: "Raw Sienna", hex: "#B85E00" }, { name: "Vinaceous Cinnamon", hex: "#F59994" }, { name: "Ecru", hex: "#C0B490" }, { name: "Dark Tyrian Blue", hex: "#0D2B52" }], roles: { primary: "#0D2B52", accent: "#B85E00" }, report_fit: 0.876 }
+  - { number: 280, top: 14, colors: [{ name: "Eugenia Red | B", hex: "#E62E73" }, { name: "Lincoln Green", hex: "#405416" }, { name: "Laelia Pink", hex: "#CC85D1" }, { name: "Taupe Brown", hex: "#6B2E63" }], roles: { primary: "#6B2E63", accent: "#405416" }, report_fit: 0.909 }
+  - { number: 281, colors: [{ name: "Pale Lemon Yellow", hex: "#FFF59E" }, { name: "Benzol Green", hex: "#00D973" }, { name: "Cobalt Green", hex: "#94FF94" }, { name: "Antwarp Blue", hex: "#008AA1" }] }
+  - { number: 282, colors: [{ name: "Eugenia Red | B", hex: "#E62E73" }, { name: "Maple", hex: "#C2975A" }, { name: "Cobalt Green", hex: "#94FF94" }, { name: "Lilac", hex: "#B875EB" }] }
+  - { number: 283, colors: [{ name: "Ochre Red", hex: "#A7374B" }, { name: "Pale Burnt Lake", hex: "#730F1F" }, { name: "Chromium Green", hex: "#66AB56" }, { name: "Venice Green", hex: "#6BFFB3" }], roles: { primary: "#730F1F", accent: "#A7374B", surface: "#6BFFB3" }, report_fit: 0.652 }
+  - { number: 284, colors: [{ name: "Eugenia Red | A", hex: "#ED3D66" }, { name: "Apricot Yellow", hex: "#FFE600" }, { name: "Sea Green", hex: "#33FF7D" }, { name: "Dusky Green", hex: "#00592E" }], roles: { primary: "#00592E", accent: "#ED3D66", surface: "#FFE600" }, report_fit: 0.766 }
+  - { number: 285, colors: [{ name: "Light Brown Drab", hex: "#B08699" }, { name: "Burnt Sienna", hex: "#A93400" }, { name: "Peach Red", hex: "#FF3319" }, { name: "Turquoise Green", hex: "#B5FFC2" }], roles: { primary: "#A93400", accent: "#B08699", surface: "#B5FFC2" }, report_fit: 0.43 }
+  - { number: 286, top: 9, colors: [{ name: "Burnt Sienna", hex: "#A93400" }, { name: "Orange Yellow", hex: "#FFAB00" }, { name: "Peacock Blue", hex: "#00CF91" }, { name: "Violet Blue", hex: "#202D85" }], roles: { primary: "#202D85", accent: "#A93400" }, report_fit: 0.926 }
+  - { number: 287, colors: [{ name: "Eosine Pink", hex: "#FF5EC4" }, { name: "Pyrite Yellow", hex: "#C4BF33" }, { name: "Pale King's Blue", hex: "#ABF5ED" }, { name: "Calamine BLue", hex: "#80FFCC" }] }
+  - { number: 288, colors: [{ name: "Yellow Orange", hex: "#FF8C00" }, { name: "Sepia", hex: "#503D00" }, { name: "Taupe Brown", hex: "#6B2E63" }, { name: "Black", hex: "#000000" }] }
+  - { number: 289, colors: [{ name: "Lemon Yellow", hex: "#F2FF26" }, { name: "Light Green Yellow", hex: "#BDF226" }, { name: "Violet Blue", hex: "#202D85" }, { name: "Dull Violet Black", hex: "#06004F" }], roles: { primary: "#06004F", accent: "#202D85", surface: "#F2FF26" }, report_fit: 0.642 }
+  - { number: 290, top: 11, colors: [{ name: "Vistoris Lake", hex: "#5C2C45" }, { name: "Pale Lemon Yellow", hex: "#FFF59E" }, { name: "Lincoln Green", hex: "#405416" }, { name: "Cobalt Green", hex: "#94FF94" }], roles: { primary: "#5C2C45", accent: "#405416", surface: "#FFF59E" }, report_fit: 0.919 }
+  - { number: 291, colors: [{ name: "Light Green Yellow", hex: "#BDF226" }, { name: "Sea Green", hex: "#33FF7D" }, { name: "Cobalt Green", hex: "#94FF94" }, { name: "Calamine BLue", hex: "#80FFCC" }] }
+  - { number: 292, colors: [{ name: "Pale Lemon Yellow", hex: "#FFF59E" }, { name: "Pinkish Cinnamon", hex: "#F2AD78" }, { name: "Isabella Color", hex: "#C3A55C" }, { name: "Ecru", hex: "#C0B490" }] }
+  - { number: 293, colors: [{ name: "Raw Sienna", hex: "#B85E00" }, { name: "Turquoise Green", hex: "#B5FFC2" }, { name: "Artemesia Green", hex: "#65A98F" }, { name: "Green", hex: "#40C945" }] }
+  - { number: 294, colors: [{ name: "Sulpher Yellow", hex: "#F5F5B8" }, { name: "Cream Yellow", hex: "#FFB852" }, { name: "Cossack Green", hex: "#328E13" }, { name: "Salvia Blue", hex: "#96BFE6" }] }
+  - { number: 295, colors: [{ name: "Cream Yellow", hex: "#FFB852" }, { name: "Yellow", hex: "#FFFF00" }, { name: "Blue", hex: "#0D75FF" }, { name: "Dull Violet Black", hex: "#06004F" }], roles: { primary: "#06004F", accent: "#0D75FF", surface: "#FFFF00" }, report_fit: 0.526 }
+  - { number: 296, top: 4, colors: [{ name: "Sulpher Yellow", hex: "#F5F5B8" }, { name: "Ochraceous Salmon", hex: "#D99E73" }, { name: "Pale Raw Umber", hex: "#5E4017" }, { name: "Slate Color", hex: "#1B3644" }], roles: { primary: "#1B3644", accent: "#5E4017", surface: "#F5F5B8" }, report_fit: 0.964 }
+  - { number: 297, top: 10, colors: [{ name: "Burnt Sienna", hex: "#A93400" }, { name: "Yellow Orange", hex: "#FF8C00" }, { name: "Olive Green", hex: "#58771E" }, { name: "Violet Blue", hex: "#202D85" }], roles: { primary: "#202D85", accent: "#A93400" }, report_fit: 0.926 }
+  - { number: 298, colors: [{ name: "Raw Sienna", hex: "#B85E00" }, { name: "Lemon Yellow", hex: "#F2FF26" }, { name: "Peach Red", hex: "#FF3319" }, { name: "Black", hex: "#000000" }] }
+  - { number: 299, colors: [{ name: "Indian Lake", hex: "#CC1A97" }, { name: "Vinaceous Cinnamon", hex: "#F59994" }, { name: "Oil Green", hex: "#6EA900" }, { name: "Antwarp Blue", hex: "#008AA1" }], roles: { primary: "#CC1A97", accent: "#008AA1" }, report_fit: 0.62 }
+  - { number: 300, colors: [{ name: "Grenadine Pink", hex: "#FF616B" }, { name: "Cream Yellow", hex: "#FFB852" }, { name: "Turquoise Green", hex: "#B5FFC2" }, { name: "Calamine BLue", hex: "#80FFCC" }] }
+  - { number: 301, colors: [{ name: "Spectrum Red", hex: "#F20000" }, { name: "Ivory Buff", hex: "#EBD999" }, { name: "Rainette Green", hex: "#85B857" }, { name: "Aconite Violet", hex: "#9C52F2" }] }
+  - { number: 302, colors: [{ name: "Cream Yellow", hex: "#FFB852" }, { name: "Ecru", hex: "#C0B490" }, { name: "Nile Blue", hex: "#BFFFE6" }, { name: "Antwarp Blue", hex: "#008AA1" }] }
+  - { number: 303, colors: [{ name: "Naples Yellow", hex: "#FAED8F" }, { name: "Peach Red", hex: "#FF3319" }, { name: "Deep Slate Olive", hex: "#172713" }, { name: "Neutral Gray", hex: "#B5D1CC" }], roles: { primary: "#172713", accent: "#FF3319", surface: "#FAED8F" }, report_fit: 0.652 }
+  - { number: 304, colors: [{ name: "Hay's Russet", hex: "#681916" }, { name: "Cream Yellow", hex: "#FFB852" }, { name: "Dark Citrine", hex: "#7E8743" }, { name: "Benzol Green", hex: "#00D973" }], roles: { primary: "#681916", accent: "#7E8743" }, report_fit: 0.71 }
+  - { number: 305, colors: [{ name: "Pinkish Cinnamon", hex: "#F2AD78" }, { name: "Apricot Yellow", hex: "#FFE600" }, { name: "Citron Yellow", hex: "#A6D40D" }, { name: "Turquoise Green", hex: "#B5FFC2" }] }
+  - { number: 306, colors: [{ name: "Lemon Yellow", hex: "#F2FF26" }, { name: "Benzol Green", hex: "#00D973" }, { name: "Dull Viridian Green", hex: "#19CC33" }, { name: "Nile Blue", hex: "#BFFFE6" }] }
+  - { number: 307, colors: [{ name: "Carmine", hex: "#D60036" }, { name: "Grayish Lavender - A", hex: "#B8B8FF" }, { name: "Aconite Violet", hex: "#9C52F2" }, { name: "Cotinga Purple", hex: "#340059" }], roles: { primary: "#340059", accent: "#D60036" }, report_fit: 0.705 }
+  - { number: 308, colors: [{ name: "Fawn", hex: "#D1B0B3" }, { name: "Scarlet", hex: "#D50C42" }, { name: "English Red", hex: "#DE4500" }, { name: "Cobalt Green", hex: "#94FF94" }], roles: { primary: "#D50C42", accent: "#DE4500", surface: "#94FF94" }, report_fit: 0.378 }
+  - { number: 309, colors: [{ name: "Golden Yellow", hex: "#FA9442" }, { name: "Apricot Orange", hex: "#FF7340" }, { name: "Violet Blue", hex: "#202D85" }, { name: "Vandar Poel's Blue", hex: "#003E83" }], roles: { primary: "#202D85", accent: "#003E83" }, report_fit: 0.713 }
+  - { number: 310, colors: [{ name: "Sulpher Yellow", hex: "#F5F5B8" }, { name: "Pinkish Cinnamon", hex: "#F2AD78" }, { name: "Olive", hex: "#718600" }, { name: "Deep Slate Olive", hex: "#172713" }], roles: { primary: "#172713", accent: "#718600", surface: "#F5F5B8" }, report_fit: 0.582 }
+  - { number: 311, colors: [{ name: "Pompeian Red", hex: "#A90636" }, { name: "Cream Yellow", hex: "#FFB852" }, { name: "Dark Greenish Glaucous", hex: "#B3D9A3" }, { name: "Light Green Yellow", hex: "#BDF226" }] }
+  - { number: 312, colors: [{ name: "Burnt Sienna", hex: "#A93400" }, { name: "Yellow Orange", hex: "#FF8C00" }, { name: "Artemesia Green", hex: "#65A98F" }, { name: "Helvetia Blue", hex: "#0057BA" }], roles: { primary: "#0057BA", accent: "#A93400" }, report_fit: 0.742 }
+  - { number: 313, colors: [{ name: "Carmine", hex: "#D60036" }, { name: "Yellow", hex: "#FFFF00" }, { name: "Diamine Green", hex: "#1B8E13" }, { name: "Black", hex: "#000000" }] }
+  - { number: 314, colors: [{ name: "Eosine Pink", hex: "#FF5EC4" }, { name: "Hay's Russet", hex: "#681916" }, { name: "Deep Lyons Blue", hex: "#0024CC" }, { name: "Dusky Madder Violet", hex: "#2D0060" }], roles: { primary: "#2D0060", accent: "#681916" }, report_fit: 0.834 }
+  - { number: 315, colors: [{ name: "Grenadine Pink", hex: "#FF616B" }, { name: "Sulpher Yellow", hex: "#F5F5B8" }, { name: "Golden Yellow", hex: "#FA9442" }, { name: "Eupatorium Purple", hex: "#BF36E0" }] }
+  - { number: 316, top: 22, colors: [{ name: "Vandyke Red", hex: "#740909" }, { name: "Dull Viridian Green", hex: "#19CC33" }, { name: "Violet", hex: "#2619D1" }, { name: "Red Violet", hex: "#3400A3" }], roles: { primary: "#3400A3", accent: "#740909" }, report_fit: 0.877 }
+  - { number: 317, colors: [{ name: "Light Pinkish Cinnamon", hex: "#FFBF99" }, { name: "Ecru", hex: "#C0B490" }, { name: "Lemon Yellow", hex: "#F2FF26" }, { name: "Turquoise Green", hex: "#B5FFC2" }] }
+  - { number: 318, colors: [{ name: "Light Brownish Olive", hex: "#706934" }, { name: "Blackish Olive", hex: "#324E2A" }, { name: "Dusky Green", hex: "#00592E" }, { name: "Deep Slate Green", hex: "#0F261F" }], roles: { primary: "#0F261F", accent: "#706934" }, report_fit: 0.757 }
+  - { number: 319, colors: [{ name: "Raw Sienna", hex: "#B85E00" }, { name: "Apricot Yellow", hex: "#FFE600" }, { name: "Yellow Orange", hex: "#FF8C00" }, { name: "Cossack Green", hex: "#328E13" }], roles: { primary: "#B85E00", accent: "#328E13", surface: "#FFE600" }, report_fit: 0.582 }
+  - { number: 320, colors: [{ name: "Coral Red", hex: "#FF7399" }, { name: "Sulpher Yellow", hex: "#F5F5B8" }, { name: "Oil Green", hex: "#6EA900" }, { name: "Light Glaucous Blue", hex: "#A6E6DB" }] }
+  - { number: 321, colors: [{ name: "Light Brown Drab", hex: "#B08699" }, { name: "Sulpher Yellow", hex: "#F5F5B8" }, { name: "Deep Slate Olive", hex: "#172713" }, { name: "Salvia Blue", hex: "#96BFE6" }], roles: { primary: "#172713", accent: "#B08699", surface: "#F5F5B8" }, report_fit: 0.69 }
+  - { number: 322, colors: [{ name: "Spectrum Red", hex: "#F20000" }, { name: "Brick Red", hex: "#A32100" }, { name: "Eupatorium Purple", hex: "#BF36E0" }, { name: "Blue Violet", hex: "#4733FF" }], roles: { primary: "#A32100", accent: "#4733FF" }, report_fit: 0.697 }
+  - { number: 323, colors: [{ name: "Cinnamon Buff", hex: "#FFBF6E" }, { name: "Citron Yellow", hex: "#A6D40D" }, { name: "Madder Brown", hex: "#651300" }, { name: "Black", hex: "#000000" }] }
+  - { number: 324, colors: [{ name: "Pompeian Red", hex: "#A90636" }, { name: "Olympic Blue", hex: "#4F8FE6" }, { name: "Aconite Violet", hex: "#9C52F2" }, { name: "Neutral Gray", hex: "#B5D1CC" }], roles: { primary: "#A90636", accent: "#4F8FE6" }, report_fit: 0.723 }
+  - { number: 325, colors: [{ name: "Eugenia Red | B", hex: "#E62E73" }, { name: "Naples Yellow", hex: "#FAED8F" }, { name: "Yellow Ocher", hex: "#E0B81F" }, { name: "Deep Slate Green", hex: "#0F261F" }], roles: { primary: "#0F261F", accent: "#E62E73", surface: "#FAED8F" }, report_fit: 0.825 }
+  - { number: 326, colors: [{ name: "Sulpher Yellow", hex: "#F5F5B8" }, { name: "Peach Red", hex: "#FF3319" }, { name: "Yellow Green", hex: "#A6FF47" }, { name: "Night Green", hex: "#7AFF00" }] }
+  - { number: 327, colors: [{ name: "Eosine Pink", hex: "#FF5EC4" }, { name: "Raw Sienna", hex: "#B85E00" }, { name: "Ecru", hex: "#C0B490" }, { name: "Grayish Lavender - B", hex: "#BFABCC" }] }
+  - { number: 328, colors: [{ name: "Brick Red", hex: "#A32100" }, { name: "Apricot Orange", hex: "#FF7340" }, { name: "Vandyke Brown", hex: "#362304" }, { name: "Light Porcelain Green", hex: "#23C17C" }], roles: { primary: "#362304", accent: "#A32100" }, report_fit: 0.626 }
+  - { number: 329, colors: [{ name: "Cream Yellow", hex: "#FFB852" }, { name: "Grayish Lavender - B", hex: "#BFABCC" }, { name: "Cotinga Purple", hex: "#340059" }, { name: "Slate Color", hex: "#1B3644" }], roles: { primary: "#340059", accent: "#1B3644" }, report_fit: 0.749 }
+  - { number: 330, colors: [{ name: "Olive Buff", hex: "#BCD382" }, { name: "Nile Blue", hex: "#BFFFE6" }, { name: "Salvia Blue", hex: "#96BFE6" }, { name: "Green Blue", hex: "#2DBC94" }] }
+  - { number: 331, colors: [{ name: "Indian Lake", hex: "#CC1A97" }, { name: "Dull Violet Black", hex: "#06004F" }, { name: "Light Mauve", hex: "#9161F2" }, { name: "Violet", hex: "#2619D1" }], roles: { primary: "#06004F", accent: "#CC1A97" }, report_fit: 0.76 }
+  - { number: 332, colors: [{ name: "Coral Red", hex: "#FF7399" }, { name: "Scarlet", hex: "#D50C42" }, { name: "Deep Slate Olive", hex: "#172713" }, { name: "Dusky Green", hex: "#00592E" }], roles: { primary: "#172713", accent: "#D50C42" }, report_fit: 0.736 }
+  - { number: 333, colors: [{ name: "Burnt Sienna", hex: "#A93400" }, { name: "Lemon Yellow", hex: "#F2FF26" }, { name: "Cobalt Green", hex: "#94FF94" }, { name: "Blue", hex: "#0D75FF" }], roles: { primary: "#A93400", accent: "#0D75FF", surface: "#F2FF26" }, report_fit: 0.616 }
+  - { number: 334, colors: [{ name: "Seashell Pink", hex: "#FFCFC4" }, { name: "Olive", hex: "#718600" }, { name: "Yellow Green", hex: "#A6FF47" }, { name: "Antwarp Blue", hex: "#008AA1" }] }
+  - { number: 335, top: 2, colors: [{ name: "Vandyke Red", hex: "#740909" }, { name: "Yellow Orange", hex: "#FF8C00" }, { name: "Violet", hex: "#2619D1" }, { name: "Slate Color", hex: "#1B3644" }], roles: { primary: "#1B3644", accent: "#740909" }, report_fit: 1 }
+  - { number: 336, top: 25, colors: [{ name: "Eosine Pink", hex: "#FF5EC4" }, { name: "Hay's Russet", hex: "#681916" }, { name: "Pale Lemon Yellow", hex: "#FFF59E" }, { name: "Blackish Olive", hex: "#324E2A" }], roles: { primary: "#681916", accent: "#324E2A", surface: "#FFF59E" }, report_fit: 0.871 }
+  - { number: 337, colors: [{ name: "Vistoris Lake", hex: "#5C2C45" }, { name: "Laelia Pink", hex: "#CC85D1" }, { name: "Violet Carmine", hex: "#531745" }, { name: "Black", hex: "#000000" }] }
+  - { number: 338, top: 29, colors: [{ name: "Carmine Red", hex: "#A10B2B" }, { name: "Orange Yellow", hex: "#FFAB00" }, { name: "Dusky Green", hex: "#00592E" }, { name: "Grayish Lavender - B", hex: "#BFABCC" }], roles: { primary: "#00592E", accent: "#A10B2B" }, report_fit: 0.847 }
+  - { number: 339, colors: [{ name: "Ochraceous Salmon", hex: "#D99E73" }, { name: "English Red", hex: "#DE4500" }, { name: "Light Glaucous Blue", hex: "#A6E6DB" }, { name: "Violet Blue", hex: "#202D85" }], roles: { primary: "#202D85", accent: "#DE4500", surface: "#A6E6DB" }, report_fit: 0.805 }
+  - { number: 340, colors: [{ name: "Peach Red", hex: "#FF3319" }, { name: "Sea Green", hex: "#33FF7D" }, { name: "Neutral Gray", hex: "#B5D1CC" }, { name: "Black", hex: "#000000" }] }
+  - { number: 341, colors: [{ name: "Grenadine Pink", hex: "#FF616B" }, { name: "Cossack Green", hex: "#328E13" }, { name: "Deep Slate Olive", hex: "#172713" }, { name: "Light Glaucous Blue", hex: "#A6E6DB" }], roles: { primary: "#172713", accent: "#328E13", surface: "#A6E6DB" }, report_fit: 0.558 }
+  - { number: 342, colors: [{ name: "Corinthian Pink", hex: "#FFA6D9" }, { name: "Cream Yellow", hex: "#FFB852" }, { name: "Orange Citrine", hex: "#8C6510" }, { name: "Deep Slate Olive", hex: "#172713" }], roles: { primary: "#172713", accent: "#8C6510" }, report_fit: 0.735 }
+  - { number: 343, colors: [{ name: "Burnt Sienna", hex: "#A93400" }, { name: "Ivory Buff", hex: "#EBD999" }, { name: "Deep Grayish Olive", hex: "#505423" }, { name: "Vandar Poel's Blue", hex: "#003E83" }], roles: { primary: "#003E83", accent: "#A93400", surface: "#EBD999" }, report_fit: 0.817 }
+  - { number: 344, colors: [{ name: "Cinnamon Buff", hex: "#FFBF6E" }, { name: "Deep Lyons Blue", hex: "#0024CC" }, { name: "Aconite Violet", hex: "#9C52F2" }, { name: "Black", hex: "#000000" }] }
+  - { number: 345, top: 26, colors: [{ name: "Hay's Russet", hex: "#681916" }, { name: "Nile Blue", hex: "#BFFFE6" }, { name: "Venice Green", hex: "#6BFFB3" }, { name: "Blue Violet", hex: "#4733FF" }], roles: { primary: "#681916", accent: "#4733FF", surface: "#BFFFE6" }, report_fit: 0.861 }
+  - { number: 346, colors: [{ name: "Rosolanc Purple", hex: "#B319AB" }, { name: "Turquoise Green", hex: "#B5FFC2" }, { name: "Light Green Yellow", hex: "#BDF226" }, { name: "Andover Green", hex: "#5C8A73" }], roles: { primary: "#B319AB", accent: "#5C8A73", surface: "#B5FFC2" }, report_fit: 0.679 }
+  - { number: 347, colors: [{ name: "Olive Yellow", hex: "#99B333" }, { name: "Sea Green", hex: "#33FF7D" }, { name: "Helvetia Blue", hex: "#0057BA" }, { name: "Lilac", hex: "#B875EB" }], roles: { primary: "#0057BA", accent: "#B875EB", surface: "#33FF7D" }, report_fit: 0.572 }
+  - { number: 348, colors: [{ name: "Olive Buff", hex: "#BCD382" }, { name: "Cossack Green", hex: "#328E13" }, { name: "Deep Slate Olive", hex: "#172713" }, { name: "Cotinga Purple", hex: "#340059" }], roles: { primary: "#340059", accent: "#328E13" }, report_fit: 0.841 }

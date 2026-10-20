@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { api, type Meta } from '../api';
+import { PalettePicker } from './palettes';
 import { Field, confirmDialog, go, useToast } from '../ui';
 
 interface ThemeInfo { slug: string; yaml: string; data: any; resolved: any; warnings: Array<{ message: string }>; assets: string[]; fonts: string[] }
@@ -70,6 +71,7 @@ export function ThemePage({ slug, meta, onChanged }: { slug: string; meta: Meta;
                 <Field label="Accent (nummering, lijnen)" hint="Leeg = zelfde als primair"><div style={{ display: 'flex', gap: 8 }}><input type="color" value={get('colors.accent') || get('colors.primary') || '#1F7A8C'} onChange={(e) => set('colors.accent', e.target.value.toUpperCase())} disabled={readonly} style={{ width: 44, padding: 2 }} /><input type="text" value={get('colors.accent')} onChange={(e) => set('colors.accent', e.target.value)} readOnly={readonly} /></div></Field>
               </div>
               {t.resolved && <div className="small muted">Afgeleid: koppen {t.resolved.colors.headingColor}, tint {t.resolved.colors.primaryLight}. Severity-kleuren blijven de standaardkleuren tenzij je ze in theme.yaml overschrijft.</div>}
+              {!readonly && <PalettePicker current={{ primary: get('colors.primary'), accent: get('colors.accent') }} onPick={(c) => { set('colors.primary', c.primary); set('colors.accent', c.accent); set('colors.surface', c.surface); set('colors.calloutBg', c.calloutBg); toast('Kleuren overgenomen — klik Proefrapport om het resultaat te zien'); }} />}
             </div>
             <div className="panel">
               <h2 style={{ marginTop: 0 }}>Typografie</h2>

@@ -92,6 +92,11 @@ async function main() {
   const fromLib = await api('POST', `/api/engagements/${eng.id}/findings`, { markdown: lib.markdown, library_id: lib.id });
   assert.equal(fromLib.created.length, 1);
   assert.equal((await api('GET', `/api/library/${lib.id}`)).used_count, 1);
+  // palettes
+  const pals = await api('GET', '/api/palettes');
+  assert.equal(pals[0].id, 'sanzo-wada'); assert.equal(pals[0].combinations.length, 348);
+  assert.equal(pals[0].combinations.filter((c: any) => c.top).length, 30);
+  assert.ok(pals[0].combinations.find((c: any) => c.number === 245).theme.primary);
   // theme preview + export
   const tp = await api('POST', '/api/themes/example-client/preview', { language: 'en' });
   assert.ok(tp.pdf);

@@ -100,6 +100,8 @@ assets: { logo: logo.svg, logo_mono: logo-mono.svg, logo_header: logo-header.svg
 texts: { disclaimer: { nl: "...", en: "..." } }
 ```
 
+**Colour combinations.** The theme editor offers the 348 combinations from Sanzo Wada's *A Dictionary of Color Combinations* (1933; data from the open set `modules/palettes/sanzo-wada.yaml`), with the 30 that suit a report best up front: one click sets `primary`, `accent`, `surface` and `calloutBg` (a deep colour for headings and the cover, a contrasting accent, a soft tint for fills); severity colours stay semantic. The ranking (`report_fit`) scores contrast on white (≥ 4.5 for the primary, ≥ 3 for the accent), hue separation and restraint, and is regenerated with `node scripts/sanzo-wada.mjs`. Other palettes are one YAML file each in `modules/palettes/`.
+
 Derived colours (tints, heading colour, severity text colour) are computed with WCAG contrast checks; a too-light brand colour is darkened for text automatically. Word uses `fonts.docx_body` / `docx_heading` / `docx_mono` (default Calibri/Consolas) because fonts are not embedded in DOCX.
 
 ## Adding a block

@@ -5,7 +5,7 @@ import { join, extname, basename } from 'node:path';
 import { execFileSync } from 'node:child_process';
 import sharp from 'sharp';
 import { parse as parseYaml, stringify as toYaml } from 'yaml';
-import { loadModules, resolveTheme, loadLibrary, libraryLanguages, VERSION, type Modules } from '@reportforge/core';
+import { loadModules, resolveTheme, loadLibrary, libraryLanguages, loadPalettes, paletteToThemeColors, VERSION, type Modules } from '@reportforge/core';
 import { parseFindings, parseMarkdown } from '@reportforge/markdown';
 import { assess, scoreCvss31, scoreCvss40 } from '@reportforge/risk';
 import { Router, HttpError, type Req, type Res } from './http.ts';
@@ -371,6 +371,9 @@ export function buildApi(db: Db, p: Paths): Router {
     setSetting(db, 'library_seeded', now());
     if (r.added) console.log(`bibliotheek: ${r.added} standaardbevindingen geladen`);
   }
+
+  // ---- palettes (colour combinations a theme can adopt)
+  r.get('/api/palettes', (req, res) => res.json(loadPalettes(p.root).map((pal) => ({ ...pal, combinations: pal.combinations.map((c) => ({ ...c, theme: c.roles ? paletteToThemeColors(c) : undefined })) }))));
 
   // ---- library
   r.post('/api/library/seed', async (req, res) => { const b = await req.json().catch(() => ({})); res.json(seedLibrary(b.languages)); });

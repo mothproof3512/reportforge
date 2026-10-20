@@ -1,6 +1,6 @@
 {
   "name": "reportforge",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "private": true,
   "description": "Modular, whitelabel pentest reporting framework. Markdown in, world-class PDF and DOCX out.",
   "license": "MIT",
