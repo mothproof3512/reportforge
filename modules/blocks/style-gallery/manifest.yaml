@@ -1,0 +1,6 @@
+id: style-gallery
+name: Style gallery
+version: "1.0"
+category: front
+description: Shows every variant of every layout element (covers, chapter titles, tables, charts, callouts, badges, finding layouts) in the current theme, so a client can choose by looking. Used by the theme editor and `rf gallery`; not for client reports.
+documents: [report]

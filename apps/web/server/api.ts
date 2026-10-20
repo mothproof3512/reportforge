@@ -78,7 +78,7 @@ export function buildApi(db: Db, p: Paths): Router {
     res.json({
       themes: Object.keys(m.themes).map((slug) => { const y = parseYaml(readFileSync(join(m.themes[slug], 'theme.yaml'), 'utf8')) ?? {}; return { slug, name: y.name ?? slug, provider: y.provider?.name, primary: y.colors?.primary }; }),
       standards: Object.values(m.standards).map((s) => ({ id: s.id, name: s.name, short: s.short, version: s.version, kind: s.kind, items: s.items.length })),
-      templates: Object.values(m.templates).filter((t) => t.id !== 'finding-preview').map((t) => ({ id: t.id, name: t.name, document: t.document, blocks: t.blocks.map((b) => b.type) })),
+      templates: Object.values(m.templates).filter((t) => !['finding-preview', 'style-gallery'].includes(t.id)).map((t) => ({ id: t.id, name: t.name, document: t.document, blocks: t.blocks.map((b) => b.type) })),
       blocks: Object.values(m.blocks).map((b) => ({ id: b.manifest.id, name: b.manifest.name, category: b.manifest.category, documents: b.manifest.documents, description: b.manifest.description })),
       importers: Object.values(importersCache ?? {}).map((i) => ({ id: i.manifest.id, name: i.manifest.name, formats: i.manifest.formats, description: i.manifest.description })),
       riskModels: [{ id: 'cvss31', name: 'CVSS 3.1' }, { id: 'cvss40', name: 'CVSS 4.0' }, { id: 'matrix', name: 'Risicomatrix (impact × waarschijnlijkheid)' }],
@@ -166,10 +166,11 @@ export function buildApi(db: Db, p: Paths): Router {
     const m = mods(true);
     const { loadEngagement } = await import('@reportforge/core');
     const { renderTypst } = await import('@reportforge/render-typst');
-    const { ctx, diagnostics } = await loadEngagement(m, join(p.root, 'examples/acme-webshop'), { theme: slug, lang: b.language });
+    const template = b.template === 'style-gallery' ? 'style-gallery' : undefined;
+    const { ctx, diagnostics } = await loadEngagement(m, join(p.root, 'examples/acme-webshop'), { theme: slug, lang: b.language, template });
     const errors = diagnostics.filter((d) => d.level === 'error');
     if (errors.length) return res.json({ error: errors.map((e) => e.message).join('; ') }, 400);
-    const out = join(p.renders, '_theme-preview', `${slug}-${b.language ?? ctx.lang}.pdf`);
+    const out = join(p.renders, '_theme-preview', `${slug}-${b.language ?? ctx.lang}${template ? '-' + template : ''}.pdf`);
     mkdirSync(join(p.renders, '_theme-preview'), { recursive: true });
     try { renderTypst(m, ctx, out); } catch (e: any) { return res.json({ error: e.message }, 400); }
     res.json({ pdf: `/api/file?path=${encodeURIComponent(out)}`, warnings: diagnostics.map((d) => d.message) });

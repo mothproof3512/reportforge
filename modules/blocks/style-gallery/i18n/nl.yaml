@@ -1,0 +1,15 @@
+title: Stijlgalerij
+intro: Elk opmaakelement in alle varianten, gerenderd met de kleuren en fonts van dit thema. Kies per element een variant in de thema-editor (Opmaak) of in theme.yaml; de huidige keuze is gemarkeerd.
+covers: Voorbladen (page.cover)
+headings: Hoofdstukkoppen (options.heading_style)
+tables: Tabellen (options.table_style)
+charts: Grafieken (options.chart_style)
+callouts: Kaders (options.callout_style)
+badges: Severity-badges (options.badge_style)
+findings: Bevindingen (options.finding_layout)
+current: huidig
+sample_heading: Aanpak en methodiek
+sample_callout_title: Aanbeveling
+sample_callout: Voer autorisatiecontroles uit in één laag (API-middleware) in plaats van per endpoint; voeg geautomatiseerde tests toe die elk object-endpoint met een vreemd account aanroepen.
+cover_pages: De voorbladen staan op de volgende pagina's.
+finding_pages: De bevindingslayouts volgen, telkens dezelfde bevinding.

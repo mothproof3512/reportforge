@@ -72,9 +72,7 @@ export class Helpers {
   spacer(pt = 6): Paragraph { return new Paragraph({ spacing: { before: 0, after: PT(pt) }, children: [] }); }
   rule(): Paragraph { return new Paragraph({ border: { bottom: { style: BorderStyle.SINGLE, size: 4, color: hex(this.colors.rule) } }, spacing: { after: PT(6) }, children: [] }); }
 
-  badge(sev: Severity, size = 7): TextRun {
-    return new TextRun({ text: ` ${this.sevLabel(sev).toUpperCase()} `, bold: true, size: PT(size), font: this.fonts.body, color: hex(this.colors.severityText[sev]), shading: { type: ShadingType.CLEAR, fill: hex(this.colors.severity[sev]) } });
-  }
+  badge(sev: Severity, size = 7): TextRun { return this.sevBadge(sev, size); }
   link(url: string, text?: string): ExternalHyperlink {
     return new ExternalHyperlink({ link: url, children: [new TextRun({ text: text ?? url, style: 'Hyperlink', font: this.fonts.body })] });
   }
@@ -120,19 +118,41 @@ export class Helpers {
     const n = rows[0]?.length ?? 1;
     const widths = o.widths ?? Array(n).fill(this.textWidthMm / n);
     const c = this.colors;
+    const st = String((this.theme.options as any)?.table_style ?? 'lines');
     const alignOf = (i: number) => (o.aligns?.[i] === 'right' ? AlignmentType.RIGHT : o.aligns?.[i] === 'center' ? AlignmentType.CENTER : AlignmentType.LEFT);
+    const rowFill = (ri: number) => {
+      if (header && ri === 0) return st === 'header-dark' ? c.primary : st === 'zebra' ? c.primaryLight : st === 'minimal' || st === 'cards' ? undefined : c.surface;
+      if (st === 'zebra') return ri % 2 === 1 ? c.surface : undefined;
+      if (st === 'cards') return c.surface;
+      return undefined;
+    };
     const trs = rows.map((r, ri) => new TableRow({
       tableHeader: header && ri === 0,
       cantSplit: true,
-      children: r.map((cellv, ci) => this.cell(cellv as any, { width: widths[ci], fill: header && ri === 0 ? c.surface : undefined, bold: header && ri === 0, align: alignOf(ci) })),
+      children: r.map((cellv, ci) => {
+        const cell = this.cell(cellv as any, { width: widths[ci], fill: rowFill(ri), bold: header && ri === 0, align: alignOf(ci) });
+        return cell;
+      }),
     }));
+    if (st === 'header-dark' && header && typeof rows[0]?.[0] === 'string') {
+      // white header text: rebuild the header row with coloured runs
+      trs[0] = new TableRow({ tableHeader: true, cantSplit: true, children: rows[0].map((cellv, ci) => this.cell(typeof cellv === 'string' ? [new TextRun({ text: cellv, bold: true, size: PT(9), font: this.fonts.body, color: hex(c.onPrimary as string) })] : (cellv as any), { width: widths[ci], fill: c.primary, align: alignOf(ci) })) });
+    }
     const border = { style: BorderStyle.SINGLE, size: 4, color: hex(c.rule) };
-    return new Table({
+    const none = { style: BorderStyle.NONE, size: 0, color: 'FFFFFF' };
+    const strong = { style: BorderStyle.SINGLE, size: 8, color: hex(c.ink) };
+    const borders = st === 'boxed' ? { top: border, bottom: border, left: border, right: border, insideHorizontal: border, insideVertical: border }
+      : st === 'zebra' || st === 'cards' ? { top: none, bottom: none, left: none, right: none, insideHorizontal: st === 'cards' ? { style: BorderStyle.SINGLE, size: 12, color: 'FFFFFF' } : none, insideVertical: none }
+      : st === 'minimal' ? { top: none, bottom: border, left: none, right: none, insideHorizontal: none, insideVertical: none }
+      : { top: border, bottom: border, left: none, right: none, insideHorizontal: border, insideVertical: none };
+    const tbl = new Table({
       rows: trs,
       width: { size: MM(widths.reduce((a, b) => a + b, 0)), type: WidthType.DXA },
       columnWidths: widths.map(MM),
-      borders: { top: border, bottom: border, left: { style: BorderStyle.NONE, size: 0, color: 'FFFFFF' }, right: { style: BorderStyle.NONE, size: 0, color: 'FFFFFF' }, insideHorizontal: border, insideVertical: { style: BorderStyle.NONE, size: 0, color: 'FFFFFF' } },
+      borders,
     });
+    if (st === 'minimal' && header) (trs[0] as any).options.children.forEach((cell: any) => { cell.options.borders = { bottom: strong }; });
+    return tbl;
   }
   kv(pairs: Array<[string, string | TextRun[]]>, keyWidth = 40): Table {
     const rows = pairs.map(([k, v]) => [[this.muted(k, 9)], typeof v === 'string' ? [this.run(v, { size: PT(9.5) })] : v]);
@@ -144,8 +164,17 @@ export class Helpers {
     const c = this.colors;
     const none = { style: BorderStyle.NONE, size: 0, color: 'FFFFFF' };
     const w = o.width ?? this.textWidthMm;
+    const st = String((this.theme.options as any)?.callout_style ?? 'bar');
+    const accent = hex(o.accent ?? c.primary);
+    const thin = { style: BorderStyle.SINGLE, size: 6, color: accent };
+    const cellBorders = st === 'outline' ? { left: thin, right: thin, top: thin, bottom: thin }
+      : st === 'card' ? { left: { ...thin, color: hex(c.rule) }, right: { ...thin, color: hex(c.rule) }, top: { ...thin, color: hex(c.rule) }, bottom: { ...thin, color: hex(c.rule) } }
+      : st === 'fill' ? { left: none, top: none, bottom: none, right: none }
+      : st === 'quote' ? { left: { style: BorderStyle.SINGLE, size: 6, color: accent }, top: none, bottom: none, right: none }
+      : { left: { style: BorderStyle.SINGLE, size: 18, color: accent }, top: none, bottom: none, right: none };
+    const shade = st === 'outline' || st === 'quote' || st === 'card' ? undefined : { type: ShadingType.CLEAR, fill: hex(o.fill ?? (st === 'fill' ? c.primaryLight : c.surface)) };
     return new Table({
-      rows: [new TableRow({ cantSplit: true, children: [new TableCell({ children, margins: { top: MM(2.5), bottom: MM(2.5), left: MM(3), right: MM(3) }, shading: { type: ShadingType.CLEAR, fill: hex(o.fill ?? c.surface) }, width: { size: MM(w), type: WidthType.DXA }, borders: { left: { style: BorderStyle.SINGLE, size: 18, color: hex(o.accent ?? c.primary) }, top: none, bottom: none, right: none } })] })],
+      rows: [new TableRow({ cantSplit: true, children: [new TableCell({ children, margins: { top: MM(2.5), bottom: MM(2.5), left: MM(3), right: MM(3) }, shading: shade, width: { size: MM(w), type: WidthType.DXA }, borders: cellBorders })] })],
       width: { size: MM(w), type: WidthType.DXA },
       columnWidths: [MM(w)],
       borders: { top: none, bottom: none, left: none, right: none, insideHorizontal: none, insideVertical: none },
@@ -172,10 +201,15 @@ export class Helpers {
   }
   /** Severity badge with the shape glyph when the theme asks for it. */
   sevBadge(sev: Severity, size = 7): TextRun {
-    const shapes = (this.theme.options as any)?.severity_shapes;
+    const opts = (this.theme.options as any) ?? {};
+    const st = String(opts.badge_style ?? (opts.severity_shapes ? 'shapes' : 'solid'));
     const glyph = { critical: '◆', high: '▲', medium: '■', low: '●', info: '▬' }[sev];
-    const label = shapes ? `${glyph} ${this.sevLabel(sev)}` : this.sevLabel(sev).toUpperCase();
-    return new TextRun({ text: ` ${label} `, bold: true, size: PT(size), font: this.fonts.body, color: hex(this.colors.severityText[sev]), shading: { type: ShadingType.CLEAR, fill: hex(this.colors.severity[sev]) } });
+    const col = hex(this.colors.severity[sev]);
+    if (st === 'outline') return new TextRun({ text: ` ${this.sevLabel(sev).toUpperCase()} `, bold: true, size: PT(size), font: this.fonts.body, color: col, border: { style: BorderStyle.SINGLE, size: 6, color: col, space: 1 } });
+    if (st === 'dot') return new TextRun({ text: `● ${this.sevLabel(sev)}`, bold: true, size: PT(size), font: this.fonts.body, color: col });
+    if (st === 'tag') return new TextRun({ text: `▌${this.sevLabel(sev).toUpperCase()} `, bold: true, size: PT(size), font: this.fonts.body, color: col, shading: { type: ShadingType.CLEAR, fill: hex(this.colors.surface) } });
+    const label = st === 'shapes' ? `${glyph} ${this.sevLabel(sev)}` : st === 'pill' ? this.sevLabel(sev) : this.sevLabel(sev).toUpperCase();
+    return new TextRun({ text: ` ${label} `, bold: true, size: PT(size), font: this.fonts.body, color: hex(this.colors.severityText[sev]), shading: { type: ShadingType.CLEAR, fill: col } });
   }
   /** Small accent label above a chapter title or a card ("1 · Managementsamenvatting"). */
   eyebrow(text: string): Paragraph {

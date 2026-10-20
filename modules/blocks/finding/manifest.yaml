@@ -8,4 +8,4 @@ each: findings
 options:
   new_page: true
   first_inline: false   # extended layout: first finding directly under the chapter heading instead of on a new page
-  layout: classic   # classic | extended (title row with badge and status pill, hairlined meta grid, summary / classification rationale / likelihood sections, recommendation callout)
+  layout: theme     # theme (= theme.options.finding_layout, default classic) | classic | extended | card | sidebar | compact | table (title row with badge and status pill, hairlined meta grid, summary / classification rationale / likelihood sections, recommendation callout)

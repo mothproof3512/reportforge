@@ -1,0 +1,5 @@
+id: style-gallery
+name: Style gallery (every layout variant of a theme)
+document: report
+blocks:
+  - style-gallery

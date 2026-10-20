@@ -1,10 +1,14 @@
 import { Paragraph, TextRun, HeadingLevel } from 'docx';
 import type { Block, Helpers } from '@reportforge/render-docx';
 export async function render(ctx: any, theme: any, t: any, opts: any, h: Helpers): Promise<Block[]> {
-  if (opts.layout === 'extended') return extended(ctx, theme, t, opts, h);
+  let layout = opts.layout ?? 'theme';
+  if (layout === 'theme') layout = (theme.options as any)?.finding_layout ?? 'classic';
+  if (layout === 'extended') return extended(ctx, theme, t, opts, h);
+  if (layout === 'table') return tableLayout(ctx, theme, t, opts, h);
   const f = opts.item, c = theme.colors, tb = t.blocks.finding;
   const hx = (s: string) => s.replace('#', '');
-  const out: Block[] = [h.findingHeading(f.id, f.title)];
+  const firstInline = opts.first_inline && f.index === 1;
+  const out: Block[] = [layout === 'compact' || firstInline ? new Paragraph({ heading: HeadingLevel.HEADING_2, spacing: { before: h.PT(14) }, children: [new TextRun({ text: f.id, color: hx(c.accent), font: h.fonts.heading }), new TextRun({ text: '  ' + f.title, font: h.fonts.heading })] }) : h.findingHeading(f.id, f.title)];
   // metadata card
   const modelName = t.core.risk_model[f.risk.model] ?? f.risk.model;
   const line1: TextRun[] = [h.label(t.core.severity), h.run('  '), h.badge(f.severity, 7.5), h.run('      '), h.label(modelName), h.run('  '), h.run(f.risk.label, { bold: true, size: h.PT(11) } as any), h.run('      '), h.label(t.core.status), h.run('  ' + f.status)];
@@ -30,6 +34,35 @@ export async function render(ctx: any, theme: any, t: any, opts: any, h: Helpers
   const section = (title: string, md?: string) => { if (md) out.push(h.h3(title), ...h.md(md)); };
   section(t.core.description, s.description); section(t.core.impact, s.impact); section(t.core.evidence, s.evidence); section(t.core.recommendation, s.recommendation);
   for (const [k, v] of Object.entries(s)) if (!['description', 'impact', 'evidence', 'recommendation', 'references'].includes(k)) section(tb[k] ?? k[0].toUpperCase() + k.slice(1), v as string);
+  section(t.core.references, s.references);
+  if (layout === 'card') {
+    // the heading stays outside (Word needs it for the TOC); everything else goes into a bordered box with a severity-coloured left edge
+    return [out[0], h.box(out.slice(1), { fill: '#FFFFFF', accent: c.severity[f.severity] })];
+  }
+  // 'sidebar' falls back to the classic layout in Word: nested full-width tables (code, images) do not fit a narrow column.
+  return out;
+}
+
+async function tableLayout(ctx: any, theme: any, t: any, opts: any, h: Helpers): Promise<Block[]> {
+  const f = opts.item, c = theme.colors, tb = t.blocks.finding, s = f.sections;
+  const hx = (x: string) => x.replace('#', '');
+  const modelName = t.core.risk_model[f.risk.model] ?? f.risk.model;
+  const out: Block[] = [opts.first_inline && f.index === 1 ? new Paragraph({ heading: HeadingLevel.HEADING_2, children: [new TextRun({ text: f.id, color: hx(c.accent), font: h.fonts.heading }), new TextRun({ text: '  ' + f.title, font: h.fonts.heading })] }) : h.findingHeading(f.id, f.title)];
+  const rows: Array<[string, any]> = [
+    [t.core.severity, [h.sevBadge(f.severity), h.run('   '), h.muted(modelName + ' ', 8.5), h.run(f.risk.label, { bold: true, size: h.PT(9) } as any)]],
+    [t.core.status, [h.run(f.status, { size: h.PT(9) } as any), h.run('   '), h.statusPill(f)]],
+    [t.core.affected, [h.mono(f.affected.length ? f.affected.join(', ') : '—')]],
+  ];
+  if (f.mapping.length) rows.push([t.core.mapping, [h.mono(f.mapping.map((m: any) => m.item).join(', '))]]);
+  if (f.cwe.length) rows.push([t.core.cwe, [h.mono(f.cwe.join(', '))]]);
+  if (f.risk.vector) rows.push([tb.vector, [h.mono(f.risk.vector)]]);
+  if (f.source) rows.push([t.core.source, [h.run(f.source, { size: h.PT(9) } as any)]]);
+  out.push(h.table(rows.map(([k, v]) => [[h.run(k, { bold: true, size: h.PT(9), color: hx(c.muted) } as any)], v]), { widths: [34, 136], header: false }), h.spacer(4));
+  let n = 0;
+  const section = (title: string, md?: string) => { if (!md) return; n++; out.push(h.p([new TextRun({ text: `${f.id}.${n}`, font: h.fonts.mono, size: h.PT(8), color: hx(c.accent), bold: true }), h.run('   ' + title, { bold: true, size: h.PT(10), color: hx(c.headingColor as string) } as any)], { keepNext: true, spacing: { before: h.PT(8), after: h.PT(3) } }), ...h.md(md)); };
+  if (f.retest) out.push(h.box([h.p([h.run(`${t.core.retest} — ${t.core.retest_status[f.retest.status] ?? f.retest.status}`, { bold: true } as any)]), ...h.md(f.retest.note)]), h.spacer(4));
+  for (const [key, title] of [['summary', tb.summary], ['description', t.core.description], ['classification', tb.classification], ['evidence', t.core.evidence], ['impact', t.core.impact], ['likelihood', tb.likelihood], ['recommendation', t.core.recommendation], ['notes', tb.notes]] as Array<[string, string]>) section(title, s[key]);
+  for (const [k, v] of Object.entries(s)) if (!['summary', 'description', 'classification', 'impact', 'likelihood', 'evidence', 'recommendation', 'notes', 'references'].includes(k)) section(k[0].toUpperCase() + k.slice(1), v as string);
   section(t.core.references, s.references);
   return out;
 }

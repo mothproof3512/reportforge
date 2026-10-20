@@ -158,8 +158,142 @@
   } else { tb.retest_pending }
 }
 
+// ---------------------------------------------------------------- shared pieces for the other layouts
+#let all-sections(theme, t, tb, s, section-fn) = {
+  section-fn(tb.summary, s.at("summary", default: none))
+  section-fn(t.core.description, s.at("description", default: none))
+  section-fn(tb.classification, s.at("classification", default: none))
+  section-fn(t.core.evidence, s.at("evidence", default: none))
+  section-fn(t.core.impact, s.at("impact", default: none))
+  section-fn(tb.likelihood, s.at("likelihood", default: none))
+  section-fn(t.core.recommendation, s.at("recommendation", default: none))
+  section-fn(tb.notes, s.at("notes", default: none))
+  for (k, v) in s.pairs() {
+    if k not in ("summary", "description", "classification", "impact", "likelihood", "evidence", "recommendation", "notes", "references") { section-fn(upper(k.slice(0, 1)) + k.slice(1), v) }
+  }
+  section-fn(t.core.references, s.at("references", default: none))
+}
+#let mapping-text(f) = f.mapping.map(m => m.item).join(", ")
+#let affected-text(f) = if f.affected.len() == 0 { "—" } else { f.affected.join(", ") }
+#let page-break-for(opts, f) = if opts.at("new_page", default: true) and not (opts.at("first_inline", default: false) and f.index == 1) { pagebreak(weak: true) } else { v(1.4em) }
+
+// card: the whole finding in a bordered card with a severity-coloured top edge;
+// metadata as a two-column key/value block inside the card.
+#let card-layout(ctx, theme, t, opts) = {
+  let c = theme.colors
+  let f = opts.item
+  let tb = t.blocks.finding
+  let s = f.sections
+  page-break-for(opts, f)
+  let model-name = t.core.risk_model.at(f.risk.model, default: f.risk.model)
+  block(width: 100%, stroke: 0.5pt + c.rule, radius: 4pt, inset: 0pt, breakable: true, clip: true, {
+    block(width: 100%, height: 4pt, fill: rf.sev-color(theme, f.severity))
+    block(width: 100%, inset: (x: 13pt, top: 10pt, bottom: 8pt), {
+      [#heading(level: 2, numbering: none, outlined: true, [#text(fill: c.accent, f.id) #h(0.5em) #f.title]) #label("finding-" + f.id)]
+      v(0.2em)
+      [#rf.badge(theme, f.severity, t.severity.at(f.severity)) #h(0.4em) #rf.status-pill(theme, t, f) #h(0.6em) #text(size: 8.5pt, fill: c.muted)[#model-name #text(weight: "bold", fill: c.ink, f.risk.label)]]
+      v(0.6em)
+      let kv = ((t.core.affected, affected-text(f)), (t.core.status, f.status))
+      if f.mapping.len() > 0 { kv.push((t.core.mapping, mapping-text(f))) }
+      if f.cwe.len() > 0 { kv.push((t.core.cwe, f.cwe.join(", "))) }
+      if f.risk.at("vector", default: none) != none { kv.push((model-name, f.risk.vector)) }
+      if f.at("source", default: none) != none { kv.push((t.core.source, f.source)) }
+      block(width: 100%, fill: c.surface, radius: 3pt, inset: (x: 9pt, y: 7pt), grid(columns: (auto, 1fr), column-gutter: 10pt, row-gutter: 4pt,
+        ..kv.map(p => (text(size: 7.5pt, fill: c.muted, tracking: 0.06em, upper(p.at(0))), text(size: 8.5pt, font: theme.fonts.mono, p.at(1)))).flatten()))
+    })
+    block(width: 100%, inset: (x: 13pt, bottom: 12pt), {
+      let sec(title, body) = { if body == none { return }; block(above: 1em, below: 0.4em, sticky: true, text(weight: "bold", size: 10pt, fill: c.headingColor, title)); body }
+      all-sections(theme, t, tb, s, sec)
+      if f.at("retest", default: none) != none { retest-card(ctx, theme, t, f) }
+    })
+  })
+}
+
+// sidebar: a narrow left column with severity, score, status, CWE and mapping
+// stacked; the sections on the right.
+#let sidebar-layout(ctx, theme, t, opts) = {
+  let c = theme.colors
+  let f = opts.item
+  let tb = t.blocks.finding
+  let s = f.sections
+  page-break-for(opts, f)
+  let model-name = t.core.risk_model.at(f.risk.model, default: f.risk.model)
+  [#heading(level: 2, numbering: none, outlined: true, [#text(fill: c.accent, f.id) #h(0.5em) #f.title]) #label("finding-" + f.id)]
+  let item(label, body) = { text(size: 7pt, fill: c.muted, tracking: 0.08em, upper(label)); linebreak(); body; v(0.7em) }
+  grid(columns: (40mm, 1fr), column-gutter: 8mm, align: (left + top, left + top),
+    block(width: 100%, stroke: (right: 0.6pt + c.rule), inset: (right: 6mm), {
+      set text(size: 8.5pt)
+      item(t.core.severity, rf.badge(theme, f.severity, t.severity.at(f.severity)))
+      item(model-name, text(size: 16pt, weight: "bold", fill: c.headingColor, f.risk.label))
+      item(t.core.status, rf.status-pill(theme, t, f))
+      if f.cwe.len() > 0 { item(t.core.cwe, text(font: theme.fonts.mono, f.cwe.join(", "))) }
+      if f.mapping.len() > 0 { item(t.core.mapping, text(font: theme.fonts.mono, size: 7.5pt, f.mapping.map(m => m.item).join(linebreak()))) }
+      item(t.core.affected, text(font: theme.fonts.mono, size: 7.5pt, f.affected.join(linebreak())))
+      if f.risk.at("vector", default: none) != none { item(tb.vector, text(font: theme.fonts.mono, size: 6.8pt, f.risk.vector)) }
+    }),
+    {
+      let sec(title, body) = { if body == none { return }; block(above: 0.9em, below: 0.4em, sticky: true, text(weight: "bold", size: 10pt, fill: c.headingColor, title)); body }
+      if f.at("retest", default: none) != none { retest-card(ctx, theme, t, f) }
+      all-sections(theme, t, tb, s, sec)
+    },
+  )
+}
+
+// compact: no page break per finding; title with inline chips, sections as
+// run-in labels — for reports with many small findings.
+#let compact-layout(ctx, theme, t, opts) = {
+  let c = theme.colors
+  let f = opts.item
+  let tb = t.blocks.finding
+  let s = f.sections
+  if f.index == 1 { v(0.5em) } else { v(1.2em); line(length: 100%, stroke: 0.4pt + c.rule); v(0.6em) }
+  block(breakable: false, {
+    [#heading(level: 2, numbering: none, outlined: true, [#text(fill: c.accent, f.id) #h(0.5em) #f.title]) #label("finding-" + f.id)]
+    v(-0.2em)
+    [#rf.badge(theme, f.severity, t.severity.at(f.severity), size: 7pt) #h(0.3em) #rf.chip(theme, [#t.core.risk_model.at(f.risk.model, default: f.risk.model) #text(weight: "bold", f.risk.label)], size: 7.5pt) #h(0.3em) #rf.chip(theme, f.status, size: 7.5pt)#for m in f.mapping [ #h(0.3em) #rf.chip(theme, raw(m.item), size: 7.5pt)]#for w in f.cwe [ #h(0.3em) #rf.chip(theme, raw(w), size: 7.5pt)]]
+    v(0.3em)
+    text(size: 8.5pt, fill: c.muted)[#t.core.affected: #text(font: theme.fonts.mono, affected-text(f))]
+  })
+  let sec(title, body) = { if body == none { return }; block(above: 0.7em, below: 0.25em, sticky: true, text(weight: "bold", size: 9pt, fill: c.headingColor, title)); body }
+  if f.at("retest", default: none) != none { retest-card(ctx, theme, t, f) }
+  all-sections(theme, t, tb, s, sec)
+}
+
+// table: a two-column metadata table at the top, sections with numbered
+// subheadings (F-01.1 Beschrijving …) — the "audit" look.
+#let table-layout(ctx, theme, t, opts) = {
+  let c = theme.colors
+  let f = opts.item
+  let tb = t.blocks.finding
+  let s = f.sections
+  page-break-for(opts, f)
+  let model-name = t.core.risk_model.at(f.risk.model, default: f.risk.model)
+  [#heading(level: 2, numbering: none, outlined: true, [#text(fill: c.accent, f.id) #h(0.5em) #f.title]) #label("finding-" + f.id)]
+  let rows = (
+    (t.core.severity, [#rf.badge(theme, f.severity, t.severity.at(f.severity)) #h(0.6em) #text(size: 8.5pt, fill: c.muted)[#model-name #text(weight: "bold", fill: c.ink, f.risk.label)]]),
+    (t.core.status, [#f.status #h(0.6em) #rf.status-pill(theme, t, f)]),
+    (t.core.affected, text(font: theme.fonts.mono, size: 8.5pt, affected-text(f))),
+  )
+  if f.mapping.len() > 0 { rows.push((t.core.mapping, text(font: theme.fonts.mono, size: 8.5pt, mapping-text(f)))) }
+  if f.cwe.len() > 0 { rows.push((t.core.cwe, text(font: theme.fonts.mono, size: 8.5pt, f.cwe.join(", ")))) }
+  if f.risk.at("vector", default: none) != none { rows.push((tb.vector, text(font: theme.fonts.mono, size: 8pt, f.risk.vector))) }
+  if f.at("source", default: none) != none { rows.push((t.core.source, f.source)) }
+  rf.table(theme, widths: (34mm, 1fr), header: false, size: 9pt, rows: rows.map(r => (text(weight: "semibold", fill: c.muted, r.at(0)), r.at(1))))
+  let n = counter("rf-finding-section")
+  n.update(0)
+  let sec(title, body) = { if body == none { return }; n.step(); block(above: 1em, below: 0.4em, sticky: true, [#text(size: 8pt, fill: c.accent, weight: "semibold", font: theme.fonts.mono)[#f.id.#context n.display()] #h(0.5em) #text(weight: "bold", size: 10pt, fill: c.headingColor, title)]); body }
+  if f.at("retest", default: none) != none { retest-card(ctx, theme, t, f) }
+  all-sections(theme, t, tb, s, sec)
+}
+
 #let render(ctx, theme, t, opts) = {
-  if opts.at("layout", default: "classic") == "extended" { return extended(ctx, theme, t, opts) }
+  let layout = opts.at("layout", default: "theme")
+  if layout == "theme" { layout = rf.opt(theme, "finding_layout", "classic") }
+  if layout == "extended" { return extended(ctx, theme, t, opts) }
+  if layout == "card" { return card-layout(ctx, theme, t, opts) }
+  if layout == "sidebar" { return sidebar-layout(ctx, theme, t, opts) }
+  if layout == "compact" { return compact-layout(ctx, theme, t, opts) }
+  if layout == "table" { return table-layout(ctx, theme, t, opts) }
   let c = theme.colors
   let f = opts.item
   let tb = t.blocks.finding
