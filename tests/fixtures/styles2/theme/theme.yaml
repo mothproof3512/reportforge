@@ -1,0 +1,8 @@
+page: { cover: geometric }
+options:
+  heading_style: underline
+  table_style: header-dark
+  chart_style: stacked
+  callout_style: card
+  badge_style: outline
+  finding_layout: sidebar

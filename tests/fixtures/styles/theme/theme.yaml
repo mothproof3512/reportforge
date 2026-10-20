@@ -1,0 +1,9 @@
+# Exercises the non-default variant of every layout element.
+page: { cover: split }
+options:
+  heading_style: bar
+  table_style: zebra
+  chart_style: donut
+  callout_style: ribbon
+  badge_style: tag
+  finding_layout: card

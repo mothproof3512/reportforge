@@ -6,3 +6,4 @@ classification_auto: "De CVSS-basisscore ({score}) zou op {model_severity} uitko
 notes: Kanttekeningen
 likelihood_impact: Kans × impact
 retest_pending: Nog niet uitgevoerd. Deze bevinding wordt bij een volgende hertest geverifieerd.
+vector: Vector

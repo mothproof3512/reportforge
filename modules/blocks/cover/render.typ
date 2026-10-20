@@ -5,6 +5,8 @@
 //   image   — the theme's cover image bleeds across the top half
 //   minimal — typographic cover on white
 //   dark    — full-page primary colour, logo top-left, title and key/value block bottom-left
+//   split   — primary colour column on the left (logo, meta), title on white right
+//   geometric — white page, large accent/primary shapes top-right, title bottom-left
 #let render(ctx, theme, t, opts) = {
   let c = theme.colors
   let eng = ctx.engagement
@@ -84,6 +86,37 @@
             ..rows.map(r => (text(size: 9.5pt, fill: dim, r.at(0)), text(size: 10pt, fill: fg, r.at(1)))).flatten(),
           )
         }))
+      } else if style == "split" {
+        let fg = white
+        let dim = white.transparentize(35%)
+        place(top + left, rect(width: 72mm, height: 100%, fill: c.primary))
+        place(top + left, dx: 72mm, rect(width: 2.5pt, height: 100%, fill: c.accent))
+        place(top + left, dx: 14mm, dy: 20mm, if logo != none { box(fill: white, radius: 3pt, inset: (x: 8pt, y: 6pt), image(logo, height: 11mm)) } else { text(fill: fg, size: 14pt, weight: "bold", theme.provider.name) })
+        place(bottom + left, dx: 14mm, dy: -20mm, block(width: 46mm, {
+          set text(fill: fg, size: 9pt)
+          set par(justify: false)
+          for p in meta { text(size: 7pt, fill: dim, tracking: 0.08em, upper(p.at(0))); linebreak(); text(size: 9.5pt, p.at(1)); v(0.5em) }
+          v(1em)
+          text(size: 8pt, fill: dim)[#theme.provider.name #linebreak() #theme.provider.at("website", default: "")]
+        }))
+        place(top + left, dx: 86mm, dy: 96mm, block(width: 108mm, {
+          set par(justify: false)
+          text(size: 9.5pt, weight: "semibold", tracking: 0.14em, fill: c.accent)[#upper(doc-label)]
+          v(1.2em)
+          block(text(size: 30pt, weight: "bold", fill: c.headingColor, font: theme.fonts.heading, hyphenate: false, eng.title))
+          if eng.at("subtitle", default: none) != none { v(0.5em); text(size: 13pt, fill: c.muted, eng.subtitle) }
+          v(1.6em)
+          line(length: 24mm, stroke: 1.5pt + c.accent)
+          v(1em)
+          text(size: 13pt)[#tb.for #h(0.3em) #text(weight: "semibold", eng.client.name)]
+        }))
+      } else if style == "geometric" {
+        place(top + right, dx: 30mm, dy: -40mm, circle(radius: 75mm, fill: c.primary))
+        place(top + right, dx: -10mm, dy: 60mm, circle(radius: 30mm, fill: c.accent.transparentize(15%)))
+        place(top + right, dx: 48mm, dy: 95mm, circle(radius: 38mm, fill: c.primaryLight))
+        place(top + left, dx: 20mm, dy: 20mm, if logo != none { image(logo, height: 12mm) } else { text(size: 16pt, weight: "bold", fill: c.primary, theme.provider.name) })
+        place(bottom + left, dx: 20mm, dy: -70mm, block(width: 120mm, title-block(c.headingColor, size: 30pt)))
+        place(bottom + left, dx: 20mm, dy: -26mm, block(width: 170mm, meta-table(meta)))
       } else if style == "band" {
         // Colour band across the upper two thirds
         place(top + left, rect(width: 100%, height: 62%, fill: c.primary))
@@ -105,8 +138,11 @@
         place(top + left, dx: 20mm, dy: 86mm, block(width: 170mm, title-block(c.headingColor)))
         place(top + left, dx: 20mm, dy: 170mm, block(width: 170mm, meta-table(meta)))
       }
+      if opts.at("gallery_label", default: none) != none {
+        place(top + right, dx: -8mm, dy: 8mm, box(fill: white, stroke: 0.5pt + c.rule, radius: 3pt, inset: (x: 7pt, y: 4pt), opts.gallery_label))
+      }
       // Provider footer, identical for all light styles
-      if style != "dark" { place(bottom + left, dx: 20mm, dy: -16mm, block(width: 170mm, {
+      if style not in ("dark", "split") { place(bottom + left, dx: 20mm, dy: -16mm, block(width: 170mm, {
         line(length: 100%, stroke: 0.5pt + c.rule)
         v(6pt)
         set text(size: 8pt, fill: c.muted)

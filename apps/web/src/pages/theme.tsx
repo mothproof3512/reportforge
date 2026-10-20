@@ -28,10 +28,10 @@ export function ThemePage({ slug, meta, onChanged }: { slug: string; meta: Meta;
   const upload = async (file: File) => {
     try { await api.upload(`/api/themes/${slug}/assets?name=${encodeURIComponent(file.name)}`, file); await load(); toast(`${file.name} toegevoegd`); } catch (e: any) { toast(e.message, true); }
   };
-  const doPreview = async (language: string) => {
+  const doPreview = async (language: string, template?: string) => {
     if (dirty) await save();
     setBusy(true);
-    try { const r = await api.post(`/api/themes/${slug}/preview`, { language }); setPreview(r.pdf + '&t=' + Date.now()); } catch (e: any) { toast(e.message, true); } finally { setBusy(false); }
+    try { const r = await api.post(`/api/themes/${slug}/preview`, { language, template }); setPreview(r.pdf + '&t=' + Date.now()); } catch (e: any) { toast(e.message, true); } finally { setBusy(false); }
   };
   const assetSelect = (key: string, label: string, hint: string) => <Field label={label} hint={hint}><select value={get('assets.' + key)} onChange={(e) => set('assets.' + key, e.target.value)}><option value="">— geen —</option>{t.assets.map((a) => <option key={a} value={a}>{a}</option>)}</select></Field>;
   const fontSelect = (key: string, label: string) => <Field label={label}><input type="text" list="rf-fonts" value={get('fonts.' + key)} onChange={(e) => set('fonts.' + key, e.target.value)} placeholder="Inter" /></Field>;
@@ -85,8 +85,21 @@ export function ThemePage({ slug, meta, onChanged }: { slug: string; meta: Meta;
           </div>
           <div>
             <div className="panel">
+              <h2 style={{ marginTop: 0 }}>Opmaak</h2>
+              <p className="muted small" style={{ marginTop: 0 }}>Zes varianten per element. Klik <b>Stijlgalerij</b> voor een PDF waarin elk element in alle varianten staat, gerenderd in dit thema; de huidige keuze is gemarkeerd.</p>
+              <div className="actions" style={{ marginBottom: 10 }}><button className="btn" onClick={() => doPreview('nl', 'style-gallery')} disabled={busy}>Stijlgalerij (nl)</button><button className="btn" onClick={() => doPreview('en', 'style-gallery')} disabled={busy}>Stijlgalerij (en)</button></div>
+              <div className="grid2">
+                <Field label="Hoofdstukkoppen"><select value={get('options.heading_style') || 'rule'} onChange={(e) => set('options.heading_style', e.target.value)} disabled={readonly}><option value="rule">Nummer + korte accentlijn (standaard)</option><option value="eyebrow">Eyebrow: klein "1 · Titel" boven grote titel</option><option value="big-number">Groot licht nummer naast titel</option><option value="bar">Gekleurde balk met witte titel</option><option value="sidebar">Verticale accentbalk links</option><option value="underline">Nummerblokje + volle onderstreping</option></select></Field>
+                <Field label="Bevindingslayout" hint="Sjabloon 'extended' kiest zelf; overige sjablonen volgen dit."><select value={get('options.finding_layout') || 'classic'} onChange={(e) => set('options.finding_layout', e.target.value)} disabled={readonly}><option value="classic">Klassiek: metakaart + secties</option><option value="extended">Uitgebreid: metagrid, samenvatting, kans, kaders</option><option value="card">Kaart met gekleurde bovenrand</option><option value="sidebar">Zijkolom met meta, tekst rechts</option><option value="compact">Compact: geen paginawissel, chips</option><option value="table">Tabel: metatabel + genummerde secties</option></select></Field>
+                <Field label="Tabellen"><select value={get('options.table_style') || 'lines'} onChange={(e) => set('options.table_style', e.target.value)} disabled={readonly}><option value="lines">Lijnen + lichte kopregel (standaard)</option><option value="zebra">Zebra: gestreepte rijen</option><option value="minimal">Minimaal: alleen kop- en eindlijn</option><option value="boxed">Raster: alle cellen omlijnd</option><option value="header-dark">Donkere kopregel</option><option value="cards">Kaarten: rijen als losse vlakken</option></select></Field>
+                <Field label="Grafieken (verdeling naar ernst)"><select value={get('options.chart_style') || 'bars'} onChange={(e) => set('options.chart_style', e.target.value)} disabled={readonly}><option value="bars">Horizontale balken (standaard)</option><option value="columns">Kolommen</option><option value="donut">Donut met legenda</option><option value="tiles">Cijfertegels</option><option value="dots">Stippen (één per bevinding)</option><option value="stacked">Eén gestapelde balk</option></select></Field>
+                <Field label="Kaders (aanbeveling, toelichting)"><select value={get('options.callout_style') || 'bar'} onChange={(e) => set('options.callout_style', e.target.value)} disabled={readonly}><option value="bar">Vlak met linkerbalk (standaard)</option><option value="outline">Omlijnd, afgerond</option><option value="fill">Egale tint, geen lijn</option><option value="ribbon">Titel als gekleurd tabje</option><option value="quote">Citaatstijl: dunne lijn, geen vlak</option><option value="card">Kaart: wit, dunne rand, kleurstip</option></select></Field>
+                <Field label="Severity-badges"><select value={get('options.badge_style') || (get('options.severity_shapes') ? 'shapes' : 'solid')} onChange={(e) => set('options.badge_style', e.target.value)} disabled={readonly}><option value="solid">Gevuld, kapitalen (standaard)</option><option value="shapes">Gevuld met vorm (◆▲■●▬)</option><option value="outline">Omlijnd, gekleurde tekst</option><option value="pill">Pil, afgerond</option><option value="dot">Kleurstip + tekst</option><option value="tag">Label met kleurstreep</option></select></Field>
+              </div>
+            </div>
+            <div className="panel">
               <h2 style={{ marginTop: 0 }}>Voorblad en beelden</h2>
-              <Field label="Voorbladstijl"><select value={get('page.cover') || 'band'} onChange={(e) => set('page.cover', e.target.value)} disabled={readonly}><option value="band">Kleurband (standaard)</option><option value="image">Voorbladbeeld</option><option value="minimal">Typografisch, wit</option></select></Field>
+              <Field label="Voorbladstijl"><select value={get('page.cover') || 'band'} onChange={(e) => set('page.cover', e.target.value)} disabled={readonly}><option value="band">Kleurband (standaard)</option><option value="image">Voorbladbeeld</option><option value="minimal">Typografisch, wit</option><option value="dark">Donker, paginavullend</option><option value="split">Gesplitst: kleurkolom links</option><option value="geometric">Geometrisch: cirkels</option></select></Field>
               {assetSelect('logo', 'Logo', 'SVG heeft de voorkeur; PNG met transparantie kan ook.')}
               {assetSelect('logo_mono', 'Logo, monochroom (koptekst)', 'Grijze variant voor de kleine koptekst; leeg = het kleurlogo.')}
               {assetSelect('logo_header', 'Logo, koptekst', 'Apart logo voor de lopende koptekst; leeg = monochroom logo, anders het kleurlogo.')}

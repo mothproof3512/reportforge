@@ -27,7 +27,7 @@
   let tb = t.blocks.executive-summary
   let st = ctx.stats
   rf.chapter(tb.title)
-  tiles(ctx, theme, t)
+  if rf.opt(theme, "chart_style", "bars") in ("bars", "tiles") { tiles(ctx, theme, t) } else { rf.severity-chart(theme, ctx.severities, total-label: t.core.findings) }
   v(1.2em)
   if eng.at("executive_summary", default: none) != none {
     eng.executive_summary

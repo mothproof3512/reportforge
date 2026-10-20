@@ -4,6 +4,10 @@ Alle wezenlijke wijzigingen per release. Versies volgen [semver](https://semver.
 
 ## [Unreleased]
 
+## [0.6.0] — 2026-10-20
+
+- Zes varianten per opmaakelement (voorblad, hoofdstukkoppen, tabellen, grafieken, kaders, severity-badges, bevindingslayout), kiesbaar per thema in het paneel Opmaak; stijlgalerij-PDF (thema-editor en `rf gallery`); DOCX volgt waar Word het toelaat.
+
 ## [0.5.0] — 2026-10-20
 
 - Kleurcombinaties van Sanzo Wada (348, top 30 voor rapportage) in de thema-editor; palettemodule `modules/palettes/`, `GET /api/palettes`.

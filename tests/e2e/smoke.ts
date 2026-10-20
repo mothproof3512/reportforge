@@ -100,6 +100,8 @@ async function main() {
   // theme preview + export
   const tp = await api('POST', '/api/themes/example-client/preview', { language: 'en' });
   assert.ok(tp.pdf);
+  const tg = await api('POST', '/api/themes/navy/preview', { language: 'nl', template: 'style-gallery' });
+  assert.ok(tg.pdf && !tg.error, 'style gallery');
   const tar = await api('GET', `/api/engagements/${eng.id}/export`);
   assert.ok(tar.byteLength > 1000);
   // ---- importers

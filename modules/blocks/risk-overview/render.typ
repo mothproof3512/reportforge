@@ -47,7 +47,7 @@
   rf.chapter(tb.title)
   if ctx.findings.len() == 0 { tb.none; return }
   heading(level: 2, tb.distribution)
-  bars(ctx, theme, t)
+  rf.severity-chart(theme, ctx.severities, total-label: t.core.findings)
   if ctx.engagement.risk_model == "matrix" {
     heading(level: 2, tb.matrix)
     matrix(ctx, theme, t, tb)

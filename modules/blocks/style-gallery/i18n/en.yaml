@@ -1,0 +1,15 @@
+title: Style gallery
+intro: Every layout element in all its variants, rendered with this theme's colours and fonts. Choose a variant per element in the theme editor (Layout) or in theme.yaml; the current choice is marked.
+covers: Covers (page.cover)
+headings: Chapter titles (options.heading_style)
+tables: Tables (options.table_style)
+charts: Charts (options.chart_style)
+callouts: Callouts (options.callout_style)
+badges: Severity badges (options.badge_style)
+findings: Findings (options.finding_layout)
+current: current
+sample_heading: Approach and methodology
+sample_callout_title: Recommendation
+sample_callout: Perform authorisation checks in one layer (API middleware) instead of per endpoint; add automated tests that call every object endpoint with a foreign account.
+cover_pages: The covers follow on the next pages.
+finding_pages: The finding layouts follow, always the same finding.

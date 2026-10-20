@@ -118,6 +118,17 @@ program.command('import')
     } else console.log(r.findings.map((f) => f.markdown).join('\n'));
     console.error(`${r.findings.length} bevindingen uit ${r.tool}`);
   });
+program.command('gallery').description('render the style gallery: every layout variant in a theme (PDF)')
+  .option('--theme <id>', 'theme id', '_default').option('-l, --lang <lang>', 'nl | en', 'nl').option('-o, --out <file>', 'output file')
+  .action(async (o) => {
+    const mods = loadModules(ROOT);
+    const { ctx, diagnostics } = await loadEngagement(mods, join(ROOT, 'examples/acme-webshop'), { theme: o.theme, lang: o.lang, template: 'style-gallery' });
+    const errors = diagnostics.filter((d) => d.level === 'error');
+    if (errors.length) { console.error(formatDiagnostics(errors)); process.exit(1); }
+    const out = resolve(o.out || `gallery-${o.theme}-${o.lang}.pdf`);
+    const r = renderTypst(mods, ctx, out);
+    console.log(`✔ ${r.pdf}`);
+  });
 program.command('importers').description('list importers').action(async () => {
   for (const i of Object.values(await loadImporters(ROOT))) console.log(`${i.manifest.id.padEnd(10)} ${i.manifest.formats.join(',').padEnd(12)} ${i.manifest.name}`);
 });
