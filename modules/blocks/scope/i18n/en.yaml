@@ -3,3 +3,15 @@ intro: The following components were part of the assessment.
 out_of_scope: Out of scope
 period_text: The assessment was performed between {start} and {end}.
 limitations: Limitations
+title_extended: Engagement and scope
+objective: Objective
+in_scope: In scope
+access: Access
+conditions: Conditions and agreements
+test_window: Test window
+test_type: Test type
+contact: Contact
+escalation: Escalation
+accounts: Test accounts
+account: Account
+rights: Privileges

@@ -5,7 +5,7 @@ import { join, extname, basename } from 'node:path';
 import { execFileSync } from 'node:child_process';
 import sharp from 'sharp';
 import { parse as parseYaml, stringify as toYaml } from 'yaml';
-import { loadModules, resolveTheme, loadLibrary, libraryLanguages, type Modules } from '@reportforge/core';
+import { loadModules, resolveTheme, loadLibrary, libraryLanguages, VERSION, type Modules } from '@reportforge/core';
 import { parseFindings, parseMarkdown } from '@reportforge/markdown';
 import { assess, scoreCvss31, scoreCvss40 } from '@reportforge/risk';
 import { Router, HttpError, type Req, type Res } from './http.ts';
@@ -84,6 +84,7 @@ export function buildApi(db: Db, p: Paths): Router {
       riskModels: [{ id: 'cvss31', name: 'CVSS 3.1' }, { id: 'cvss40', name: 'CVSS 4.0' }, { id: 'matrix', name: 'Risicomatrix (impact × waarschijnlijkheid)' }],
       languages: ['nl', 'en'],
       steps: ['Intake', 'Testplan', 'Test uitvoeren', 'Rapportage', 'TPM/attestation', 'Opleveren', 'Hertest', 'Bijgewerkte rapportage/TPM', 'Opleveren v2'],
+      version: VERSION,
       typst: (() => { try { return execFileSync(process.env.TYPST_BIN ?? 'typst', ['--version'], { encoding: 'utf8' }).trim(); } catch { return null; } })(),
     });
   });

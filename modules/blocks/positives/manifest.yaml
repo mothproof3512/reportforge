@@ -1,0 +1,6 @@
+id: positives
+name: What is in good order
+version: "1.0"
+category: closing
+description: Positive observations (engagement.positives, markdown) — the controls that were demonstrably in order and deserve to be kept.
+documents: [report, retest]

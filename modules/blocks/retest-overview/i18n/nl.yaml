@@ -1,2 +1,7 @@
 title: Resultaat van de hertest
 intro: "De hertest is uitgevoerd op {date} en richt zich op de bevindingen uit rapportversie {version}. Onderstaande tabel toont per bevinding de status na de hertest."
+title_extended: Hertest en verificatie
+subtitle: Status van het herstel en de geplande verificatie.
+verification: Verificatie
+procedure: Over de hertestprocedure
+procedure_text: De hertest is nog niet uitgevoerd. Zodra de opdrachtgever het herstel heeft doorgevoerd, verifieert {provider} elke bevinding en legt het resultaat vast in een bijgewerkte versie van dit rapport.

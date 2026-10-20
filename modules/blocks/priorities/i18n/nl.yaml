@@ -1,0 +1,12 @@
+title: Prioriteiten en risicobeeld
+top: Top {n} prioriteiten
+what: Wat
+todo: Wat te doen
+matrix_title: Risicomatrix · kans × impact
+likelihood: Kans
+impact: Impact
+matrix_intro: "De matrix plaatst elke bevinding op de kruising van geschatte kans en impact. De kleur van de cel volgt de severity-klasse: hoe verder naar rechtsboven, hoe ernstiger."
+matrix_note: De positie in de matrix is een inschatting per bevinding; de kans dat misbruik daadwerkelijk plaatsvindt (bereikbaarheid, benodigde kennis en rechten) maal de impact als dat gebeurt (aard en omvang van de schade). De eindclassificatie combineert deze inschatting met de CVSS-basisscore en de context van de omgeving, zoals de gevoeligheid van de verwerkte gegevens. Daardoor kan een bevinding zwaarder of lichter worden geclassificeerd dan de CVSS-score alleen suggereert; dit wordt bij de betreffende bevinding toegelicht.
+derived_note: Voor bevindingen met een CVSS-vector is de positie afgeleid uit de basismetrieken (impact uit C/I/A, kans uit de exploiteerbaarheidsmetrieken).
+deviation_note: Waar de classificatie afwijkt van de CVSS-score, staat de onderbouwing bij de betreffende bevinding.
+none: Er zijn geen bevindingen om te prioriteren.

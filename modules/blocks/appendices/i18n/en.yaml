@@ -1,0 +1,34 @@
+title: Appendices
+tools: Tooling and versions
+mapping: CWE / OWASP mapping
+glossary: Glossary
+disclaimer: Disclaimer and liability
+owasp_col: OWASP Top 10
+terms:
+  - { term: Black box, definition: "Test without prior knowledge, credentials or source code; the position of an external attacker.", match: "black box|black-box" }
+  - { term: Grey box, definition: "Test with limited prior knowledge or a regular user account; the position of a customer or employee.", match: "grey box|grey-box|gray box" }
+  - { term: CVSS, definition: "Common Vulnerability Scoring System; the standard for scoring the severity of a vulnerability (0–10).", match: "cvss", always: true }
+  - { term: CWE, definition: "Common Weakness Enumeration; catalogue of types of weaknesses in software and configuration.", match: "cwe", always: true }
+  - { term: OWASP, definition: "Open Worldwide Application Security Project; non-profit that publishes the Top 10 and the Web Security Testing Guide, among others.", match: "owasp", always: true }
+  - { term: TLS, definition: "Transport Layer Security; encryption of traffic between browser and server (HTTPS).", match: "\\btls\\b" }
+  - { term: HSTS, definition: "HTTP Strict Transport Security; forces browsers to always use HTTPS.", match: "hsts" }
+  - { term: CSP, definition: "Content-Security-Policy; header that determines which sources a page may load and execute.", match: "content-security-policy|\\bcsp\\b" }
+  - { term: CSRF, definition: "Cross-Site Request Forgery; a logged-in user unintentionally performs an action via a page of the attacker.", match: "csrf|request forgery" }
+  - { term: XSS, definition: "Cross-site scripting; injecting script into a page that is executed for other users.", match: "xss|cross-site scripting" }
+  - { term: IDOR, definition: "Insecure Direct Object Reference; access to other people's objects by changing an identifier.", match: "idor|object reference" }
+  - { term: SQL injection, definition: "Manipulating database queries through user input.", match: "sql injection|sqli" }
+  - { term: SSRF, definition: "Server-Side Request Forgery; the server is tricked into making requests to attacker-chosen addresses.", match: "ssrf|server-side request" }
+  - { term: JWT, definition: "JSON Web Token; signed token that carries a user's identity and privileges.", match: "\\bjwt\\b" }
+  - { term: MFA, definition: "Multi-factor authentication; logging in with a second factor besides the password.", match: "\\bmfa\\b|multi-factor|two-factor|2fa" }
+  - { term: DNSSEC, definition: "Digital signing of DNS answers against forgery.", match: "dnssec" }
+  - { term: DMARC, definition: "Policy that tells receivers what to do with mail that fails SPF and DKIM, including reporting.", match: "dmarc" }
+  - { term: SPF / DKIM, definition: "E-mail authentication: SPF lists which servers may send for a domain, DKIM signs messages.", match: "\\bspf\\b|dkim" }
+  - { term: DANE, definition: "Binds a mail server's certificate to DNS via DNSSEC so encryption cannot be intercepted.", match: "\\bdane\\b" }
+  - { term: CVD / security.txt, definition: "Coordinated Vulnerability Disclosure; standardised contact point (RFC 9116) for security researchers.", match: "security\\.txt|responsible disclosure|coordinated vulnerability" }
+  - { term: Metadata, definition: "Hidden properties in a file, such as author, editing path and software version.", match: "metadata" }
+  - { term: Tor, definition: "Anonymising network that routes traffic via several relays, hiding the true origin.", match: "\\btor\\b" }
+  - { term: Geo-IP blocking, definition: "Allowing or denying access based on the country associated with the source IP address.", match: "geo-ip|geoip|geo-block" }
+  - { term: WAF, definition: "Web Application Firewall; filters HTTP traffic for known attack patterns.", match: "\\bwaf\\b" }
+  - { term: Rate limiting, definition: "Limiting the number of requests per unit of time, against brute force and abuse.", match: "rate limit" }
+  - { term: Kerberoasting, definition: "Offline cracking of Kerberos service tickets to recover service account passwords.", match: "kerberoast" }
+  - { term: LAPS, definition: "Local Administrator Password Solution; unique, rotating local administrator password per system.", match: "\\blaps\\b" }

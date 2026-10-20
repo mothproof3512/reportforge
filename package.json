@@ -1,6 +1,6 @@
 {
   "name": "reportforge",
-  "version": "0.1.0",
+  "version": "0.4.0",
   "private": true,
   "description": "Modular, whitelabel pentest reporting framework. Markdown in, world-class PDF and DOCX out.",
   "license": "MIT",
@@ -21,7 +21,9 @@
     "web:build": "node apps/web/build.mjs",
     "web:dev": "node apps/web/build.mjs --watch",
     "start": "node --import tsx apps/web/server/index.ts",
-    "test:e2e": "tsx tests/e2e/smoke.ts"
+    "test:e2e": "tsx tests/e2e/smoke.ts",
+    "release": "node scripts/release.mjs",
+    "version:check": "node scripts/release.mjs --check"
   },
   "engines": {
     "node": ">=22"

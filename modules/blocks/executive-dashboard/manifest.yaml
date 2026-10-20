@@ -1,0 +1,10 @@
+id: executive-dashboard
+name: Executive summary (dashboard)
+version: "1.0"
+category: front
+description: Management summary as narrative (left) with key figures, a provider score and a bar chart per severity (right), as in the extended report template.
+documents: [report, retest]
+options:
+  score: true                 # show the "<provider>-score" gauge
+  weights: { critical: 25, high: 10, medium: 4, low: 1, info: 0 }   # score = 100 − Σ weights of open findings
+  thresholds: { excellent: 90, good: 75, moderate: 50 }

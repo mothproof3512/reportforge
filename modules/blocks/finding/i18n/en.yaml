@@ -1,1 +1,8 @@
 retest_title: Retest
+summary: Summary
+likelihood: Likelihood
+classification: Classification rationale
+classification_auto: "The CVSS base score ({score}) would result in {model_severity}; the final classification is {severity} based on the context of the environment and the estimate of likelihood and impact."
+notes: Remarks
+likelihood_impact: Likelihood × impact
+retest_pending: Not yet performed. This finding will be verified in a subsequent retest.

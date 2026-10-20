@@ -1,0 +1,12 @@
+title: Priorities and risk picture
+top: Top {n} priorities
+what: What
+todo: What to do
+matrix_title: Risk matrix · likelihood × impact
+likelihood: Likelihood
+impact: Impact
+matrix_intro: The matrix places every finding at the intersection of estimated likelihood and impact. The cell colour follows the severity class; the further to the top right, the more serious.
+matrix_note: The position in the matrix is an estimate per finding; the likelihood that abuse actually occurs (reachability, required knowledge and privileges) times the impact when it does (nature and extent of the damage). The final classification combines this estimate with the CVSS base score and the context of the environment, such as the sensitivity of the data processed. A finding can therefore be classified higher or lower than the CVSS score alone suggests; this is explained with the finding concerned.
+derived_note: For findings with a CVSS vector the position is derived from the base metrics (impact from C/I/A, likelihood from the exploitability metrics).
+deviation_note: Where the classification deviates from the CVSS score, the rationale is given with the finding concerned.
+none: There are no findings to prioritise.

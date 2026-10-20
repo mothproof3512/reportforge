@@ -49,6 +49,12 @@ assets:
   # logo_header: logo-header.svg   # optional: a separate asset for the running header (else logo_mono, else logo)
 
 texts:
+  about_report:
+    nl: Dit rapport betreft een momentopname binnen de afgesproken reikwijdte en het vastgestelde tijdvenster. Het biedt geen garantie op de afwezigheid van kwetsbaarheden.
+    en: This report is a point-in-time assessment within the agreed scope and time window. It offers no guarantee that no vulnerabilities exist.
+  classification_text:
+    nl: Dit document is geclassificeerd als **{classification}**. Het bevat gevoelige informatie over kwetsbaarheden in de omgeving van de opdrachtgever. Verspreiding is beperkt tot de personen op de distributielijst. Delen met derden alleen na schriftelijke toestemming van de opdrachtgever.
+    en: This document is classified **{classification}**. It contains sensitive information about vulnerabilities in the client's environment. Distribution is limited to the persons on the distribution list; sharing with third parties only with the client's written consent.
   disclaimer:
     nl: |
       Dit rapport is opgesteld op basis van een beveiligingsonderzoek dat is uitgevoerd in de hierin beschreven periode en scope. Een penetratietest geeft een momentopname van de beveiliging; het ontbreken van bevindingen betekent niet dat er geen kwetsbaarheden bestaan. Wijzigingen aan de geteste omgeving na de testperiode vallen buiten de reikwijdte van dit rapport.

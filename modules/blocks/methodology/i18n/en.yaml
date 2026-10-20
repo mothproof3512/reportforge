@@ -5,3 +5,8 @@ risk_title: Risk classification
 risk_cvss: "Each finding was rated using {model}. The score determines the severity (critical, high, medium, low or informational); where the tester deviates from the calculated outcome based on context and business impact, this is noted with the finding. The appendix explains the classification."
 risk_matrix: "Each finding was rated on impact and likelihood (scale 1–5). The product of both determines the severity. The appendix explains the classification."
 tools_ref: An overview of the tooling used is included in the appendix.
+course: Course of the assessment
+framework: Frameworks
+for_scoring: for scoring the findings
+limitations: Limitations
+limitations_text: A penetration test is a point-in-time assessment within a defined scope and a fixed time window. The absence of a finding does not mean that no vulnerabilities exist; changes after the test period fall outside this report.

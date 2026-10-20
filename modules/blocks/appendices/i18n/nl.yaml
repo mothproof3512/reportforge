@@ -1,0 +1,34 @@
+title: Bijlagen
+tools: Tooling en versies
+mapping: CWE / OWASP-mapping
+glossary: Begrippenlijst
+disclaimer: Disclaimer en aansprakelijkheid
+owasp_col: OWASP Top 10
+terms:
+  - { term: Black box, definition: "Test zonder voorkennis, inloggegevens of broncode; de positie van een externe aanvaller.", match: "black box|black-box" }
+  - { term: Grey box, definition: "Test met beperkte voorkennis of een regulier gebruikersaccount; de positie van een klant of medewerker.", match: "grey box|grey-box|gray box" }
+  - { term: CVSS, definition: "Common Vulnerability Scoring System; standaard om de ernst van een kwetsbaarheid te scoren (0–10).", match: "cvss", always: true }
+  - { term: CWE, definition: "Common Weakness Enumeration; catalogus van soorten zwakheden in software en configuratie.", match: "cwe", always: true }
+  - { term: OWASP, definition: "Open Worldwide Application Security Project; non-profit die onder meer de Top 10 en de Web Security Testing Guide publiceert.", match: "owasp", always: true }
+  - { term: TLS, definition: "Transport Layer Security; versleuteling van verkeer tussen browser en server (HTTPS).", match: "\\btls\\b" }
+  - { term: HSTS, definition: "HTTP Strict Transport Security; dwingt browsers altijd HTTPS te gebruiken.", match: "hsts" }
+  - { term: CSP, definition: "Content-Security-Policy; header die bepaalt welke bronnen een pagina mag laden en uitvoeren.", match: "content-security-policy|\\bcsp\\b" }
+  - { term: CSRF, definition: "Cross-Site Request Forgery; een ingelogde gebruiker voert onbedoeld een actie uit via een pagina van de aanvaller.", match: "csrf|request forgery" }
+  - { term: XSS, definition: "Cross-site scripting; het injecteren van script in een pagina die bij andere gebruikers wordt uitgevoerd.", match: "xss|cross-site scripting" }
+  - { term: IDOR, definition: "Insecure Direct Object Reference; toegang tot objecten van anderen door een identifier aan te passen.", match: "idor|object reference" }
+  - { term: SQL-injectie, definition: "Het manipuleren van databasequery's via gebruikersinvoer.", match: "sql-injectie|sql injection|sqli" }
+  - { term: SSRF, definition: "Server-Side Request Forgery; de server wordt verleid tot het doen van verzoeken naar door de aanvaller gekozen adressen.", match: "ssrf|server-side request" }
+  - { term: JWT, definition: "JSON Web Token; ondertekend token dat identiteit en rechten van een gebruiker draagt.", match: "\\bjwt\\b" }
+  - { term: MFA, definition: "Multifactorauthenticatie; inloggen met een tweede factor naast het wachtwoord.", match: "\\bmfa\\b|multifactor|tweefactor|2fa" }
+  - { term: DNSSEC, definition: "Digitale ondertekening van DNS-antwoorden tegen vervalsing.", match: "dnssec" }
+  - { term: DMARC, definition: "Beleid dat bepaalt wat ontvangers doen met mail die SPF en DKIM niet doorstaat, inclusief rapportage.", match: "dmarc" }
+  - { term: SPF / DKIM, definition: "E-mailauthenticatie: SPF bepaalt welke servers namens een domein mogen mailen, DKIM ondertekent berichten.", match: "\\bspf\\b|dkim" }
+  - { term: DANE, definition: "Koppelt het certificaat van een mailserver via DNSSEC aan DNS, zodat versleuteling niet kan worden onderschept.", match: "\\bdane\\b" }
+  - { term: CVD / security.txt, definition: "Coordinated Vulnerability Disclosure; gestandaardiseerd meldpunt (RFC 9116) voor beveiligingsonderzoekers.", match: "security\\.txt|responsible disclosure|coordinated vulnerability" }
+  - { term: Metadata, definition: "Verborgen eigenschappen in een bestand, zoals auteur, bewerkingspad en softwareversie.", match: "metadata" }
+  - { term: Tor, definition: "Anonimiserend netwerk dat verkeer via meerdere relays leidt, waardoor de werkelijke herkomst niet zichtbaar is.", match: "\\btor\\b" }
+  - { term: Geo-IP-blokkering, definition: "Toegang toestaan of weigeren op basis van het land dat bij het bron-IP-adres hoort.", match: "geo-ip|geoip|geo-blok" }
+  - { term: WAF, definition: "Web Application Firewall; filtert HTTP-verkeer op bekende aanvalspatronen.", match: "\\bwaf\\b" }
+  - { term: Rate limiting, definition: "Begrenzing van het aantal verzoeken per tijdseenheid, tegen brute force en misbruik.", match: "rate limit" }
+  - { term: Kerberoasting, definition: "Het offline kraken van Kerberos-servicetickets om wachtwoorden van serviceaccounts te achterhalen.", match: "kerberoast" }
+  - { term: LAPS, definition: "Local Administrator Password Solution; uniek, roterend lokaal beheerderswachtwoord per systeem.", match: "\\blaps\\b" }

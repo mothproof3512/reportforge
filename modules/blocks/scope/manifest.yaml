@@ -4,3 +4,5 @@ version: "1.0"
 category: context
 description: In-scope assets table, out-of-scope list, test period and constraints.
 documents: [report, retest, attestation, testplan]
+options:
+  layout: classic   # classic | extended (objective, access column, conditions, test accounts)

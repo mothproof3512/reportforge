@@ -3,3 +3,15 @@ intro: De volgende onderdelen maakten deel uit van het onderzoek.
 out_of_scope: Buiten scope
 period_text: Het onderzoek is uitgevoerd in de periode van {start} tot en met {end}.
 limitations: Beperkingen
+title_extended: Opdracht en scope
+objective: Doelstelling
+in_scope: In scope
+access: Toegang
+conditions: Randvoorwaarden en afspraken
+test_window: Testvenster
+test_type: Testtype
+contact: Contactpersoon
+escalation: Escalatie
+accounts: Testaccounts
+account: Account
+rights: Rechten

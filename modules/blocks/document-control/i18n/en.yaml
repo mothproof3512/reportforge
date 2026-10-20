@@ -1,4 +1,17 @@
 title: Document control
+subtitle: Version history, distribution, classification and contact details for this report.
 history: Version history
-distribution: Distribution
+distribution: Distribution list
 distribution_text: This document was prepared for {client} and is intended solely for the recipients named in this document.
+contact: Contact details
+name_role: Name / role
+organisation: Organisation
+company: Company
+address: Address
+phone: Phone
+email: E-mail
+website: Website
+registration: Registration
+about: About this report
+about_text: This report is a point-in-time assessment within the agreed scope and time window. It offers no guarantee that no vulnerabilities exist.
+classification_text: This document is classified {classification}. It contains sensitive information about vulnerabilities in the client's environment. Distribution is limited to the persons on the distribution list; sharing with third parties only with the client's written consent.

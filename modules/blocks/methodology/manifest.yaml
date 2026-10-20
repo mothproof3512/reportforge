@@ -4,3 +4,5 @@ version: "1.0"
 category: context
 description: Test approach text, the standards used (with their descriptions) and the risk model.
 documents: [report, retest, attestation, testplan]
+options:
+  layout: classic   # classic | extended (phase timeline, framework list, tooling chips, limitations)

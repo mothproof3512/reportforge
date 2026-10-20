@@ -2,3 +2,5 @@ title: Conclusion and recommendations
 recommendations: Strategic recommendations
 auto: "The assessment resulted in {total} findings. The highest severity is {highest}. {provider} recommends remediating the findings in order of severity, starting with those rated {highest}, and commissioning a retest once the measures have been implemented."
 auto_none: "The assessment did not identify any findings posing a security risk. {provider} recommends periodic reassessment, especially after substantial changes to the environment."
+roadmap: Roadmap
+main_conclusion: Main conclusion

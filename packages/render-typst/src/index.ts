@@ -10,7 +10,7 @@ import { mkdirSync, writeFileSync, copyFileSync, existsSync, rmSync } from 'node
 import { join, relative, basename, extname } from 'node:path';
 import { execFileSync, spawnSync } from 'node:child_process';
 import { markdownToTypst, typstString } from '@reportforge/markdown';
-import { buildDictionary, formatDate, severityLabel, type Modules, type ReportContext, type Lang } from '@reportforge/core';
+import { buildDictionary, formatDate, severityLabel, splitRoadmap, type Modules, type ReportContext, type Lang } from '@reportforge/core';
 
 export interface TypstRenderOptions {
   typstBin?: string;
@@ -27,7 +27,9 @@ export interface TypstRenderResult {
 }
 
 const MARKDOWN_PATHS = [
-  /^engagement\.(test_approach|executive_summary|conclusion|limitations|recommendations)$/,
+  /^engagement\.(test_approach|executive_summary|conclusion|limitations|recommendations|positives|roadmap)$/,
+  /^engagement\.glossary\.\d+\.definition$/,
+  /^fmt\.roadmap\.\d+\.body$/,
   /^findings\.\d+\.sections\.[^.]+$/,
   /^findings\.\d+\.retest\.note$/,
   /^theme\.texts\.[^.]+\.(nl|en)$/,
@@ -119,6 +121,8 @@ export function renderTypst(mods: Modules, ctx: ReportContext, outPdf: string, o
       header_title: eng.title.length > 62 ? eng.title.slice(0, 60).replace(/\s+\S*$/, '') + '…' : eng.title,
       header_client: eng.client.name.length > 34 ? eng.client.name.slice(0, 32).replace(/\s+\S*$/, '') + '…' : eng.client.name,
       history: (eng.document_history ?? []).map((h) => ({ ...h, date: formatDate(h.date, lang) })),
+      roadmap: splitRoadmap(eng.roadmap),
+      planning: (eng.testplan?.planning ?? []).map((p) => ({ ...p, start_short: p.start ? formatDate(p.start, lang, true) : '', end_short: p.end ? formatDate(p.end, lang, true) : '' })),
     },
     severities: sevs.map((s) => ({ id: s, label: severityLabel(s, lang), count: ctx.stats.bySeverity[s], open: ctx.stats.openBySeverity[s] })),
   };

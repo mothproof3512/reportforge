@@ -1,0 +1,14 @@
+title: Executive summary
+findings_at_delivery: findings at delivery
+open_findings: open findings
+score_title: "{provider} score"
+per_severity: Findings per severity
+at_delivery: at delivery
+after_retest: after retest
+excellent: Excellent
+good: Good
+moderate: Moderate
+poor: Insufficient
+auto_intro: "{provider} performed a penetration test for {client} between {start} and {end} on {scope_count} scope items. {total} findings were identified: {critical} critical, {high} high, {medium} medium, {low} low and {info} informational."
+auto_note: This summary was generated automatically; provide `executive_summary` for your own text covering the reason, what was tested and the main conclusion.
+no_findings: No findings were identified during the assessment.

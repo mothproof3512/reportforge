@@ -1,0 +1,7 @@
+title: Overview of the findings
+subtitle: All {n} findings with classification and status at delivery{retest}.
+subtitle_retest: " and after the retest"
+at_delivery: At delivery
+after_retest: After retest
+low_info: Low / Informational
+none: No findings were identified.

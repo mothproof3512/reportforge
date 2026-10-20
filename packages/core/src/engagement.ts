@@ -11,6 +11,7 @@ import { join, resolve, dirname, isAbsolute } from 'node:path';
 import { z } from 'zod';
 import sharp from 'sharp';
 import { parseFindings, type Diagnostic, type ParsedFinding } from '@reportforge/markdown';
+import { VERSION } from './version.ts';
 import { assess, SEVERITY_RANK, type Severity } from '@reportforge/risk';
 import { readYaml, resolveMapping } from './modules.ts';
 import { resolveTheme } from './theme.ts';
@@ -38,7 +39,7 @@ export const EngagementSchema = z.object({
   authors: z.array(person).default([]),
   testers: z.array(person).optional(),
   reviewers: z.array(person).optional(),
-  scope: z.array(z.object({ asset: z.string(), type: z.string().optional(), description: z.string().optional(), environment: z.string().optional() })).default([]),
+  scope: z.array(z.object({ asset: z.string(), type: z.string().optional(), description: z.string().optional(), environment: z.string().optional(), access: z.string().optional() })).default([]),
   out_of_scope: z.array(z.string()).optional(),
   standards: z.array(z.string()).default([]),
   tools: z.array(z.object({ name: z.string(), version: z.union([z.string(), z.number()]).transform(String).optional(), purpose: z.string().optional() })).optional(),
@@ -49,6 +50,11 @@ export const EngagementSchema = z.object({
   recommendations: z.string().optional(),
   document_history: z.array(z.object({ version: z.union([z.string(), z.number()]).transform(String), date: dateStr, author: z.string(), change: z.string() })).optional(),
   retest: z.object({ of_version: z.string(), date: dateStr }).optional(),
+  finding_prefix: z.string().regex(/^[A-Za-z][A-Za-z0-9]{0,5}$/).optional(),
+  positives: z.string().optional(),
+  roadmap: z.string().optional(),
+  glossary: z.array(z.object({ term: z.string(), definition: z.string() })).optional(),
+  accounts: z.array(z.object({ role: z.string(), account: z.string().optional(), rights: z.string().optional() })).optional(),
 }).passthrough();
 
 export interface LoadResult {
@@ -57,7 +63,7 @@ export interface LoadResult {
   dir: string;
 }
 
-const MD_FIELDS = ['test_approach', 'executive_summary', 'conclusion', 'limitations', 'recommendations'];
+const MD_FIELDS = ['test_approach', 'executive_summary', 'conclusion', 'limitations', 'recommendations', 'positives', 'roadmap'];
 
 function readMdField(dir: string, value: unknown): string | undefined {
   if (typeof value !== 'string') return undefined;
@@ -147,7 +153,8 @@ export async function loadEngagement(mods: Modules, engagementDir: string, opts:
 
   // Order: severity, then score desc, then title; number F-01..
   findings.sort((a, b) => SEVERITY_RANK[a.severity] - SEVERITY_RANK[b.severity] || (b.risk.score ?? 0) - (a.risk.score ?? 0) || a.title.localeCompare(b.title));
-  findings.forEach((f, i) => { f.index = i + 1; if (!f.id) f.id = `F-${String(i + 1).padStart(2, '0')}`; });
+  const prefix = (eng.finding_prefix ?? 'F').toUpperCase();
+  findings.forEach((f, i) => { f.index = i + 1; if (!f.id) f.id = `${prefix}-${String(i + 1).padStart(2, '0')}`; deriveLikelihoodImpact(f); f.brief = brief(f); });
   const dup = findings.map((f) => f.id).filter((id, i, a) => a.indexOf(id) !== i);
   for (const d of new Set(dup)) diagnostics.push({ level: 'error', message: `Dubbel bevindings-ID ${d}.` });
 
@@ -174,7 +181,63 @@ export async function loadEngagement(mods: Modules, engagementDir: string, opts:
     document: opts.document ?? template.document, lang, engagement: eng, theme, template, findings,
     stats: { total: findings.length, bySeverity, openBySeverity, byStatus, highest: findings[0]?.severity },
     standards, images, coverage,
-    generated: { at: new Date().toISOString(), tool: 'reportforge 0.1.0' },
+    generated: { at: new Date().toISOString(), tool: `reportforge ${VERSION}` },
   };
   return { ctx, diagnostics, dir };
+}
+
+/**
+ * Likelihood × impact (1–5) for the risk matrix and the "kans × impact" field.
+ * The matrix model has them; for CVSS findings they are derived from the base
+ * metrics (impact from C/I/A, likelihood from the exploitability metrics) and
+ * flagged `derived: true` so renderers can say so.
+ */
+function deriveLikelihoodImpact(f: Finding): void {
+  const d = f.risk.details as Record<string, unknown>;
+  if (typeof d.impact === 'number' && typeof d.likelihood === 'number') return;
+  const m = d.metrics as Record<string, string> | undefined;
+  if (!m || !m.C) return;
+  const cia = { H: 0.56, L: 0.22, N: 0 } as Record<string, number>;
+  const iss = 1 - (1 - (cia[m.C] ?? 0)) * (1 - (cia[m.I] ?? 0)) * (1 - (cia[m.A] ?? 0));
+  const av = { N: 0.85, A: 0.62, L: 0.55, P: 0.2 } as Record<string, number>;
+  const ac = { L: 0.77, H: 0.44 } as Record<string, number>;
+  const pr = { N: 0.85, L: 0.62, H: 0.27 } as Record<string, number>;
+  const ui = { N: 0.85, R: 0.62 } as Record<string, number>;
+  const expl = (av[m.AV] ?? 0.85) * (ac[m.AC] ?? 0.77) * (pr[m.PR] ?? 0.85) * (ui[m.UI] ?? 0.85);
+  const clamp = (x: number) => Math.max(1, Math.min(5, x));
+  d.impact = clamp(1 + Math.round((4 * iss) / 0.915));
+  d.likelihood = clamp(1 + Math.round((4 * expl) / 0.4727));
+  d.derived = true;
+}
+
+/** Plain-text one-liners for priority cards: first paragraph of the summary (or description) and the first recommendation. */
+function plain(md: string): string {
+  return md.replace(/```[\s\S]*?```/g, ' ').replace(/!\[[^\]]*\]\([^)]*\)/g, '').replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
+    .replace(/[*_`#>]/g, '').replace(/\s+/g, ' ').trim();
+}
+function firstPara(md: string | undefined): string {
+  if (!md) return '';
+  const paras = md.replace(/\r/g, '').split(/\n\s*\n/).map((p) => p.trim()).filter((p) => p && !p.startsWith('```') && !p.startsWith('!['));
+  return paras.length ? plain(paras[0]) : '';
+}
+function firstItem(md: string | undefined): string {
+  if (!md) return '';
+  const m = md.match(/^\s*(?:[-*+]|\d+[.)])\s+(.+)$/m);
+  return plain(m ? m[1] : firstPara(md));
+}
+function clip(s: string, n: number): string { return s.length <= n ? s : s.slice(0, n - 1).replace(/\s+\S*$/, '') + '…'; }
+function brief(f: Finding): { what: string; action: string } {
+  return { what: clip(firstPara(f.sections.summary) || firstPara(f.sections.description), 230), action: clip(firstItem(f.sections.recommendation), 200) };
+}
+export function splitRoadmap(md: string | undefined): Array<{ title: string; body: string }> {
+  if (!md) return [];
+  const out: Array<{ title: string; body: string }> = [];
+  let cur: { title: string; body: string } | null = null;
+  for (const line of md.replace(/\r/g, '').split('\n')) {
+    const m = line.match(/^#{2,4}\s+(.+?)\s*$/);
+    if (m) { cur = { title: m[1], body: '' }; out.push(cur); continue; }
+    if (!cur) { cur = { title: '', body: '' }; out.push(cur); }
+    cur.body += line + '\n';
+  }
+  return out.map((g) => ({ ...g, body: g.body.trim() })).filter((g) => g.title || g.body);
 }

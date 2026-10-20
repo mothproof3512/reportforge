@@ -1,9 +1,29 @@
 #import "/modules/lib/rf.typ"
 
+// Extended: "Hertest en verificatie" chapter in the main report — status pill per
+// finding, verification column, and the retest procedure text (also before any retest).
+#let extended(ctx, theme, t, opts) = {
+  let c = theme.colors
+  let tb = t.blocks.retest-overview
+  let eng = ctx.engagement
+  rf.chapter(tb.title_extended, subtitle: tb.subtitle)
+  rf.table(theme, widths: (16mm, 24mm, 42mm, 1fr), size: 8.5pt,
+    rows: (("ID", t.core.status, tb.verification, t.core.notes),) + ctx.findings.map(f => (
+      text(font: theme.fonts.mono, size: 8pt, f.id),
+      rf.status-pill(theme, t, f, size: 7pt),
+      if f.at("retest", default: none) != none { ctx.fmt.retest_date } else { "–" },
+      if f.at("retest", default: none) != none and f.retest.at("note", default: none) != none { f.retest.note } else { "" },
+    )),
+  )
+  heading(level: 2, numbering: none, outlined: false, tb.procedure)
+  if eng.at("retest", default: none) != none { tb.intro.replace("{date}", ctx.fmt.retest_date).replace("{version}", eng.retest.of_version) } else { tb.procedure_text.replace("{provider}", theme.provider.name) }
+}
+
 #let render(ctx, theme, t, opts) = {
   let c = theme.colors
   let tb = t.blocks.retest-overview
   let eng = ctx.engagement
+  if opts.at("layout", default: "classic") == "extended" { return extended(ctx, theme, t, opts) }
   rf.chapter(tb.title)
   if eng.at("retest", default: none) != none { tb.intro.replace("{date}", ctx.fmt.retest_date).replace("{version}", eng.retest.of_version) }
   let statuses = ("resolved", "partially-resolved", "open", "not-tested", "risk-accepted")

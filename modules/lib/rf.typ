@@ -15,13 +15,50 @@
 #let text-width(theme) = theme.page.text_width_mm * 1mm
 
 // ---------------------------------------------------------------- severity badge
-#let badge(theme, sev, label, size: 7.5pt) = box(
-  fill: sev-color(theme, sev),
-  radius: 2pt,
-  inset: (x: 5pt, y: 2.6pt),
-  baseline: 25%,
-  text(fill: sev-text-color(theme, sev), size: size, weight: "bold", tracking: 0.04em, upper(label)),
-)
+// Small shape per severity (diamond, triangle, square, circle, dash) so the
+// class stays recognisable in greyscale print and for colour-blind readers.
+#let sev-shape(sev, fill, size: 5pt) = box(baseline: 10%, width: size, height: size, align(center + horizon, {
+  if sev == "critical" { polygon(fill: fill, (size / 2, 0pt), (size, size / 2), (size / 2, size), (0pt, size / 2)) }
+  else if sev == "high" { polygon(fill: fill, (size / 2, 0pt), (size, size), (0pt, size)) }
+  else if sev == "medium" { rect(fill: fill, width: size * 0.85, height: size * 0.85) }
+  else if sev == "low" { circle(fill: fill, radius: size / 2) }
+  else { rect(fill: fill, width: size, height: size * 0.3) }
+}))
+
+#let badge(theme, sev, label, size: 7.5pt) = {
+  let shapes = theme.at("options", default: (:)).at("severity_shapes", default: false)
+  let fg = sev-text-color(theme, sev)
+  box(
+    fill: sev-color(theme, sev),
+    radius: if shapes { 3pt } else { 2pt },
+    inset: (x: 5pt, y: 2.6pt),
+    baseline: 25%,
+    if shapes [#sev-shape(sev, fg, size: size * 0.7)#h(0.45em)#text(fill: fg, size: size, weight: "bold", label)]
+    else { text(fill: fg, size: size, weight: "bold", tracking: 0.04em, upper(label)) },
+  )
+}
+
+// Outlined status pill (Open / Opgelost / …)
+#let pill(theme, label, color: none, size: 7.5pt, filled: false) = {
+  let col = if color == none { theme.colors.muted } else { color }
+  box(
+    stroke: 0.7pt + col,
+    fill: if filled { col } else { none },
+    radius: 10pt,
+    inset: (x: 6pt, y: 2.4pt),
+    baseline: 25%,
+    text(fill: if filled { white } else { col }, size: size, weight: "semibold", label),
+  )
+}
+
+// Retest/remediation status → (label, colour)
+#let status-pill(theme, t, f, size: 7.5pt) = {
+  let c = theme.colors
+  let st = if f.at("retest", default: none) != none { f.retest.status } else { "open" }
+  let col = if st == "resolved" { c.severity.low } else if st == "partially-resolved" { c.severity.medium } else if st == "risk-accepted" { c.muted } else { c.severity.high }
+  let label = if st == "resolved" { t.core.resolved } else if st == "partially-resolved" { t.core.partially_resolved } else if st == "risk-accepted" { t.core.retest_status.at("risk-accepted") } else { t.core.open }
+  pill(theme, label, color: col, size: size)
+}
 
 #let chip(theme, body, fill: none, stroke: none, size: 8pt) = box(
   fill: if fill == none { theme.colors.surface } else { fill },
@@ -140,11 +177,13 @@
   )
 }
 
-#let callout(theme, body, title: none, color: none) = {
+#let eyebrow(theme, body, size: 7.5pt) = text(size: size, weight: "bold", fill: theme.colors.accent, tracking: 0.02em, body)
+
+#let callout(theme, body, title: none, color: none, fill: none) = {
   let c = if color == none { theme.colors.primary } else { color }
   block(
     width: 100%,
-    fill: theme.colors.surface,
+    fill: if fill == none { theme.colors.at("calloutBg", default: theme.colors.surface) } else { fill },
     stroke: (left: 2.5pt + c),
     inset: (x: 11pt, y: 9pt),
     radius: 2pt,
@@ -159,15 +198,27 @@
 }
 
 // Numbered section heading (level 1) that always starts on a new page.
-#let chapter(body) = {
+#let chapter-subtitle(body) = block(above: -0.2em, below: 1.4em, text(size: 11.5pt, fill: rgb("#5B6B7C"), body))
+#let chapter(body, subtitle: none, numbering: "1.1", outlined: true) = {
   pagebreak(weak: true)
-  heading(level: 1, body)
+  heading(level: 1, numbering: numbering, outlined: outlined, body)
+  if subtitle != none { chapter-subtitle(subtitle) }
 }
+
+// Big number + caption, as in dashboards ("7  bevindingen bij oplevering")
+#let stat(theme, value, caption, color: none, size: 26pt) = block(width: 100%, breakable: false, {
+  line(length: 100%, stroke: 1.2pt + if color == none { theme.colors.primary } else { color })
+  v(5pt)
+  text(size: size, weight: "bold", fill: theme.colors.headingColor, font: theme.fonts.heading, value)
+  v(-0.1em)
+  text(size: 8.5pt, fill: theme.colors.muted, caption)
+})
 
 // ---------------------------------------------------------------- page setup
 #let setup(theme, ctx, t, doc) = {
   let c = theme.colors
   let eng = ctx.engagement
+  set document(title: eng.title + " — " + eng.reference + " v" + eng.version, author: theme.provider.name, keywords: (ctx.generated.tool,))
   set text(
     font: theme.fonts.body,
     size: eval(theme.fonts.base_size),
@@ -196,6 +247,12 @@
       let mode = hc.at("text", default: "both")
       let src = theme.assets.at("logo_header", default: theme.assets.at("logo_mono", default: theme.assets.at("logo", default: none)))
       let logo = if pos == "none" { none } else if src != none { image(src, height: lh) } else { text(weight: "semibold", theme.provider.name) }
+      let cls = eng.at("classification", default: none)
+      if hc.at("classification", default: "none") == "pill" and cls != none {
+        let p = pill(theme, cls, color: c.primary, size: 7pt, filled: true)
+        logo = if logo == none { p } else { [#logo #h(0.6em) #p] }
+        if pos == "none" { pos = "right" }
+      }
       let txt = if mode == "none" { [] } else if mode == "title" { [#ctx.fmt.header_title] } else if mode == "client" { [#ctx.fmt.header_client] } else { [#ctx.fmt.header_title #h(0.6em) #text(fill: c.rule)[|] #h(0.6em) #ctx.fmt.header_client] }
       let txtbox = box(height: 1.1em, clip: true, text(hyphenate: false, txt))
       if pos == "left" {
@@ -213,25 +270,59 @@
       set text(size: 7.5pt, fill: c.muted)
       line(length: 100%, stroke: 0.4pt + c.rule)
       v(-0.3em)
-      grid(
-        columns: (1fr, auto, 1fr),
-        align: (left, center, right),
-        [#eng.at("classification", default: "") #h(0.6em) #text(fill: c.rule)[|] #h(0.6em) #eng.reference #h(0.6em) #text(fill: c.rule)[|] #h(0.6em) v#eng.version],
-        [],
-        [#counter(page).display("1") / #context counter(page).final().first()],
-      )
+      let fstyle = theme.page.at("footer", default: (:)).at("style", default: "default")
+      if fstyle == "website" {
+        grid(
+          columns: (1fr, auto, 1fr),
+          align: (left, center, right),
+          [#theme.provider.at("website", default: theme.provider.name)],
+          [#text(font: theme.fonts.mono, size: 7pt)[Ref. #eng.reference · v#eng.version]],
+          [#t.core.page #counter(page).display("1") #t.core.of #context counter(page).final().first()],
+        )
+      } else {
+        grid(
+          columns: (1fr, auto, 1fr),
+          align: (left, center, right),
+          [#eng.at("classification", default: "") #h(0.6em) #text(fill: c.rule)[|] #h(0.6em) #eng.reference #h(0.6em) #text(fill: c.rule)[|] #h(0.6em) v#eng.version],
+          [],
+          [#counter(page).display("1") / #context counter(page).final().first()],
+        )
+      }
+    },
+    background: context {
+      let deco = theme.page.at("decoration", default: "none")
+      if deco == "arcs" and counter(page).get().first() > 1 {
+        let tint = c.primary.lighten(90%)
+        if calc.rem(counter(page).get().first(), 2) == 1 {
+          place(bottom + right, dx: 40mm, dy: 40mm, circle(radius: 62mm, stroke: 24mm + tint))
+        } else {
+          place(bottom + left, dx: -58mm, dy: 20mm, circle(radius: 62mm, stroke: 22mm + tint))
+        }
+      }
     },
   )
   set heading(numbering: "1.1")
-  show heading: set text(font: theme.fonts.heading, fill: c.headingColor)
+  let hstyle = theme.at("options", default: (:)).at("heading_style", default: "rule")
+  let htrack = eval(str(theme.at("options", default: (:)).at("heading_tracking", default: "0em")))
+  show heading: set text(font: theme.fonts.heading, fill: c.headingColor, tracking: htrack)
   show heading.where(level: 1): it => {
-    set text(size: 18pt, weight: "bold")
-    block(above: 2.4em, below: 1.1em, breakable: false, [
-      #if it.numbering != none { text(fill: c.accent, size: 11pt, weight: "semibold", tracking: 0.08em)[#counter(heading).display(it.numbering)]; v(0.2em) }
-      #it.body
-      #v(0.35em)
-      #line(length: 28mm, stroke: 1.6pt + c.accent)
-    ])
+    if hstyle == "eyebrow" {
+      // "1 · Title" small in accent, then the big title (as in the extended report template)
+      set text(size: 24pt, weight: "bold")
+      block(above: 1.6em, below: 1.0em, breakable: false, [
+        #text(size: 7.5pt, weight: "bold", fill: c.accent, tracking: 0.02em)[#if it.numbering != none [#counter(heading).display(it.numbering) · ]#it.body]
+        #v(0.1em)
+        #it.body
+      ])
+    } else {
+      set text(size: 18pt, weight: "bold")
+      block(above: 2.4em, below: 1.1em, breakable: false, [
+        #if it.numbering != none { text(fill: c.accent, size: 11pt, weight: "semibold", tracking: 0.08em)[#counter(heading).display(it.numbering)]; v(0.2em) }
+        #it.body
+        #v(0.35em)
+        #line(length: 28mm, stroke: 1.6pt + c.accent)
+      ])
+    }
   }
   show heading.where(level: 2): it => {
     set text(size: 12.5pt, weight: "bold")
