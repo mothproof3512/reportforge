@@ -190,16 +190,21 @@
     header: context {
       if counter(page).get().first() <= 1 { return }
       set text(size: 7.5pt, fill: c.muted)
-      grid(
-        columns: (1fr, auto),
-        align: (left + horizon, right + horizon),
-        box(height: 1.1em, clip: true, text(hyphenate: false)[#ctx.fmt.header_title #h(0.6em) #text(fill: c.rule)[|] #h(0.6em) #ctx.fmt.header_client]),
-        if theme.assets.at("logo_mono", default: none) != none {
-          image(theme.assets.logo_mono, height: 5.5mm)
-        } else if theme.assets.at("logo", default: none) != none {
-          image(theme.assets.logo, height: 5.5mm)
-        } else { text(weight: "semibold", theme.provider.name) },
-      )
+      let hc = theme.page.at("header", default: (:))
+      let pos = hc.at("logo", default: "right")
+      let lh = eval(str(hc.at("logo_height", default: "5.5mm")))
+      let mode = hc.at("text", default: "both")
+      let src = theme.assets.at("logo_header", default: theme.assets.at("logo_mono", default: theme.assets.at("logo", default: none)))
+      let logo = if pos == "none" { none } else if src != none { image(src, height: lh) } else { text(weight: "semibold", theme.provider.name) }
+      let txt = if mode == "none" { [] } else if mode == "title" { [#ctx.fmt.header_title] } else if mode == "client" { [#ctx.fmt.header_client] } else { [#ctx.fmt.header_title #h(0.6em) #text(fill: c.rule)[|] #h(0.6em) #ctx.fmt.header_client] }
+      let txtbox = box(height: 1.1em, clip: true, text(hyphenate: false, txt))
+      if pos == "left" {
+        grid(columns: (auto, 1fr), column-gutter: 3mm, align: (left + horizon, right + horizon), logo, txtbox)
+      } else if pos == "none" {
+        grid(columns: (1fr,), align: (left + horizon,), txtbox)
+      } else {
+        grid(columns: (1fr, auto), align: (left + horizon, right + horizon), txtbox, logo)
+      }
       v(-0.4em)
       line(length: 100%, stroke: 0.4pt + c.rule)
     },
