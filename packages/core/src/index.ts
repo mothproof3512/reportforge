@@ -6,4 +6,6 @@ export type { LoadResult } from './engagement.ts';
 export { formatDate, severityLabel, t } from './i18n.ts';
 export { loadLibrary, libraryLanguages, stripTags } from './library.ts';
 export { VERSION } from './version.ts';
+export { loadPalettes, paletteToThemeColors } from './palettes.ts';
+export type { Palette, PaletteCombination } from './palettes.ts';
 export type { LibraryEntry } from './library.ts';

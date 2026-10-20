@@ -4,6 +4,10 @@ Alle wezenlijke wijzigingen per release. Versies volgen [semver](https://semver.
 
 ## [Unreleased]
 
+## [0.5.0] — 2026-10-20
+
+- Kleurcombinaties van Sanzo Wada (348, top 30 voor rapportage) in de thema-editor; palettemodule `modules/palettes/`, `GET /api/palettes`.
+
 ## [0.4.0] — 2026-10-20
 
 - Sjabloon `pentest-report-extended` naar het aangeleverde PDF-template: dashboard-samenvatting met score, prioriteiten en kans×impact-matrix, scope met randvoorwaarden en testaccounts, methodiek met tijdlijn, risicoclassificatie met hersteltermijnen, bevindingentabel, uitgebreide bevindingslayout, "Wat goed gaat", roadmap, hertesttabel, bijlagen A–D met begrippenlijst.
