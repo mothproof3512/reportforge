@@ -102,6 +102,15 @@ texts: { disclaimer: { nl: "...", en: "..." } }
 
 **Layout variants.** Every layout element has six variants, chosen per theme in the editor's *Opmaak* panel (or `theme.yaml`): cover `page.cover` (band, image, minimal, dark, split, geometric), chapter titles `options.heading_style` (rule, eyebrow, big-number, bar, sidebar, underline), tables `options.table_style` (lines, zebra, minimal, boxed, header-dark, cards), charts `options.chart_style` (bars, columns, donut, tiles, dots, stacked), callouts `options.callout_style` (bar, outline, fill, ribbon, quote, card), severity badges `options.badge_style` (solid, shapes, outline, pill, dot, tag) and the finding layout `options.finding_layout` (classic, extended, card, sidebar, compact, table; a template can pin one). **Stijlgalerij** in the theme editor — or `npm run rf -- gallery --theme navy` — renders a PDF with every element in all variants in that theme, current choice marked. Word follows the choices where Word can (tables, callouts, badges, card/compact/table findings) and falls back to the classic form elsewhere.
 
+**Page decorations.** `page.decorations` is a list of layers drawn behind the content: an SVG or PNG from the theme folder or one of the bundled shapes in `assets/decorations/` (ring, arc, disc, blob, dots, lines, hexagon, triangle), with `anchor` (nine positions), `dx`/`dy` offsets (may push the shape off the page), `width`, `rotate`, `opacity` (0–1), `blur` (0 = sharp), `tint` (primary | accent | ink | muted | #hex) and `pages` (content | all | odd | even | cover | first | last). Tint, opacity and blur are baked into a derived file (cached in `.rf-cache/decorations/`), so SVGs stay vector and blurred ones are pre-rasterised once. The editor has a layer list under *Voorblad en beelden*; `page.decoration: arcs` remains as the built-in alternating rings.
+
+```yaml
+page:
+  decorations:
+    - { image: ring.svg, anchor: bottom-right, dx: 50mm, dy: 50mm, width: 170mm, opacity: 0.07, pages: odd }
+    - { image: blob.svg, anchor: top-left, dx: -40mm, dy: -30mm, width: 120mm, rotate: 25deg, opacity: 0.08, blur: 6, tint: accent, pages: even }
+```
+
 **Colour combinations.** The theme editor offers the 348 combinations from Sanzo Wada's *A Dictionary of Color Combinations* (1933; data from the open set `modules/palettes/sanzo-wada.yaml`), with the 30 that suit a report best up front: one click sets `primary`, `accent`, `surface` and `calloutBg` (a deep colour for headings and the cover, a contrasting accent, a soft tint for fills); severity colours stay semantic. The ranking (`report_fit`) scores contrast on white (≥ 4.5 for the primary, ≥ 3 for the accent), hue separation and restraint, and is regenerated with `node scripts/sanzo-wada.mjs`. Other palettes are one YAML file each in `modules/palettes/`.
 
 Derived colours (tints, heading colour, severity text colour) are computed with WCAG contrast checks; a too-light brand colour is darkened for text automatically. Word uses `fonts.docx_body` / `docx_heading` / `docx_mono` (default Calibri/Consolas) because fonts are not embedded in DOCX.

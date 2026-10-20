@@ -51,6 +51,7 @@
     margin: 0pt,
     numbering: none,
     {
+      rf.decorations(theme, 1, 1, cover: true)
       if style == "dark" {
         let fg = white
         let dim = white.transparentize(35%)

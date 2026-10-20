@@ -97,12 +97,20 @@ export function renderTypst(mods: Modules, ctx: ReportContext, outPdf: string, o
     copyFileSync(abs, join(buildDir, 'assets', name));
     assets[k] = assetBase + name;
   }
+  // Page decorations: derived files (tint/opacity/blur baked in by loadEngagement)
+  const decorations = [] as Array<Record<string, unknown>>;
+  for (const [i, d] of (ctx.theme.page.decorations ?? []).entries()) {
+    if (!d.src) continue;
+    const name = `decoration-${i}${extname(d.src)}`;
+    copyFileSync(d.src, join(buildDir, 'assets', name));
+    decorations.push({ ...d, src: assetBase + name });
+  }
   const textWidthMm = pageTextWidthMm(ctx.theme.page);
   const themeData = {
     id: ctx.theme.id, name: ctx.theme.name, version: ctx.theme.version,
     provider: ctx.theme.provider, colors: ctx.theme.colors,
     fonts: { body: ctx.theme.fonts.body, heading: ctx.theme.fonts.heading, mono: ctx.theme.fonts.mono, base_size: ctx.theme.fonts.base_size },
-    page: { ...ctx.theme.page, text_width_mm: textWidthMm }, assets, texts: ctx.theme.texts, options: ctx.theme.options,
+    page: { ...ctx.theme.page, decorations, text_width_mm: textWidthMm }, assets, texts: ctx.theme.texts, options: ctx.theme.options,
   };
   const ser = new TypstSerializer(md, [/^theme\.colors\./]);
   writeFileSync(join(buildDir, 'theme.typ'), `#let theme = ${ser.value(themeData, 'theme')}\n`);

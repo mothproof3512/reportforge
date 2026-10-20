@@ -85,6 +85,7 @@ export function buildApi(db: Db, p: Paths): Router {
       languages: ['nl', 'en'],
       steps: ['Intake', 'Testplan', 'Test uitvoeren', 'Rapportage', 'TPM/attestation', 'Opleveren', 'Hertest', 'Bijgewerkte rapportage/TPM', 'Opleveren v2'],
       version: VERSION,
+      decorationShapes: existsSync(join(p.root, 'assets/decorations')) ? readdirSync(join(p.root, 'assets/decorations')).filter((f) => /\.(svg|png)$/i.test(f)).sort() : [],
       typst: (() => { try { return execFileSync(process.env.TYPST_BIN ?? 'typst', ['--version'], { encoding: 'utf8' }).trim(); } catch { return null; } })(),
     });
   });

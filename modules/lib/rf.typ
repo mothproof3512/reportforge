@@ -353,6 +353,28 @@
   }
 }
 
+// ---------------------------------------------------------------- page decorations
+// theme.page.decorations: layers placed behind the content. `pages` selects
+// all | odd | even | cover | content | first | last. The cover block calls this
+// with cover: true inside its own page().
+#let decorations(theme, n, total, cover: false) = {
+  for d in theme.page.at("decorations", default: ()) {
+    let p = d.at("pages", default: "content")
+    let show-it = if cover { p in ("all", "cover") }
+      else if p == "all" { true } else if p == "content" { n > 1 } else if p == "odd" { n > 1 and calc.odd(n) } else if p == "even" { n > 1 and calc.even(n) }
+      else if p == "first" { n == 2 } else if p == "last" { n == total } else { false }
+    if not show-it { continue }
+    let anchor = d.at("anchor", default: "bottom-right")
+    let al = (
+      "top-left": top + left, "top": top + center, "top-right": top + right,
+      "left": horizon + left, "center": horizon + center, "right": horizon + right,
+      "bottom-left": bottom + left, "bottom": bottom + center, "bottom-right": bottom + right,
+    ).at(anchor, default: bottom + right)
+    place(al, dx: eval(d.at("dx", default: "0mm")), dy: eval(d.at("dy", default: "0mm")),
+      rotate(eval(d.at("rotate", default: "0deg")), origin: center, reflow: false, image(d.src, width: eval(d.at("width", default: "120mm")))))
+  }
+}
+
 // ---------------------------------------------------------------- page setup
 #let setup(theme, ctx, t, doc) = {
   let c = theme.colors
@@ -429,15 +451,17 @@
       }
     },
     background: context {
+      let n = counter(page).get().first()
       let deco = theme.page.at("decoration", default: "none")
-      if deco == "arcs" and counter(page).get().first() > 1 {
+      if deco == "arcs" and n > 1 {
         let tint = c.primary.lighten(90%)
-        if calc.rem(counter(page).get().first(), 2) == 1 {
+        if calc.rem(n, 2) == 1 {
           place(bottom + right, dx: 40mm, dy: 40mm, circle(radius: 62mm, stroke: 24mm + tint))
         } else {
           place(bottom + left, dx: -58mm, dy: 20mm, circle(radius: 62mm, stroke: 22mm + tint))
         }
       }
+      decorations(theme, n, counter(page).final().first(), cover: false)
     },
   )
   set heading(numbering: "1.1")

@@ -118,6 +118,20 @@ export interface ThemeColors {
   [k: string]: unknown;
 }
 
+/** One background layer: an SVG/PNG placed behind the page content. */
+export interface Decoration {
+  image: string;                 // file name in the theme folder, or one of assets/decorations/*.svg
+  src?: string;                  // resolved absolute path (set by the theme resolver)
+  anchor?: 'top-left' | 'top' | 'top-right' | 'left' | 'center' | 'right' | 'bottom-left' | 'bottom' | 'bottom-right';
+  dx?: string; dy?: string;      // offsets, e.g. "40mm" / "-20mm" (positive = right/down); may push the shape off the page
+  width?: string;                // rendered width, e.g. "160mm"
+  rotate?: string;               // e.g. "15deg"
+  opacity?: number;              // 0–1 (0.08 = very light)
+  blur?: number;                 // 0 = sharp; blur radius in SVG units / px
+  tint?: string;                 // "#RRGGBB" or "primary" | "accent" | "ink" | "muted": replaces fills/strokes
+  pages?: 'all' | 'odd' | 'even' | 'cover' | 'content' | 'first' | 'last';
+}
+
 export interface ResolvedTheme {
   id: string;
   name: string;
@@ -126,7 +140,7 @@ export interface ResolvedTheme {
   provider: { name: string; short?: string; address?: string[]; website?: string; email?: string; phone?: string; registration?: string };
   colors: ThemeColors;
   fonts: { body: string; heading: string; mono: string; dirs: string[]; base_size: string };
-  page: { size: string; margin: { top: string; bottom: string; left: string; right: string }; number_format: string; cover: string; header: { logo: 'right' | 'left' | 'none'; logo_height: string; text: 'title' | 'client' | 'both' | 'none'; classification?: 'none' | 'pill' }; footer?: { style?: 'default' | 'website' }; decoration?: 'none' | 'arcs' };
+  page: { size: string; margin: { top: string; bottom: string; left: string; right: string }; number_format: string; cover: string; header: { logo: 'right' | 'left' | 'none'; logo_height: string; text: 'title' | 'client' | 'both' | 'none'; classification?: 'none' | 'pill' }; footer?: { style?: 'default' | 'website' }; decoration?: 'none' | 'arcs'; decorations?: Decoration[] };
   assets: { logo?: string; logo_mono?: string; logo_header?: string; cover_image?: string; signature?: string };
   texts: Record<string, Record<Lang, string>>;
   options: Record<string, unknown>;

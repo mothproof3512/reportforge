@@ -100,6 +100,11 @@ async function main() {
   // theme preview + export
   const tp = await api('POST', '/api/themes/example-client/preview', { language: 'en' });
   assert.ok(tp.pdf);
+  // decorations: a scratch theme with one layer renders, then is removed
+  await api('PUT', '/api/themes/smoke-deco', { data: { name: 'Smoke deco', colors: { primary: '#224466' }, page: { decorations: [{ image: 'hexagon.svg', anchor: 'top-right', dx: '30mm', dy: '-20mm', width: '140mm', rotate: '15deg', opacity: 0.06, blur: 3, tint: 'accent', pages: 'content' }] } } });
+  const td = await api('POST', '/api/themes/smoke-deco/preview', { language: 'nl' });
+  assert.ok(td.pdf && !td.error, 'decorations preview');
+  await api('DELETE', '/api/themes/smoke-deco');
   const tg = await api('POST', '/api/themes/navy/preview', { language: 'nl', template: 'style-gallery' });
   assert.ok(tg.pdf && !tg.error, 'style gallery');
   const tar = await api('GET', `/api/engagements/${eng.id}/export`);
