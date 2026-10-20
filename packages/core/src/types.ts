@@ -119,8 +119,8 @@ export interface ResolvedTheme {
   provider: { name: string; short?: string; address?: string[]; website?: string; email?: string; phone?: string; registration?: string };
   colors: ThemeColors;
   fonts: { body: string; heading: string; mono: string; dirs: string[]; base_size: string };
-  page: { size: string; margin: { top: string; bottom: string; left: string; right: string }; number_format: string; cover: string };
-  assets: { logo?: string; logo_mono?: string; cover_image?: string; signature?: string };
+  page: { size: string; margin: { top: string; bottom: string; left: string; right: string }; number_format: string; cover: string; header: { logo: 'right' | 'left' | 'none'; logo_height: string; text: 'title' | 'client' | 'both' | 'none' } };
+  assets: { logo?: string; logo_mono?: string; logo_header?: string; cover_image?: string; signature?: string };
   texts: Record<string, Record<Lang, string>>;
   options: Record<string, unknown>;
 }

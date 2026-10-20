@@ -107,19 +107,27 @@ export function resolveTheme(mods: Modules, themeRef: string, engagementDir?: st
   const fonts = raw.fonts ?? {};
   const fontDirs = [join(mods.root, 'assets/fonts'), join(defaultDir, 'fonts'), join(dir, 'fonts')].filter((d) => existsSync(d));
   const assets: ResolvedTheme['assets'] = {};
-  for (const key of ['logo', 'logo_mono', 'cover_image', 'signature'] as const) {
+  for (const key of ['logo', 'logo_mono', 'logo_header', 'cover_image', 'signature'] as const) {
     const v = raw.assets?.[key];
     if (!v) continue;
     const candidates = [join(dir, v), join(defaultDir, v), isAbsolute(v) ? v : ''].filter(Boolean);
     const found = candidates.find((p) => existsSync(p));
     if (found) assets[key] = found; else warnings.push({ message: `Asset ${key} "${v}" niet gevonden in thema ${themeRef}.` });
   }
+  const page = deepMerge({ size: 'a4', margin: { top: '22mm', bottom: '22mm', left: '20mm', right: '20mm' }, number_format: '{page} / {total}', cover: 'band', header: { logo: 'right', logo_height: '5.5mm', text: 'both' } }, raw.page);
+  {
+    const h = page.header as { logo: string; logo_height: string; text: string };
+    if (!['right', 'left', 'none'].includes(h.logo)) { warnings.push({ message: `page.header.logo "${h.logo}" onbekend; gebruik right, left of none.` }); h.logo = 'right'; }
+    if (!['both', 'title', 'client', 'none'].includes(h.text)) { warnings.push({ message: `page.header.text "${h.text}" onbekend; gebruik both, title, client of none.` }); h.text = 'both'; }
+    const mm = Number(String(h.logo_height).replace(/mm\s*$/, ''));
+    if (!/^\d+(\.\d+)?\s*mm$/.test(String(h.logo_height)) || mm < 3 || mm > 9) { warnings.push({ message: `page.header.logo_height "${h.logo_height}" moet tussen 3mm en 9mm liggen; 5.5mm gebruikt.` }); h.logo_height = '5.5mm'; }
+  }
   const theme: ResolvedTheme = {
     id: raw.id ?? themeRef, name: raw.name ?? themeRef, version: String(raw.version ?? '1'), dir,
     provider: raw.provider ?? { name: raw.name ?? themeRef },
     colors,
     fonts: { body: fonts.body ?? 'Inter', heading: fonts.heading ?? fonts.body ?? 'Inter', mono: fonts.mono ?? 'JetBrains Mono', dirs: fontDirs, base_size: fonts.base_size ?? '10pt' },
-    page: deepMerge({ size: 'a4', margin: { top: '22mm', bottom: '22mm', left: '20mm', right: '20mm' }, number_format: '{page} / {total}', cover: 'band' }, raw.page),
+    page: page as ResolvedTheme['page'],
     assets,
     texts: raw.texts ?? {},
     options: raw.options ?? {},

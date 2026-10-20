@@ -88,8 +88,8 @@ name: Acme Security
 provider: { name: Acme Security B.V., address: [Straat 1, 1234 AB Stad], website: https://acme.example, email: info@acme.example }
 colors: { primary: "#7A1E2C", accent: "#C9A227" }
 fonts: { body: "Source Sans 3", heading: "Source Serif 4", mono: "JetBrains Mono" }   # .ttf/.otf in modules/themes/acme/fonts/
-page: { cover: image }
-assets: { logo: logo.svg, logo_mono: logo-mono.svg, cover_image: cover.jpg }
+page: { cover: image, header: { logo: right, logo_height: 5.5mm, text: both } }   # running header: logo right|left|none, 3–9 mm, text both|title|client|none
+assets: { logo: logo.svg, logo_mono: logo-mono.svg, logo_header: logo-header.svg, cover_image: cover.jpg }   # logo_header is optional: header uses logo_header → logo_mono → logo
 texts: { disclaimer: { nl: "...", en: "..." } }
 ```
 

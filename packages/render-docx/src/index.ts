@@ -41,7 +41,7 @@ export async function renderDocx(mods: Modules, ctx: ReportContext, outDocx: str
     try { imageMeta[url] = { ...info, png: await toPng(info.abs) }; } catch (e: any) { warnings.push(`Afbeelding ${url} kon niet naar PNG worden omgezet: ${e.message}`); }
   }
   let logoPng: Buffer | undefined;
-  const logoSrc = ctx.theme.assets.logo_mono ?? ctx.theme.assets.logo;
+  const logoSrc = ctx.theme.assets.logo_header ?? ctx.theme.assets.logo_mono ?? ctx.theme.assets.logo;
   if (logoSrc) { try { logoPng = await toPng(logoSrc); } catch (e: any) { warnings.push(`Logo niet converteerbaar: ${e.message}`); } }
   let logoColorPng: Buffer | undefined;
   if (ctx.theme.assets.logo) { try { logoColorPng = await toPng(ctx.theme.assets.logo); } catch { /* reported above */ } }
@@ -71,8 +71,14 @@ export async function renderDocx(mods: Modules, ctx: ReportContext, outDocx: str
   }
 
   const fonts = h.fonts;
-  const headerRight = logoPng ? new ImageRun({ type: 'png', data: logoPng, transformation: { width: PX(28), height: PX(28 * (await sharp(logoPng).metadata().then((m) => (m.height ?? 1) / (m.width ?? 1)))) }, altText: { title: 'logo', description: 'logo', name: 'logo' } })
+  const hc = ctx.theme.page.header ?? { logo: 'right', logo_height: '5.5mm', text: 'both' };
+  const logoHmm = Number(String(hc.logo_height).replace(/[^\d.]/g, '')) || 5.5;
+  const logoHpx = Math.round(logoHmm * 3.78);
+  const headerLogo = hc.logo === 'none' ? null : logoPng ? new ImageRun({ type: 'png', data: logoPng, transformation: { height: logoHpx, width: Math.round(logoHpx / (await sharp(logoPng).metadata().then((m) => (m.height ?? 1) / (m.width ?? 1)))) }, altText: { title: 'logo', description: 'logo', name: 'logo' } })
     : new TextRun({ text: ctx.theme.provider.name, bold: true, size: PT(7.5), color: hex(c.muted), font: fonts.body });
+  const headerText = hc.text === 'none' ? '' : hc.text === 'title' ? eng.title : hc.text === 'client' ? eng.client.name : `${eng.title}   |   ${eng.client.name}`;
+  const headerTextRun = new TextRun({ text: headerText, size: PT(7.5), color: hex(c.muted), font: fonts.body });
+  const headerChildren = hc.logo === 'left' && headerLogo ? [headerLogo, new TextRun({ text: '   ' }), headerTextRun] : headerLogo ? [headerTextRun, new TextRun({ text: '\t' }), headerLogo] : [headerTextRun];
 
   const doc = new Document({
     creator: ctx.theme.provider.name,
@@ -110,7 +116,7 @@ export async function renderDocx(mods: Modules, ctx: ReportContext, outDocx: str
         default: new Header({ children: [new Paragraph({
           tabStops: [{ type: TabStopType.RIGHT, position: MM(170) }],
           border: { bottom: { style: BorderStyle.SINGLE, size: 4, color: hex(c.rule), space: 4 } },
-          children: [new TextRun({ text: `${eng.title}   |   ${eng.client.name}`, size: PT(7.5), color: hex(c.muted), font: fonts.body }), new TextRun({ text: '\t' }), headerRight],
+          children: headerChildren,
         })] }),
         first: new Header({ children: [new Paragraph({ children: [] })] }),
       },

@@ -38,10 +38,15 @@ page:
   size: a4
   margin: { top: 22mm, bottom: 22mm, left: 20mm, right: 20mm }
   cover: band          # band | image | minimal
+  header:              # running header on every page after the cover
+    logo: right        # right | left | none
+    logo_height: 5.5mm # 4–8mm is sensible; the header band is clipped at ~9mm
+    text: both         # both | title | client | none
 
 assets:
   logo: logo.svg
   logo_mono: logo-mono.svg
+  # logo_header: logo-header.svg   # optional: a separate asset for the running header (else logo_mono, else logo)
 
 texts:
   disclaimer:
