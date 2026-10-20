@@ -1,0 +1,7 @@
+title: Overzicht van de bevindingen
+subtitle: Alle {n} bevindingen met classificatie en status bij oplevering{retest}.
+subtitle_retest: " en na de hertest"
+at_delivery: Bij oplevering
+after_retest: Na hertest
+low_info: Laag / Informatief
+none: Er zijn geen bevindingen vastgesteld.

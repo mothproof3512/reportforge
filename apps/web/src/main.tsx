@@ -68,7 +68,7 @@ function App() {
         {nav('/library', 'Bibliotheek')}
         {nav('/settings', 'Instellingen')}
         <div className="spacer" />
-        <div className="meta">{meta.typst ? meta.typst : 'typst niet gevonden'}<br />{meta.blocks.length} blokken · {meta.standards.length} standaarden</div>
+        <div className="meta">Reportforge v{meta.version}<br />{meta.typst ? meta.typst : 'typst niet gevonden'}<br />{meta.blocks.length} blokken · {meta.standards.length} standaarden</div>
       </nav>
       <main className="main" style={workbench ? { overflow: 'hidden' } : undefined}>{page}</main>
     </div>

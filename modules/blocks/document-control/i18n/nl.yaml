@@ -1,4 +1,17 @@
 title: Documentbeheer
+subtitle: Versiehistorie, verspreiding, classificatie en contactgegevens bij dit rapport.
 history: Versiehistorie
-distribution: Distributie
+distribution: Distributielijst
 distribution_text: Dit document is opgesteld voor {client} en is uitsluitend bestemd voor de in dit document genoemde ontvangers.
+contact: Contactgegevens
+name_role: Naam / rol
+organisation: Organisatie
+company: Onderneming
+address: Adres
+phone: Telefoon
+email: E-mail
+website: Website
+registration: KvK
+about: Over dit rapport
+about_text: Dit rapport betreft een momentopname binnen de afgesproken reikwijdte en het vastgestelde tijdvenster. Het biedt geen garantie op de afwezigheid van kwetsbaarheden.
+classification_text: Dit document is geclassificeerd als {classification}. Het bevat gevoelige informatie over kwetsbaarheden in de omgeving van de opdrachtgever. Verspreiding is beperkt tot de personen op de distributielijst. Delen met derden alleen na schriftelijke toestemming van de opdrachtgever.

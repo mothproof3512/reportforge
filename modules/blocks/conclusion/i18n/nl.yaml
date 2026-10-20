@@ -2,3 +2,5 @@ title: Conclusie en aanbevelingen
 recommendations: Aanbevelingen op hoofdlijnen
 auto: "Het onderzoek heeft {total} bevindingen opgeleverd. De hoogste ernst is {highest}. {provider} adviseert de bevindingen in volgorde van ernst op te lossen, te beginnen met de bevindingen van het niveau {highest}, en na het doorvoeren van de maatregelen een hertest uit te laten voeren."
 auto_none: "Het onderzoek heeft geen bevindingen opgeleverd die een beveiligingsrisico vormen. {provider} adviseert de beveiliging periodiek opnieuw te laten toetsen, zeker na wezenlijke wijzigingen aan de omgeving."
+roadmap: Roadmap
+main_conclusion: Hoofdconclusie

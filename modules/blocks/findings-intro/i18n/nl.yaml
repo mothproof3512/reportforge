@@ -1,3 +1,5 @@
 title: Bevindingen
 intro: "Dit hoofdstuk beschrijft elke bevinding afzonderlijk. Per bevinding is aangegeven wat er is aangetroffen, welke systemen het betreft, wat een aanvaller ermee kan bereiken, hoe dit is aangetoond en hoe het kan worden verholpen. De bevindingen zijn gesorteerd op ernst."
 none: Tijdens het onderzoek zijn geen bevindingen gedaan.
+title_extended: Bevindingen in detail
+intro_short: "Per bevinding: samenvatting, beschrijving, bewijs, impact en kans, aanbeveling en de status van de hertest. Gesorteerd op ernst."

@@ -17,6 +17,7 @@ export interface Finding {
   mapping: MappingRef[];
   cwe: string[];
   retest?: { status: string; note?: string };
+  brief?: { what: string; action: string };   // plain-text one-liners for priority cards
   file?: string;
   line?: number;
 }
@@ -34,6 +35,7 @@ export interface ScopeItem {
   type?: string;        // web, api, infra, mobile, ...
   description?: string;
   environment?: string; // production, acceptance, ...
+  access?: string;      // unauthenticated, customer account, ...
 }
 
 export interface ToolRef { name: string; version?: string; purpose?: string }
@@ -75,6 +77,11 @@ export interface Engagement {
   retest?: { of_version: string; date: string };
   intake?: Intake;
   testplan?: TestPlan;
+  finding_prefix?: string;        // F (default), CS, …
+  positives?: string;             // markdown: what is in good order
+  roadmap?: string;               // markdown: ### group headings → remediation roadmap
+  glossary?: Array<{ term: string; definition: string }>;
+  accounts?: Array<{ role: string; account?: string; rights?: string }>;
   [extra: string]: unknown;
 }
 
@@ -105,7 +112,7 @@ export interface TestPlan {
 
 export interface ThemeColors {
   primary: string; primaryDark: string; primaryLight: string; accent: string;
-  ink: string; muted: string; rule: string; surface: string; codeBg: string;
+  ink: string; muted: string; rule: string; surface: string; codeBg: string; calloutBg: string;
   severity: Record<Severity, string>;
   severityText: Record<Severity, string>;
   [k: string]: unknown;
@@ -119,7 +126,7 @@ export interface ResolvedTheme {
   provider: { name: string; short?: string; address?: string[]; website?: string; email?: string; phone?: string; registration?: string };
   colors: ThemeColors;
   fonts: { body: string; heading: string; mono: string; dirs: string[]; base_size: string };
-  page: { size: string; margin: { top: string; bottom: string; left: string; right: string }; number_format: string; cover: string; header: { logo: 'right' | 'left' | 'none'; logo_height: string; text: 'title' | 'client' | 'both' | 'none' } };
+  page: { size: string; margin: { top: string; bottom: string; left: string; right: string }; number_format: string; cover: string; header: { logo: 'right' | 'left' | 'none'; logo_height: string; text: 'title' | 'client' | 'both' | 'none'; classification?: 'none' | 'pill' }; footer?: { style?: 'default' | 'website' }; decoration?: 'none' | 'arcs' };
   assets: { logo?: string; logo_mono?: string; logo_header?: string; cover_image?: string; signature?: string };
   texts: Record<string, Record<Lang, string>>;
   options: Record<string, unknown>;

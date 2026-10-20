@@ -13,3 +13,23 @@ info: "No direct risk; observations and improvement points for information."
 status_confirmed: "Confirmed: the vulnerability was demonstrated."
 status_likely: "Likely: strong indications, but not fully demonstrated (e.g. to avoid damage)."
 status_fp: "False positive: reported by tooling, but no vulnerability after verification."
+title_extended: Risk classification
+subtitle: How findings are weighed and which remediation term is advised per class.
+weighting: Weighting
+weighting_text: "Every finding is assigned a class based on likelihood and impact, supported by the {model} base score. Where the context requires it, the final classification deviates from the CVSS score with reasons given. The {provider} score is 100 minus the sum of the weights of open findings ({weights})."
+classes_title: Classes, CVSS range and remediation term
+term: Remediation term
+term_critical: Within 7 days
+term_high: Within 30 days
+term_medium: Within 90 days
+term_low: With the next release
+term_info: At own discretion
+critical_short: Direct abuse possible with major damage.
+high_short: Serious impact with a realistic chance of abuse.
+medium_short: Limited impact or lower likelihood.
+low_short: Hardening or best practice.
+info_short: For information; no risk in itself.
+shapes_title: Why colour and shape
+shapes_text: Besides a colour, each class has its own shape and label, so the severity stays recognisable in black-and-white print and for readers with colour vision deficiency.
+status_remediation: Remediation status
+status_remediation_text: The status shows where a finding stands on the report date. Statuses are outlined pills.

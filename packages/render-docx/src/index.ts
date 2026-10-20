@@ -10,7 +10,7 @@ import sharp from 'sharp';
 import {
   Document, Packer, Paragraph, TextRun, Header, Footer, AlignmentType, PageNumber, LevelFormat, BorderStyle, ImageRun, TabStopType, HeadingLevel, LineRuleType,
 } from 'docx';
-import { buildDictionary, formatDate, severityLabel, type Modules, type ReportContext, type Lang } from '@reportforge/core';
+import { buildDictionary, formatDate, severityLabel, splitRoadmap, type Modules, type ReportContext, type Lang } from '@reportforge/core';
 import { Helpers, PT, MM, PX, type Block } from './helpers.ts';
 
 export type { Block } from './helpers.ts';
@@ -33,7 +33,7 @@ export async function renderDocx(mods: Modules, ctx: ReportContext, outDocx: str
   const eng = ctx.engagement;
   const sevs = ['critical', 'high', 'medium', 'low', 'info'] as const;
   const dict = buildDictionary(mods, lang) as Record<string, any>;
-  const t = { ...dict, severity: Object.fromEntries(sevs.map((s) => [s, severityLabel(s, lang)])) };
+  const t: Record<string, any> = { ...dict, severity: Object.fromEntries(sevs.map((s) => [s, severityLabel(s, lang)])) };
 
   // Images as PNG buffers (Word has no SVG fallback we want to rely on)
   const imageMeta: Record<string, { abs: string; width: number; height: number; png?: Buffer }> = {};
@@ -52,6 +52,8 @@ export async function renderDocx(mods: Modules, ctx: ReportContext, outDocx: str
     date: formatDate(eng.date, lang), period_start: formatDate(eng.period.start, lang), period_end: formatDate(eng.period.end, lang),
     retest_date: eng.retest ? formatDate(eng.retest.date, lang) : '',
     history: (eng.document_history ?? []).map((x) => ({ ...x, date: formatDate(x.date, lang) })),
+    roadmap: splitRoadmap(eng.roadmap),
+    planning: (eng.testplan?.planning ?? []).map((p) => ({ ...p, start_short: p.start ? formatDate(p.start, lang, true) : '', end_short: p.end ? formatDate(p.end, lang, true) : '' })),
   };
   (h as any).severities = sevs.map((s) => ({ id: s, label: severityLabel(s, lang), count: ctx.stats.bySeverity[s], open: ctx.stats.openBySeverity[s] }));
 
@@ -78,10 +80,14 @@ export async function renderDocx(mods: Modules, ctx: ReportContext, outDocx: str
     : new TextRun({ text: ctx.theme.provider.name, bold: true, size: PT(7.5), color: hex(c.muted), font: fonts.body });
   const headerText = hc.text === 'none' ? '' : hc.text === 'title' ? eng.title : hc.text === 'client' ? eng.client.name : `${eng.title}   |   ${eng.client.name}`;
   const headerTextRun = new TextRun({ text: headerText, size: PT(7.5), color: hex(c.muted), font: fonts.body });
-  const headerChildren = hc.logo === 'left' && headerLogo ? [headerLogo, new TextRun({ text: '   ' }), headerTextRun] : headerLogo ? [headerTextRun, new TextRun({ text: '\t' }), headerLogo] : [headerTextRun];
+  const headerPill = hc.classification === 'pill' && eng.classification ? h.pill(eng.classification, c.primary, true) : null;
+  const rightParts: Array<TextRun | ImageRun> = [...(hc.logo !== 'left' && headerLogo ? [headerLogo] : []), ...(headerPill ? [new TextRun({ text: headerLogo && hc.logo !== 'left' ? '  ' : '' }), headerPill] : [])];
+  const headerChildren = hc.logo === 'left' && headerLogo ? [headerLogo, new TextRun({ text: '   ' }), headerTextRun, ...(rightParts.length ? [new TextRun({ text: '\t' }), ...rightParts] : [])] : rightParts.length ? [headerTextRun, new TextRun({ text: '\t' }), ...rightParts] : [headerTextRun];
+  const footerWebsite = ctx.theme.page.footer?.style === 'website';
 
   const doc = new Document({
     creator: ctx.theme.provider.name,
+    lastModifiedBy: ctx.generated.tool,
     title: eng.title,
     description: `${eng.reference} v${eng.version}`,
     features: { updateFields: true },
@@ -114,7 +120,7 @@ export async function renderDocx(mods: Modules, ctx: ReportContext, outDocx: str
       },
       headers: {
         default: new Header({ children: [new Paragraph({
-          tabStops: [{ type: TabStopType.RIGHT, position: MM(170) }],
+          tabStops: [{ type: TabStopType.RIGHT, position: MM(headerPill ? 167 : 170) }],
           border: { bottom: { style: BorderStyle.SINGLE, size: 4, color: hex(c.rule), space: 4 } },
           children: headerChildren,
         })] }),
@@ -124,7 +130,12 @@ export async function renderDocx(mods: Modules, ctx: ReportContext, outDocx: str
         default: new Footer({ children: [new Paragraph({
           tabStops: [{ type: TabStopType.RIGHT, position: MM(170) }],
           border: { top: { style: BorderStyle.SINGLE, size: 4, color: hex(c.rule), space: 4 } },
-          children: [
+          children: footerWebsite ? [
+            new TextRun({ text: ctx.theme.provider.website ?? ctx.theme.provider.name, size: PT(7.5), color: hex(c.muted), font: fonts.body }),
+            new TextRun({ text: `\t`, size: PT(7.5) }),
+            new TextRun({ text: `Ref. ${eng.reference} · v${eng.version}   `, size: PT(7), color: hex(c.muted), font: fonts.mono }),
+            new TextRun({ children: [`${t.core.page} `, PageNumber.CURRENT, ` ${t.core.of} `, PageNumber.TOTAL_PAGES], size: PT(7.5), color: hex(c.muted), font: fonts.body }),
+          ] : [
             new TextRun({ text: `${eng.classification ?? ''}   |   ${eng.reference}   |   v${eng.version}`, size: PT(7.5), color: hex(c.muted), font: fonts.body }),
             new TextRun({ text: '\t', size: PT(7.5) }),
             new TextRun({ children: [PageNumber.CURRENT, ' / ', PageNumber.TOTAL_PAGES], size: PT(7.5), color: hex(c.muted), font: fonts.body }),

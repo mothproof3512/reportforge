@@ -4,3 +4,5 @@ version: "1.0"
 category: finding
 description: Opens the findings chapter and explains how each finding is structured.
 documents: [report, retest]
+options:
+  layout: classic   # classic | extended (short intro; combine with finding option first_inline)

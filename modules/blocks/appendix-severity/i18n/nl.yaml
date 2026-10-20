@@ -13,3 +13,23 @@ info: "Geen direct risico; observaties en verbeterpunten ter kennisgeving."
 status_confirmed: "Bevestigd: de kwetsbaarheid is daadwerkelijk aangetoond."
 status_likely: "Waarschijnlijk: sterke aanwijzingen, maar niet volledig aangetoond (bijvoorbeeld om schade te voorkomen)."
 status_fp: "Onjuist positief: door tooling gemeld, maar na verificatie geen kwetsbaarheid."
+title_extended: Risicoclassificatie
+subtitle: Hoe bevindingen worden gewogen en welke hersteltermijn per klasse wordt geadviseerd.
+weighting: Weging
+weighting_text: "Elke bevinding krijgt een klasse op basis van kans en impact, ondersteund door de {model}-basisscore. Waar de context daarom vraagt, wijkt de eindclassificatie beargumenteerd af van de CVSS-score. De {provider}-score is 100 minus de som van de gewichten van openstaande bevindingen ({weights})."
+classes_title: Klassen, CVSS-bereik en hersteltermijn
+term: Hersteltermijn
+term_critical: Binnen 7 dagen
+term_high: Binnen 30 dagen
+term_medium: Binnen 90 dagen
+term_low: Bij de volgende release
+term_info: Naar eigen inzicht
+critical_short: Direct misbruik mogelijk met grote schade.
+high_short: Ernstige impact bij realistische kans op misbruik.
+medium_short: Beperkte impact of lagere kans.
+low_short: Verharding of best practice.
+info_short: Ter kennisname; op zichzelf geen risico.
+shapes_title: Waarom kleur én vorm
+shapes_text: Elke klasse heeft naast een kleur een eigen vorm en label, zodat de ernst herkenbaar blijft bij zwart-witdruk en voor lezers met kleurenblindheid.
+status_remediation: Status van herstel
+status_remediation_text: De status geeft aan waar een bevinding staat op de rapportdatum. Statussen zijn omlijnde pillen.

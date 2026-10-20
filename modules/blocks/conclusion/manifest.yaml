@@ -4,3 +4,5 @@ version: "1.0"
 category: closing
 description: Conclusion and strategic recommendations from engagement.yaml (markdown), with a generated fallback.
 documents: [report, retest]
+options:
+  subheads: false   # true: 'Hoofdconclusie' subheading above the conclusion text (extended template)

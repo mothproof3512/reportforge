@@ -1,0 +1,11 @@
+id: appendices
+name: Appendices (combined)
+version: "1.0"
+category: appendix
+description: One "Appendices" chapter with lettered sections — A tooling and versions, B CWE/OWASP mapping, C glossary (engagement.glossary or the built-in list filtered on terms that occur in the report), D disclaimer.
+documents: [report, retest]
+options:
+  tools: true
+  mapping: true
+  glossary: true
+  disclaimer: true

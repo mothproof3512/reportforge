@@ -1,0 +1,5 @@
+- **Wachtwoorden worden veilig opgeslagen.** Accountwachtwoorden zijn gehasht met Argon2id met actuele parameters; bij de SQL-injectie (F-02) waren de hashes niet praktisch te kraken.
+- **Tweefactorauthenticatie werkt zoals bedoeld.** De TOTP-implementatie op het klantportaal kon niet worden omzeild, ook niet via de API of de wachtwoordresetflow.
+- **Sessiebeheer is op orde.** Sessiecookies hebben `Secure`, `HttpOnly` en `SameSite=Lax`, worden geroteerd bij inloggen en vervallen bij uitloggen.
+- **TLS-configuratie op de DMZ.** Alleen TLS 1.2 en 1.3 met moderne cipher suites, HSTS met preload en een geldige certificaatketen op alle hosts.
+- **Betaalflow.** De koppeling met de betaalprovider was niet te manipuleren: bedragen en orderstatussen worden server-side bevestigd via de webhook met handtekeningcontrole.

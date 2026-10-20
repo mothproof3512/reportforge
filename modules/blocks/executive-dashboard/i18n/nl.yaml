@@ -1,0 +1,14 @@
+title: Managementsamenvatting
+findings_at_delivery: bevindingen bij oplevering
+open_findings: openstaande bevindingen
+score_title: "{provider}-score"
+per_severity: Bevindingen per severity
+at_delivery: bij oplevering
+after_retest: na hertest
+excellent: Uitstekend
+good: Goed
+moderate: Matig
+poor: Onvoldoende
+auto_intro: "{provider} heeft in opdracht van {client} in de periode {start} tot en met {end} een penetratietest uitgevoerd op {scope_count} scope-onderdelen. Er zijn {total} bevindingen vastgesteld: {critical} kritiek, {high} hoog, {medium} middel, {low} laag en {info} informatief."
+auto_note: Deze samenvatting is automatisch gegenereerd; vul `executive_summary` in voor een eigen tekst met aanleiding, wat is getest en de hoofdconclusie.
+no_findings: Er zijn tijdens het onderzoek geen bevindingen vastgesteld.

@@ -56,6 +56,10 @@ const SECTION_ALIASES: Record<string, string> = {
   evidence: 'evidence', bewijs: 'evidence', 'proof of concept': 'evidence', poc: 'evidence',
   recommendation: 'recommendation', recommendations: 'recommendation', aanbeveling: 'recommendation', aanbevelingen: 'recommendation', oplossing: 'recommendation', remediation: 'recommendation',
   references: 'references', referenties: 'references', bronnen: 'references',
+  summary: 'summary', samenvatting: 'summary',
+  likelihood: 'likelihood', kans: 'likelihood', waarschijnlijkheid: 'likelihood',
+  classification: 'classification', classificatie: 'classification', 'toelichting op de classificatie': 'classification', 'toelichting classificatie': 'classification', rationale: 'classification',
+  notes: 'notes', kanttekeningen: 'notes', opmerkingen: 'notes', remarks: 'notes',
 };
 
 const REQUIRED_SECTIONS = ['description', 'impact', 'evidence', 'recommendation'];

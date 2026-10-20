@@ -1,0 +1,9 @@
+id: priorities
+name: Priorities and risk picture
+version: "1.0"
+category: front
+description: Top-N priority cards (what / what to do) and a likelihood × impact matrix with the finding IDs in the cells. For CVSS findings the position is derived from the base metrics.
+documents: [report, retest]
+options:
+  top_n: 3
+  matrix: true

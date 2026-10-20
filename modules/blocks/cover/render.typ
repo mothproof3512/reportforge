@@ -4,6 +4,7 @@
 //   band    — full-width colour band with the title, white space below
 //   image   — the theme's cover image bleeds across the top half
 //   minimal — typographic cover on white
+//   dark    — full-page primary colour, logo top-left, title and key/value block bottom-left
 #let render(ctx, theme, t, opts) = {
   let c = theme.colors
   let eng = ctx.engagement
@@ -48,7 +49,42 @@
     margin: 0pt,
     numbering: none,
     {
-      if style == "band" {
+      if style == "dark" {
+        let fg = white
+        let dim = white.transparentize(35%)
+        place(top + left, rect(width: 100%, height: 100%, fill: c.primary))
+        // decorative ring, bottom right, partly off the page
+        place(bottom + right, dx: 48mm, dy: 60mm, circle(radius: 78mm, stroke: 30mm + white.transparentize(92%)))
+        place(top + left, dx: 20mm, dy: 20mm, if logo != none {
+          box(fill: white, radius: 3pt, inset: (x: 8pt, y: 6pt), image(logo, height: 12mm))
+        } else {
+          box(stroke: (dash: "dashed", paint: dim, thickness: 0.6pt), inset: (x: 10pt, y: 8pt), text(fill: dim, size: 7pt, weight: "semibold", tracking: 0.12em, upper(theme.provider.name)))
+        })
+        let big = if eng.title.len() > 34 { 30pt } else if eng.title.len() > 22 { 38pt } else { 46pt }
+        place(bottom + left, dx: 20mm, dy: -22mm, block(width: 120mm, {
+          set par(justify: false, leading: 0.5em)
+          text(size: 9pt, weight: "bold", fill: c.accent.lighten(20%), tracking: 0.08em, upper(doc-label))
+          v(0.6em)
+          block(text(size: big, weight: "bold", fill: fg, font: theme.fonts.heading, tracking: -0.025em, hyphenate: false, eng.title))
+          if eng.at("subtitle", default: none) != none { v(0.3em); text(size: 13pt, fill: dim, eng.subtitle) }
+          v(0.5em)
+          text(size: 17pt, weight: "semibold", fill: fg, eng.client.name)
+          v(1.2em)
+          line(length: 100%, stroke: 0.6pt + white.transparentize(60%))
+          v(0.9em)
+          let rows = (
+            (t.core.client, eng.client.name),
+            (tb.executed_by, theme.provider.name),
+            (t.core.reference, [#text(font: theme.fonts.mono, size: 9.5pt)[#eng.reference #h(0.4em) · #h(0.4em) v#eng.version]]),
+            (t.core.date, ctx.fmt.date),
+          )
+          if eng.at("classification", default: none) != none { rows.push((t.core.classification, rf.pill(theme, eng.classification, color: white, size: 7pt))) }
+          grid(
+            columns: (34mm, 1fr), row-gutter: 8pt, column-gutter: 6mm, align: (left + horizon, left + horizon),
+            ..rows.map(r => (text(size: 9.5pt, fill: dim, r.at(0)), text(size: 10pt, fill: fg, r.at(1)))).flatten(),
+          )
+        }))
+      } else if style == "band" {
         // Colour band across the upper two thirds
         place(top + left, rect(width: 100%, height: 62%, fill: c.primary))
         place(top + left, dx: 0pt, dy: 62% - 3pt, rect(width: 100%, height: 3pt, fill: c.accent))
@@ -69,8 +105,8 @@
         place(top + left, dx: 20mm, dy: 86mm, block(width: 170mm, title-block(c.headingColor)))
         place(top + left, dx: 20mm, dy: 170mm, block(width: 170mm, meta-table(meta)))
       }
-      // Provider footer, identical for all styles
-      place(bottom + left, dx: 20mm, dy: -16mm, block(width: 170mm, {
+      // Provider footer, identical for all light styles
+      if style != "dark" { place(bottom + left, dx: 20mm, dy: -16mm, block(width: 170mm, {
         line(length: 100%, stroke: 0.5pt + c.rule)
         v(6pt)
         set text(size: 8pt, fill: c.muted)
@@ -79,7 +115,7 @@
           [#text(weight: "semibold", fill: c.ink, theme.provider.name) #h(0.5em) #theme.provider.at("address", default: ()).join(" · ")],
           [#theme.provider.at("website", default: "") #h(0.8em) #theme.provider.at("email", default: "")],
         )
-      }))
+      })) }
     },
   )
 }

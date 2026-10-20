@@ -5,3 +5,8 @@ risk_title: Risicoclassificatie
 risk_cvss: "Elke bevinding is beoordeeld met {model}. De score bepaalt de ernst (kritiek, hoog, middel, laag of informatief); waar de tester op basis van context en bedrijfsimpact afwijkt van de rekenkundige uitkomst, is dat bij de bevinding vermeld. Een toelichting op de classificatie staat in de bijlage."
 risk_matrix: "Elke bevinding is beoordeeld op impact en waarschijnlijkheid (schaal 1–5). Het product van beide bepaalt de ernst. Een toelichting op de classificatie staat in de bijlage."
 tools_ref: Een overzicht van de gebruikte tooling staat in de bijlage.
+course: Verloop van het onderzoek
+framework: Normenkader
+for_scoring: voor de scoring van bevindingen
+limitations: Beperkingen
+limitations_text: Een penetratietest is een momentopname binnen een afgebakende reikwijdte en een vast tijdvenster. De afwezigheid van een bevinding betekent niet dat er geen kwetsbaarheden bestaan; wijzigingen na de testperiode vallen buiten dit rapport.

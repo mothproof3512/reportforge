@@ -28,10 +28,13 @@ reviewers:
   - { name: M. Peters, role: Principal consultant }
 
 scope:
-  - { asset: https://shop.voorbeeldwebshop.nl, type: web, environment: acceptatie, description: Webshop (storefront) inclusief checkout }
-  - { asset: https://mijn.voorbeeldwebshop.nl, type: web, environment: acceptatie, description: Klantportaal met orderhistorie en retouren }
-  - { asset: https://api.voorbeeldwebshop.nl/v2, type: api, environment: acceptatie, description: REST API achter beide applicaties }
-  - { asset: 203.0.113.0/28, type: infra, environment: productie, description: Publiek bereikbare infrastructuur (DMZ) }
+  - { asset: https://shop.voorbeeldwebshop.nl, type: web, environment: acceptatie, access: Klantaccount, description: Webshop (storefront) inclusief checkout }
+  - { asset: https://mijn.voorbeeldwebshop.nl, type: web, environment: acceptatie, access: Klantaccount, description: Klantportaal met orderhistorie en retouren }
+  - { asset: https://api.voorbeeldwebshop.nl/v2, type: api, environment: acceptatie, access: Klantaccount, description: REST API achter beide applicaties }
+  - { asset: 203.0.113.0/28, type: infra, environment: productie, access: Ongeauthenticeerd, description: Publiek bereikbare infrastructuur (DMZ) }
+accounts:
+  - { role: Klant, account: tester1, rights: Regulier klantaccount }
+  - { role: Klant, account: tester2, rights: Regulier klantaccount }
 out_of_scope:
   - Betaalprovider (Mollie) en de betaalpagina's buiten het eigen domein
   - Denial-of-service-aanvallen en volumetrische tests
@@ -53,6 +56,10 @@ recommendations: |
   2. **Secure development lifecycle.** Neem de OWASP ASVS (niveau 2) op als eis bij nieuwe functionaliteit en laat security-reviews onderdeel zijn van de definition of done.
   3. **Patchbeleid infrastructuur.** Breng de DMZ-systemen onder in een maandelijkse patchcyclus met monitoring op end-of-life-componenten.
   4. **Hertest.** Laat na het doorvoeren van de maatregelen een hertest uitvoeren om de effectiviteit vast te stellen.
+
+positives: positives.md
+roadmap: roadmap.md
+# finding_prefix: CS          # bevindingen heten dan CS-01, CS-02, …
 
 document_history:
   - { version: "0.9", date: 2026-09-16, author: J. Jansen, change: Conceptrapport ter review }

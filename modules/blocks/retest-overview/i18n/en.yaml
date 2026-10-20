@@ -1,2 +1,7 @@
 title: Retest results
 intro: "The retest was performed on {date} and covers the findings from report version {version}. The table below shows the status of each finding after the retest."
+title_extended: Retest and verification
+subtitle: Status of remediation and the planned verification.
+verification: Verification
+procedure: About the retest procedure
+procedure_text: The retest has not yet been performed. Once the client has implemented the remediation, {provider} verifies every finding and records the result in an updated version of this report.

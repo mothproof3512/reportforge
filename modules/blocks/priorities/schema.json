@@ -1,0 +1,1 @@
+{ "$schema": "https://json-schema.org/draft/2020-12/schema", "title": "priorities options", "type": "object", "properties": { "top_n": { "type": "integer", "minimum": 1, "maximum": 6 }, "matrix": { "type": "boolean" } } }

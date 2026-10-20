@@ -77,6 +77,9 @@ function Overview({ eng, meta, onSaved }: { eng: Engagement; meta: Meta; onSaved
           <Field label="Classificatie"><input type="text" value={d.classification ?? ''} onChange={(e) => set('classification', e.target.value)} /></Field>
           <Field label="Type test"><select value={d.type ?? ''} onChange={(e) => set('type', e.target.value)}><option value="">—</option>{['web', 'api', 'infra', 'mobile', 'cloud', 'wifi', 'social', 'red-team'].map((t) => <option key={t}>{t}</option>)}</select></Field>
         </div>
+        <div className="grid3">
+          <Field label="Prefix bevindingsnummers" hint="Standaard F (F-01, F-02, …); bijv. CS voor CS-01."><input type="text" value={d.finding_prefix ?? ''} placeholder="F" maxLength={6} onChange={(e) => set('finding_prefix', e.target.value.toUpperCase() || undefined)} /></Field>
+        </div>
         <div className="grid2">
           <Field label="Testperiode van"><input type="date" value={d.period?.start ?? ''} onChange={(e) => set('period', { ...(d.period ?? {}), start: e.target.value })} /></Field>
           <Field label="tot en met"><input type="date" value={d.period?.end ?? ''} onChange={(e) => set('period', { ...(d.period ?? {}), end: e.target.value })} /></Field>
@@ -102,7 +105,9 @@ function Overview({ eng, meta, onSaved }: { eng: Engagement; meta: Meta; onSaved
 
       <div className="panel">
         <h2 style={{ marginTop: 0 }}>Scope</h2>
-        <SubTable rows={d.scope ?? []} onChange={(r) => set('scope', r)} columns={[{ key: 'asset', label: 'Asset', width: '34%' }, { key: 'type', label: 'Type', type: 'select', options: ['web', 'api', 'infra', 'mobile', 'cloud', 'other'], width: '12%' }, { key: 'environment', label: 'Omgeving', width: '16%' }, { key: 'description', label: 'Toelichting' }]} blank={() => ({ asset: '', type: 'web', environment: '', description: '' })} />
+        <SubTable rows={d.scope ?? []} onChange={(r) => set('scope', r)} columns={[{ key: 'asset', label: 'Asset', width: '34%' }, { key: 'type', label: 'Type', type: 'select', options: ['web', 'api', 'infra', 'mobile', 'cloud', 'other'], width: '12%' }, { key: 'environment', label: 'Omgeving', width: '14%' }, { key: 'access', label: 'Toegang', width: '14%' }, { key: 'description', label: 'Toelichting' }]} blank={() => ({ asset: '', type: 'web', environment: '', access: '', description: '' })} />
+        <div className="field-label">Testaccounts</div>
+        <SubTable rows={d.accounts ?? []} onChange={(r) => set('accounts', r)} columns={[{ key: 'role', label: 'Rol', width: '30%' }, { key: 'account', label: 'Account', width: '30%' }, { key: 'rights', label: 'Rechten' }]} blank={() => ({ role: '', account: '', rights: '' })} />
         <Field label="Buiten scope" hint="Eén regel per onderdeel"><LinesEditor value={d.out_of_scope ?? []} onChange={(v) => set('out_of_scope', v)} /></Field>
         {md('limitations', 'Beperkingen (markdown, optioneel)', undefined, 4)}
       </div>
@@ -120,6 +125,8 @@ function Overview({ eng, meta, onSaved }: { eng: Engagement; meta: Meta; onSaved
         {md('test_approach', 'Aanpak (markdown, optioneel)', 'Vervangt de standaardtekst in het hoofdstuk Aanpak en methodiek.', 5)}
         {md('conclusion', 'Conclusie (markdown)', undefined, 8)}
         {md('recommendations', 'Aanbevelingen op hoofdlijnen (markdown, optioneel)', undefined, 6)}
+        {md('positives', 'Wat goed gaat (markdown, optioneel)', 'Positieve observaties; eigen hoofdstuk in het uitgebreide sjabloon.', 5)}
+        {md('roadmap', 'Roadmap (markdown, optioneel)', 'Groepen met ### koppen, bijv. "### 0 – 30 dagen"; elke groep wordt een kader in de conclusie.', 6)}
       </div>
 
       <div className="panel">

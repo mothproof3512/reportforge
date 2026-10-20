@@ -16,11 +16,12 @@ import { preflight, formatDiagnostics } from '@reportforge/preflight';
 import { renderTypst, typstVersion } from '@reportforge/render-typst';
 import { renderDocx } from '@reportforge/render-docx';
 import { loadImporters } from '@reportforge/importers';
+import { VERSION } from '@reportforge/core';
 import { readFileSync } from 'node:fs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
 const program = new Command();
-program.name('reportforge').description('Modular, whitelabel pentest reporting').version('0.1.0');
+program.name('reportforge').description('Modular, whitelabel pentest reporting').version(VERSION);
 
 program.command('render')
   .argument('<engagement>', 'engagement directory')

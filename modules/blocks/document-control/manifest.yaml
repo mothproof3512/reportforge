@@ -4,3 +4,5 @@ version: "1.0"
 category: front
 description: Document metadata (authors, reviewers, classification) and version history.
 documents: [report, retest, attestation, testplan]
+options:
+  layout: classic   # classic | extended (distribution list + provider contact + classification + about)

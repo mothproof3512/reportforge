@@ -6,12 +6,13 @@ const MONTHS: Record<Lang, string[]> = {
 };
 
 /** "2026-09-19" → "19 september 2026" / "19 September 2026" */
-export function formatDate(iso: string | undefined, lang: Lang): string {
+export function formatDate(iso: string | undefined, lang: Lang, short = false): string {
   if (!iso) return '';
   const m = String(iso).match(/^(\d{4})-(\d{2})-(\d{2})/);
   if (!m) return String(iso);
   const [, y, mo, d] = m;
-  return `${Number(d)} ${MONTHS[lang][Number(mo) - 1]} ${y}`;
+  const month = MONTHS[lang][Number(mo) - 1];
+  return short ? `${Number(d)} ${month.slice(0, 3)}` : `${Number(d)} ${month} ${y}`;
 }
 
 const SEV: Record<Lang, Record<Severity, string>> = {

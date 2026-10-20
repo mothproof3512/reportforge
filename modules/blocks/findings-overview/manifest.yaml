@@ -1,0 +1,8 @@
+id: findings-overview
+name: Findings overview table
+version: "1.0"
+category: risk
+description: One table with every finding (ID, title, asset, severity, score, status at delivery and after retest) and count tiles below it.
+documents: [report, retest]
+options:
+  tiles: true

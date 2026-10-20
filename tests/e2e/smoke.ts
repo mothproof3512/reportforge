@@ -111,6 +111,8 @@ async function main() {
   const gen = await api('POST', `/api/engagements/${eng.id}/checklists/generate`, { standards: sug.suggested });
   assert.equal(gen.data.testplan.checklists.length, 2);
   assert.equal(gen.data.testplan.checklists.find((c: any) => c.standard === 'wstg-4.2').items.length, 100);
+  const rx = await api('POST', `/api/engagements/${eng.id}/render`, { formats: ['pdf', 'docx'], template: 'pentest-report-extended', theme: 'navy' });
+  assert.ok(rx.ok, 'extended: ' + JSON.stringify(rx.diagnostics.filter((d: any) => d.level === 'error')));
   for (const tpl of ['intake', 'testplan', 'attestation-short', 'attestation-compliance', 'pentest-report']) {
     const rr = await api('POST', `/api/engagements/${eng.id}/render`, { formats: ['pdf', 'docx'], template: tpl });
     assert.ok(rr.ok, `${tpl}: ` + JSON.stringify(rr.diagnostics.filter((d: any) => d.level === 'error')));

@@ -1,0 +1,60 @@
+# "Navy" — the look of the extended report template: dark cover, teal eyebrow
+# headings, classification pill in the header, decorative arcs, shaped severity
+# badges. Pair it with the template `pentest-report-extended`; it also works
+# with every other template.
+id: navy
+name: Navy
+version: "1"
+provider:
+  name: Uitvoerder B.V.
+  address: [Straat 1, 1234 AB Stad]
+  website: www.uitvoerder.example
+  email: info@uitvoerder.example
+  phone: "+31 (0)20 000 00 00"
+  registration: "KvK 00000000"
+
+colors:
+  primary: "#214A73"      # navy: cover, headings, pills
+  accent: "#179E8C"       # teal: eyebrows, callout borders, timeline
+  ink: "#1C3650"
+  muted: "#5B6B7C"
+  rule: "#D6DEE6"
+  surface: "#F3F5F8"
+  codeBg: "#F5F4EF"
+  calloutBg: "#F8F7F2"    # sand for recommendation / roadmap callouts
+  severity:
+    critical: "#7A1F2E"
+    high: "#D63B2F"
+    medium: "#F2A900"
+    low: "#2B6FDB"
+    info: "#6B7280"
+
+fonts:
+  body: Inter
+  heading: Inter
+  mono: JetBrains Mono
+  base_size: 10pt
+
+page:
+  cover: dark            # band | image | minimal | dark
+  header: { logo: none, logo_height: 5.5mm, text: both, classification: pill }
+  footer: { style: website }
+  decoration: arcs
+
+options:
+  heading_style: eyebrow
+  heading_tracking: -0.02em
+  severity_shapes: true
+
+texts:
+  about_report:
+    nl: Dit rapport betreft een momentopname binnen de afgesproken reikwijdte en het vastgestelde tijdvenster. Het biedt geen garantie op de afwezigheid van kwetsbaarheden.
+    en: This report is a point-in-time assessment within the agreed scope and time window. It offers no guarantee that no vulnerabilities exist.
+  classification_text:
+    nl: Dit document is geclassificeerd als **{classification}**. Het bevat gevoelige informatie over kwetsbaarheden in de omgeving van de opdrachtgever. Verspreiding is beperkt tot de personen op de distributielijst. Delen met derden alleen na schriftelijke toestemming van de opdrachtgever.
+    en: This document is classified **{classification}**. It contains sensitive information about vulnerabilities in the client's environment. Distribution is limited to the persons on the distribution list; sharing with third parties only with the client's written consent.
+  disclaimer:
+    nl: |
+      Dit rapport betreft een momentopname binnen de afgesproken reikwijdte en het vastgestelde tijdvenster. Het biedt geen garantie op de afwezigheid van kwetsbaarheden. Wijzigingen aan de omgeving na de testperiode vallen buiten dit rapport. {provider} aanvaardt geen aansprakelijkheid voor schade voortvloeiend uit het gebruik van dit rapport, behoudens opzet of grove nalatigheid.
+    en: |
+      This report is a point-in-time assessment within the agreed scope and time window. It offers no guarantee that no vulnerabilities exist. Changes to the environment after the test period fall outside this report. {provider} accepts no liability for damage arising from the use of this report, except in cases of intent or gross negligence.

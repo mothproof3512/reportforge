@@ -1,6 +1,12 @@
 import type { Block, Helpers } from '@reportforge/render-docx';
 export async function render(ctx: any, theme: any, t: any, opts: any, h: Helpers): Promise<Block[]> {
   const tb = t.blocks['retest-overview'], eng = ctx.engagement;
+  if (opts.layout === 'extended') {
+    const out: Block[] = [h.h1(tb.title_extended), h.subtitle(tb.subtitle)];
+    out.push(h.table([['ID', t.core.status, tb.verification, t.core.notes], ...ctx.findings.map((f: any) => [[h.mono(f.id)], [h.statusPill(f)], f.retest ? (h as any).fmt.retest_date : '–', f.retest?.note ?? ''])], { widths: [16, 28, 42, 84] }));
+    out.push(h.h2(tb.procedure, { numbered: false }), h.p(eng.retest ? tb.intro.replace('{date}', (h as any).fmt.retest_date).replace('{version}', eng.retest.of_version) : tb.procedure_text.replace('{provider}', theme.provider.name)));
+    return out;
+  }
   const out: Block[] = [h.h1(tb.title)];
   if (eng.retest) out.push(h.p(tb.intro.replace('{date}', (h as any).fmt.retest_date).replace('{version}', eng.retest.of_version)));
   const statuses = ['resolved', 'partially-resolved', 'open', 'not-tested', 'risk-accepted'];

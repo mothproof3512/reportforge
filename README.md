@@ -53,7 +53,13 @@ my-engagement/
 └─ theme/theme.yaml     optional: engagement-specific theme override
 ```
 
-See `examples/acme-webshop/engagement.yaml` for every field, including `intake`, `testplan` (with checklists) and `attestation`. Templates: `pentest-report`, `retest-report`, `intake`, `testplan`, `attestation-short|standard|extended|compliance` (`npm run render -- <dir> -t testplan`).
+See `examples/acme-webshop/engagement.yaml` for every field, including `intake`, `testplan` (with checklists) and `attestation`. Templates: `pentest-report`, `pentest-report-extended`, `retest-report`, `intake`, `testplan`, `attestation-short|standard|extended|compliance` (`npm run render -- <dir> -t testplan`).
+
+### The extended report template
+
+`pentest-report-extended` is the structure of a full-service report: documentbeheer with distribution list and provider contact, a dashboard summary (narrative left; count tiles, a *provider score* and a bar chart right), a priorities page (top-3 cards with *what / what to do* and a likelihood × impact matrix with the finding IDs in the cells), scope with conditions and test accounts, methodology with a phase timeline, risk classification with remediation terms, a findings table, findings in the extended layout (title row with badge and status pill, hairlined meta grid, summary, classification rationale, evidence, impact and likelihood side by side, recommendation callout, remarks, retest status), "what is in good order", conclusion with a roadmap, a retest table and lettered appendices (tooling, CWE/OWASP mapping, a glossary that only lists terms occurring in the report, disclaimer). Pair it with the `navy` theme (dark cover, teal eyebrow headings, classification pill in the header, decorative arcs, shaped severity badges) or any other theme — every piece is an option on an existing block, so it also works with the classic look.
+
+It uses a few extra fields: `positives` and `roadmap` (markdown; roadmap groups are `###` headings), `accounts` (test accounts), `access` per scope item, `glossary` (optional; otherwise the built-in list is filtered), `finding_prefix` (`CS` → CS-01, …), and in findings the optional sections `### Samenvatting`, `### Kans`, `### Toelichting op de classificatie` and `### Kanttekeningen` (English: Summary, Likelihood, Classification, Notes). For CVSS findings the matrix position is derived from the base metrics; the *provider score* is 100 − Σ weights of open findings (critical 25, high 10, medium 4, low 1 — options on the `executive-dashboard` block).
 
 ## The finding format
 
@@ -88,7 +94,8 @@ name: Acme Security
 provider: { name: Acme Security B.V., address: [Straat 1, 1234 AB Stad], website: https://acme.example, email: info@acme.example }
 colors: { primary: "#7A1E2C", accent: "#C9A227" }
 fonts: { body: "Source Sans 3", heading: "Source Serif 4", mono: "JetBrains Mono" }   # .ttf/.otf in modules/themes/acme/fonts/
-page: { cover: image, header: { logo: right, logo_height: 5.5mm, text: both } }   # running header: logo right|left|none, 3–9 mm, text both|title|client|none
+page: { cover: image, header: { logo: right, logo_height: 5.5mm, text: both, classification: pill }, footer: { style: website }, decoration: arcs }   # cover band|image|minimal|dark; header logo right|left|none, 3–9 mm, text both|title|client|none, classification pill; footer default|website; decoration none|arcs
+options: { heading_style: eyebrow, heading_tracking: -0.02em, severity_shapes: true }   # eyebrow = small "1 · Title" above the big chapter title; shapes = ◆▲■●▬ in severity badges
 assets: { logo: logo.svg, logo_mono: logo-mono.svg, logo_header: logo-header.svg, cover_image: cover.jpg }   # logo_header is optional: header uses logo_header → logo_mono → logo
 texts: { disclaimer: { nl: "...", en: "..." } }
 ```
@@ -141,6 +148,22 @@ bash deploy/proxmox/create-vm.sh --id 9100 --name reportforge \
 ```
 
 DHCP by default; add `--ip 192.168.1.60/24 --gw 192.168.1.1` for a static address. This downloads the Ubuntu 24.04 cloud image, creates the VM with cloud-init (Docker, git, unattended security updates), clones the repo to `/opt/reportforge` and starts the web app on port 3000. Updating: `cd /opt/reportforge && git pull && docker compose -f deploy/docker-compose.yml up -d --build`. Backups: `deploy/backup.sh /mnt/nas/reportforge` from cron.
+
+## Releases and versioning
+
+Versions follow semver and live in one place: `package.json` (mirrored into `packages/core/src/version.ts` by the release script). The version shows in the app's sidebar, `npm run rf -- --version`, the PDF/DOCX metadata and `CHANGELOG.md`.
+
+```bash
+# 1. describe the change under "## [Unreleased]" in CHANGELOG.md, commit your work
+# 2. cut the release (bumps the version, dates the changelog entry, commits, tags vX.Y.Z)
+npm run release -- 0.5.0 "Short description"
+git push && git push --tags
+# 3. on the NUC
+cd /opt/reportforge && git pull && docker compose -f deploy/docker-compose.yml up -d --build
+npm run version:check     # package.json, version.ts and CHANGELOG agree
+```
+
+To run a specific version on the NUC: `git checkout v0.4.0` (and `git checkout main` to follow the latest again). GitHub shows every tag under *Releases/Tags*, with the diff between two versions one click away.
 
 ## Licence
 

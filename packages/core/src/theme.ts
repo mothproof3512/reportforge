@@ -88,6 +88,7 @@ export function resolveTheme(mods: Modules, themeRef: string, engagementDir?: st
     rule: c.rule ?? '#D9DEE5',
     surface: c.surface ?? '#F4F6F9',
     codeBg: c.codeBg ?? '#F1F3F6',
+    calloutBg: c.calloutBg ?? c.surface ?? '#F4F6F9',
     severity: { ...SEVERITY_DEFAULTS, ...(c.severity ?? {}) },
     severityText: {} as Record<Severity, string>,
   };

@@ -140,15 +140,65 @@ export class Helpers {
     return tbl;
   }
   /** Shaded box (callout / metadata card). */
-  box(children: Block[], o: { fill?: string; accent?: string } = {}): Table {
+  box(children: Block[], o: { fill?: string; accent?: string; width?: number } = {}): Table {
     const c = this.colors;
     const none = { style: BorderStyle.NONE, size: 0, color: 'FFFFFF' };
+    const w = o.width ?? this.textWidthMm;
     return new Table({
-      rows: [new TableRow({ cantSplit: true, children: [new TableCell({ children, margins: { top: MM(2.5), bottom: MM(2.5), left: MM(3), right: MM(3) }, shading: { type: ShadingType.CLEAR, fill: hex(o.fill ?? c.surface) }, width: { size: MM(this.textWidthMm), type: WidthType.DXA }, borders: { left: { style: BorderStyle.SINGLE, size: 18, color: hex(o.accent ?? c.primary) }, top: none, bottom: none, right: none } })] })],
-      width: { size: MM(this.textWidthMm), type: WidthType.DXA },
-      columnWidths: [MM(this.textWidthMm)],
+      rows: [new TableRow({ cantSplit: true, children: [new TableCell({ children, margins: { top: MM(2.5), bottom: MM(2.5), left: MM(3), right: MM(3) }, shading: { type: ShadingType.CLEAR, fill: hex(o.fill ?? c.surface) }, width: { size: MM(w), type: WidthType.DXA }, borders: { left: { style: BorderStyle.SINGLE, size: 18, color: hex(o.accent ?? c.primary) }, top: none, bottom: none, right: none } })] })],
+      width: { size: MM(w), type: WidthType.DXA },
+      columnWidths: [MM(w)],
       borders: { top: none, bottom: none, left: none, right: none, insideHorizontal: none, insideVertical: none },
     });
+  }
+  /** Side-by-side columns (borderless table); widths in mm. */
+  columns(cols: Block[][], widths?: number[]): Table {
+    const n = cols.length;
+    let ws = widths ?? Array(n).fill(this.textWidthMm / n);
+    const sum = ws.reduce((a, b) => a + b, 0);
+    if (sum > this.textWidthMm - 2) ws = ws.map((w) => (w * (this.textWidthMm - 2)) / sum);   // keep the gutters inside the text column
+    const none = { style: BorderStyle.NONE, size: 0, color: 'FFFFFF' };
+    return new Table({
+      rows: [new TableRow({ children: cols.map((children, i) => new TableCell({ children: children.length ? children : [this.p('')], width: { size: MM(ws[i]), type: WidthType.DXA }, margins: { top: 0, bottom: 0, left: i === 0 ? 0 : MM(3), right: i === n - 1 ? 0 : MM(3) }, verticalAlign: VerticalAlign.TOP })) })],
+      width: { size: MM(ws.reduce((a, b) => a + b, 0)), type: WidthType.DXA },
+      columnWidths: ws.map(MM),
+      borders: { top: none, bottom: none, left: none, right: none, insideHorizontal: none, insideVertical: none },
+    });
+  }
+  /** Outlined status pill ("Open", "Opgelost"). */
+  pill(label: string, color?: string, filled = false): TextRun {
+    const col = hex(color ?? this.colors.muted);
+    return new TextRun({ text: ` ${label} `, font: this.fonts.body, size: PT(7.5), bold: true, color: filled ? 'FFFFFF' : col, shading: filled ? { type: ShadingType.CLEAR, fill: col } : undefined, border: { style: BorderStyle.SINGLE, size: 6, color: col, space: 1 } });
+  }
+  /** Severity badge with the shape glyph when the theme asks for it. */
+  sevBadge(sev: Severity, size = 7): TextRun {
+    const shapes = (this.theme.options as any)?.severity_shapes;
+    const glyph = { critical: '◆', high: '▲', medium: '■', low: '●', info: '▬' }[sev];
+    const label = shapes ? `${glyph} ${this.sevLabel(sev)}` : this.sevLabel(sev).toUpperCase();
+    return new TextRun({ text: ` ${label} `, bold: true, size: PT(size), font: this.fonts.body, color: hex(this.colors.severityText[sev]), shading: { type: ShadingType.CLEAR, fill: hex(this.colors.severity[sev]) } });
+  }
+  /** Small accent label above a chapter title or a card ("1 · Managementsamenvatting"). */
+  eyebrow(text: string): Paragraph {
+    return new Paragraph({ spacing: { after: PT(2) }, children: [new TextRun({ text, font: this.fonts.body, size: PT(7.5), bold: true, color: hex(this.colors.accent) })] });
+  }
+  /** Chapter subtitle in muted text under the heading. */
+  subtitle(text: string): Paragraph {
+    return new Paragraph({ spacing: { before: 0, after: PT(10) }, children: [new TextRun({ text, font: this.fonts.body, size: PT(11.5), color: hex(this.colors.muted) })] });
+  }
+  /** Big number with a caption (stat tile), top rule in the primary colour. */
+  stat(value: string, caption: string, color?: string): Block[] {
+    return [
+      new Paragraph({ border: { top: { style: BorderStyle.SINGLE, size: 10, color: hex(color ?? this.colors.primary), space: 4 } }, spacing: { after: 0 }, children: [new TextRun({ text: value, font: this.fonts.heading, size: PT(24), bold: true, color: hex(this.colors.headingColor as string) })] }),
+      new Paragraph({ spacing: { after: PT(6) }, children: [this.muted(caption, 8.5)] }),
+    ];
+  }
+  /** Status pill for a finding from its retest status (open when none). */
+  statusPill(f: any): TextRun {
+    const c = this.colors, t = this.t;
+    const st = f.retest?.status ?? 'open';
+    const col = st === 'resolved' ? c.severity.low : st === 'partially-resolved' ? c.severity.medium : st === 'risk-accepted' ? c.muted : c.severity.high;
+    const label = st === 'resolved' ? t.core.resolved : st === 'partially-resolved' ? t.core.partially_resolved : st === 'risk-accepted' ? t.core.retest_status['risk-accepted'] : t.core.open;
+    return this.pill(label, col);
   }
   /** Code block: mono runs with explicit line breaks, shaded, left accent. */
   code(source: string): Table {
