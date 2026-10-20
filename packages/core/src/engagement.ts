@@ -12,6 +12,7 @@ import { z } from 'zod';
 import sharp from 'sharp';
 import { parseFindings, type Diagnostic, type ParsedFinding } from '@reportforge/markdown';
 import { VERSION } from './version.ts';
+import { deriveDecoration } from './decorations.ts';
 import { assess, SEVERITY_RANK, type Severity } from '@reportforge/risk';
 import { readYaml, resolveMapping } from './modules.ts';
 import { resolveTheme } from './theme.ts';
@@ -88,6 +89,10 @@ export async function loadEngagement(mods: Modules, engagementDir: string, opts:
   // Theme
   const themeRef = opts.theme ?? (existsSync(join(dir, 'theme', 'theme.yaml')) && eng.theme === '_default' ? join(dir, 'theme') : eng.theme);
   const { theme, warnings: tw } = resolveTheme(mods, themeRef, dir);
+  for (const d of theme.page.decorations ?? []) {
+    if (!d.src) continue;
+    try { d.src = await deriveDecoration(d, join(mods.root, '.rf-cache', 'decorations')); } catch (e: any) { tw.push({ message: `Versiering ${d.image}: ${e.message}` }); }
+  }
   for (const w of tw) diagnostics.push({ level: 'warning', message: w.message, file: 'theme' });
   if (eng.provider) theme.provider = { ...theme.provider, ...eng.provider };
 

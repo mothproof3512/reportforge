@@ -6,7 +6,7 @@
 import { existsSync } from 'node:fs';
 import { join, resolve, isAbsolute } from 'node:path';
 import { readYaml } from './modules.ts';
-import type { Modules, ResolvedTheme, Severity, ThemeColors } from './types.ts';
+import type { Modules, ResolvedTheme, Severity, ThemeColors, Decoration } from './types.ts';
 
 export interface ThemeWarning { message: string }
 
@@ -123,6 +123,26 @@ export function resolveTheme(mods: Modules, themeRef: string, engagementDir?: st
     const mm = Number(String(h.logo_height).replace(/mm\s*$/, ''));
     if (!/^\d+(\.\d+)?\s*mm$/.test(String(h.logo_height)) || mm < 3 || mm > 9) { warnings.push({ message: `page.header.logo_height "${h.logo_height}" moet tussen 3mm en 9mm liggen; 5.5mm gebruikt.` }); h.logo_height = '5.5mm'; }
   }
+  const decorations: Decoration[] = [];
+  for (const [i, raw0] of ((page as any).decorations ?? []).entries()) {
+    const d = { ...(raw0 as Decoration) };
+    if (!d.image) { warnings.push({ message: `page.decorations[${i}] heeft geen image.` }); continue; }
+    const cands = [join(dir, d.image), join(defaultDir, d.image), join(mods.root, 'assets/decorations', d.image), isAbsolute(d.image) ? d.image : ''].filter(Boolean);
+    const found = cands.find((p) => existsSync(p));
+    if (!found) { warnings.push({ message: `Versiering "${d.image}" niet gevonden (thema-map of assets/decorations).` }); continue; }
+    d.src = found;
+    d.anchor = (['top-left', 'top', 'top-right', 'left', 'center', 'right', 'bottom-left', 'bottom', 'bottom-right'] as const).includes(d.anchor as any) ? d.anchor : 'bottom-right';
+    d.pages = (['all', 'odd', 'even', 'cover', 'content', 'first', 'last'] as const).includes(d.pages as any) ? d.pages : 'content';
+    const len = (v: unknown, dflt: string) => (typeof v === 'number' ? `${v}mm` : typeof v === 'string' && /^-?\d+(\.\d+)?\s*(mm|cm|pt|in)$/.test(v) ? v : dflt);
+    d.dx = len(d.dx, '0mm'); d.dy = len(d.dy, '0mm'); d.width = len(d.width, '120mm');
+    d.rotate = typeof d.rotate === 'number' ? `${d.rotate}deg` : typeof d.rotate === 'string' && /^-?\d+(\.\d+)?\s*deg$/.test(d.rotate) ? d.rotate : '0deg';
+    d.opacity = Math.max(0, Math.min(1, Number(d.opacity ?? 0.1)));
+    d.blur = Math.max(0, Math.min(50, Number(d.blur ?? 0)));
+    const named: Record<string, string> = { primary: colors.primary, accent: colors.accent, ink: colors.ink, muted: colors.muted };
+    d.tint = d.tint ? (named[d.tint] ?? (/^#[0-9a-fA-F]{6}$/.test(d.tint) ? d.tint.toUpperCase() : colors.primary)) : colors.primary;
+    decorations.push(d);
+  }
+  (page as any).decorations = decorations;
   const theme: ResolvedTheme = {
     id: raw.id ?? themeRef, name: raw.name ?? themeRef, version: String(raw.version ?? '1'), dir,
     provider: raw.provider ?? { name: raw.name ?? themeRef },

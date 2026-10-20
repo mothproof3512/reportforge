@@ -4,6 +4,10 @@ Alle wezenlijke wijzigingen per release. Versies volgen [semver](https://semver.
 
 ## [Unreleased]
 
+## [0.7.0] — 2026-10-20
+
+- Achtergrondversiering per thema: lagen van SVG/PNG met positie, verschuiving, breedte, rotatie, transparantie, vervaging, kleur en paginakeuze; acht meegeleverde vormen; lageneditor in de thema-editor.
+
 ## [0.6.0] — 2026-10-20
 
 - Zes varianten per opmaakelement (voorblad, hoofdstukkoppen, tabellen, grafieken, kaders, severity-badges, bevindingslayout), kiesbaar per thema in het paneel Opmaak; stijlgalerij-PDF (thema-editor en `rf gallery`); DOCX volgt waar Word het toelaat.

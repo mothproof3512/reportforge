@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { api, type Meta } from '../api';
 import { PalettePicker } from './palettes';
+import { DecorationsEditor } from './decorations';
 import { Field, confirmDialog, go, useToast } from '../ui';
 
 interface ThemeInfo { slug: string; yaml: string; data: any; resolved: any; warnings: Array<{ message: string }>; assets: string[]; fonts: string[] }
@@ -108,6 +109,9 @@ export function ThemePage({ slug, meta, onChanged }: { slug: string; meta: Meta;
                 <Field label="Koptekst: logohoogte" hint="4–8 mm"><input type="text" value={get('page.header.logo_height') || '5.5mm'} onChange={(e) => set('page.header.logo_height', e.target.value)} disabled={readonly} /></Field>
                 <Field label="Koptekst: tekst"><select value={get('page.header.text') || 'both'} onChange={(e) => set('page.header.text', e.target.value)} disabled={readonly}><option value="both">Titel | klant</option><option value="title">Alleen titel</option><option value="client">Alleen klant</option><option value="none">Geen tekst</option></select></Field>
               </div>
+              <Field label="Achtergrondversiering" hint="Vormen (SVG/PNG) licht achter de pagina-inhoud: positie, grootte, rotatie, transparantie, vervaging en op welke pagina's. Eigen bestanden: upload hieronder en kies ze bij 'Afbeelding'.">
+                <DecorationsEditor value={d.page?.decorations ?? []} onChange={(v) => set('page.decorations', v.length ? v : undefined)} assets={t.assets.filter((a) => /\.(svg|png)$/i.test(a))} shapes={meta.decorationShapes ?? []} readonly={readonly} builtin={get('page.decoration') || 'none'} onBuiltin={(v) => set('page.decoration', v === 'none' ? undefined : v)} />
+              </Field>
               {assetSelect('cover_image', 'Voorbladbeeld', 'JPEG/PNG, minimaal 2000 px breed; wordt bovenaan het voorblad bijgesneden.')}
               {!readonly && <Field label="Bestand toevoegen" hint="Logo's (svg/png/jpg) en fonts (ttf/otf)."><input type="file" onChange={(e) => { if (e.target.files?.[0]) upload(e.target.files[0]); e.target.value = ''; }} /></Field>}
               <div className="actions">{t.assets.map((a) => <div key={a} className="panel tight" style={{ marginBottom: 0, width: 150 }}><img src={`/api/themes/${slug}/assets/${encodeURIComponent(a)}`} style={{ width: '100%', height: 60, objectFit: 'contain', background: '#F3F5F7' }} /><div className="small mono" style={{ wordBreak: 'break-all' }}>{a}</div>{!readonly && <button className="btn small ghost danger" onClick={async () => { if (confirmDialog(`${a} verwijderen?`)) { await api.del(`/api/themes/${slug}/assets/${encodeURIComponent(a)}`); load(); } }}>Verwijderen</button>}</div>)}</div>
